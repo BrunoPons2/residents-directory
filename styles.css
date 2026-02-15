@@ -1,0 +1,22 @@
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#fff;color:#111}
+.topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #eaeaea;padding:12px 14px;display:flex;gap:10px;align-items:center}
+.brand{font-weight:700}
+.search{flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:12px;font-size:16px}
+.container{padding:10px 10px 40px}
+.status{padding:8px 4px;color:#555;font-size:14px}
+.list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.card{display:flex;gap:12px;align-items:center;border:1px solid #eee;border-radius:16px;padding:10px 10px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.avatar{width:46px;height:46px;border-radius:14px;object-fit:cover;background:#f2f2f2;flex:0 0 auto}
+.name{font-weight:650}
+.sub{font-size:13px;color:#666}
+.row{display:flex;flex-direction:column;gap:2px;min-width:0}
+.card button{all:unset;cursor:pointer;display:flex;gap:12px;align-items:center;width:100%}
+.modal{border:none;border-radius:18px;padding:0;max-width:520px;width:92vw}
+.modal::backdrop{background:rgba(0,0,0,.45)}
+.modal-inner{padding:14px;position:relative}
+.icon-btn{position:absolute;right:10px;top:10px;border:none;background:#f2f2f2;border-radius:12px;padding:8px 10px;cursor:pointer}
+.modal-photo{width:100%;max-height:55vh;object-fit:contain;border-radius:16px;background:#f6f6f6}
+.modal-name{margin-top:10px;font-size:20px;font-weight:750}
+.modal-actions{display:flex;gap:10px;margin-top:10px}
+.btn{display:inline-flex;justify-content:center;align-items:center;flex:1;padding:12px;border-radius:14px;border:1px solid #ddd;text-decoration:none;color:#111;font-weight:650}
+.modal-meta{margin-top:10px;font-size:13px;color:#666;word-break:break-word}

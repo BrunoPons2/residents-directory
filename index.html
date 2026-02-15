@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Residents Directory</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Residents Directory</div>
+    <input id="search" class="search" type="search" placeholder="Search residents…" autocomplete="off" />
+  </header>
+
+  <main class="container">
+    <div id="status" class="status"></div>
+    <ul id="list" class="list"></ul>
+  </main>
+
+  <dialog id="modal" class="modal">
+    <div class="modal-inner">
+      <button id="closeBtn" class="icon-btn" aria-label="Close">✕</button>
+      <img id="modalPhoto" class="modal-photo" alt="" />
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-actions">
+        <a id="callBtn" class="btn" href="#">Call</a>
+        <a id="emailBtn" class="btn" href="#">Email</a>
+      </div>
+      <div class="modal-meta" id="modalMeta"></div>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
