@@ -1,5 +1,5 @@
 // Minimal service worker for offline caching (prototype)
-const CACHE_NAME = 'residents-pwa-v4';
+const CACHE_NAME = 'residents-pwa-v5';
 const ASSETS = [
   './',
   './index.html',
