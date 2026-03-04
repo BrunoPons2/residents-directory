@@ -4,22 +4,22 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#ffffff" />
-  <title>Residents Directory </title>
+  <title>Residents Directory</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <header class="topbar">
     <div class="brand">Residents Directory</div>
+
     <input id="search" class="search" type="search" placeholder="Search residents…" autocomplete="off" />
+
+    <!-- ONE sort dropdown only -->
     <select id="sort" class="search" aria-label="Sort">
-  <option value="address">Sort: Address</option>
-  <option value="full_name">Sort: Full Name</option>
-</select>
-    <select id="sort" class="search" aria-label="Sort">
-  <option value="address">Sort: Address</option>
-  <option value="full_name">Sort: Full Name</option>
-</select>
+      <option value="address">Sort: Address</option>
+      <option value="full_name">Sort: Full Name</option>
+    </select>
   </header>
 
   <main class="container">
@@ -31,12 +31,12 @@
     <div class="modal-inner">
       <button id="closeBtn" class="icon-btn" aria-label="Close">✕</button>
       <img id="modalPhoto" class="modal-photo" alt="" />
-      <div class="modal-name" id="modalName"></div>
+      <div id="modalName" class="modal-name"></div>
       <div class="modal-actions">
         <a id="callBtn" class="btn" href="#">Call</a>
         <a id="emailBtn" class="btn" href="#">Email</a>
       </div>
-      <div class="modal-meta" id="modalMeta"></div>
+      <div id="modalMeta" class="modal-meta"></div>
     </div>
   </dialog>
 
