@@ -2,7 +2,8 @@
 const listEl = document.getElementById('list');
 const statusEl = document.getElementById('status');
 const searchEl = document.getElementById('search');
-
+const sortEl = document.getElementById('sort');
+let currentSort = 'address';
 const modal = document.getElementById('modal');
 const closeBtn = document.getElementById('closeBtn');
 const modalPhoto = document.getElementById('modalPhoto');
