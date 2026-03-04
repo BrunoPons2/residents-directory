@@ -119,6 +119,25 @@ searchEl.addEventListener('input', ()=>{
   render();
 });
 
+const sortEl = document.getElementById('sort');
+
+if (sortEl){
+  sortEl.addEventListener('change', () => {
+
+    const mainResidents = residents.filter(r => Number(r.resident_id) <= 226);
+    const addendumResidents = residents.filter(r => Number(r.resident_id) >= 227);
+
+    if (sortEl.value === 'full_name'){
+      mainResidents.sort((a,b)=>a.full_name.localeCompare(b.full_name));
+    } else {
+      mainResidents.sort((a,b)=>parseInt(a.address) - parseInt(b.address));
+    }
+
+    filtered = [...mainResidents, ...addendumResidents];
+    render();
+  });
+}
+
 // Register service worker (works when hosted over HTTPS / localhost)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
