@@ -31,6 +31,22 @@ async function loadData(){
   const res = await fetch('data/residents.csv', {cache:'no-store'});
   const text = await res.text();
   residents = csvToRows(text);
+
+// Split residents and addendum
+const mainResidents = residents.filter(r => Number(r.resident_id) <= 226);
+const addendumResidents = residents.filter(r => Number(r.resident_id) >= 227);
+
+// Default sort by address
+mainResidents.sort((a,b) => {
+  const numA = parseInt(a.address);
+  const numB = parseInt(b.address);
+  return numA - numB;
+});
+
+// Recombine
+residents = [...mainResidents, ...addendumResidents];
+
+filtered = residents.slice();
   filtered = residents;
   statusEl.textContent = `${residents.length} residents`;
   render();
