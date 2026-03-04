@@ -27,11 +27,44 @@ function csvToRows(csvText){
   });
 }
 
+function getAddendumSplit(arr) {
+  const main = arr.filter(r => Number(r.resident_id) <= 226);
+  const addendum = arr.filter(r => Number(r.resident_id) >= 227);
+  return { main, addendum };
+}
+
+function addressSortKey(addressRaw) {
+  const a = (addressRaw || '').trim().toLowerCase();
+  const m = a.match(/\d+/);
+  const num = m ? parseInt(m[0], 10) : Number.MAX_SAFE_INTEGER;
+  const street = a.replace(/^\s*\d+\s*/, '').trim();
+  return { street, num };
+}
+
+function applySortToMainOnly(arr) {
+  const { main, addendum } = getAddendumSplit(arr);
+
+  if (currentSort === 'full_name') {
+    main.sort((x, y) => (x.full_name || '').localeCompare((y.full_name || ''), undefined, { sensitivity: 'base' }));
+  } else {
+    main.sort((x, y) => {
+      const ax = addressSortKey(x.address);
+      const ay = addressSortKey(y.address);
+      if (ax.street < ay.street) return -1;
+      if (ax.street > ay.street) return 1;
+      return ax.num - ay.num;
+    });
+  }
+
+  return [...main, ...addendum];
+}
+
 async function loadData(){
   statusEl.textContent = 'Loading…';
   const res = await fetch('data/residents.csv', {cache:'no-store'});
   const text = await res.text();
   residents = csvToRows(text);
+  residents = applySortToMainOnly(residents);
 
 // Split residents and addendum
 const mainResidents = residents.filter(r => Number(r.resident_id) <= 226);
@@ -119,6 +152,28 @@ searchEl.addEventListener('input', ()=>{
   statusEl.textContent = `${filtered.length} match${filtered.length===1?'':'es'}`;
   render();
 });
+
+if (sortEl) {
+  sortEl.value = currentSort;
+
+  sortEl.addEventListener('change', () => {
+    currentSort = sortEl.value || 'address';
+
+    // Re-sort with new mode, keeping addendum fixed at the bottom
+    residents = applySortToMainOnly(residents);
+
+    // Re-apply search filter (if any), and keep addendum pinned in the filtered view too
+    const q = (searchEl.value || '').trim().toLowerCase();
+    if (!q) {
+      filtered = residents.slice();
+    } else {
+      filtered = residents.filter(r => ((r.full_name || '').toLowerCase().includes(q)) || ((r.address || '').toLowerCase().includes(q)));
+      filtered = applySortToMainOnly(filtered);
+    }
+
+    render();
+  });
+}
 
 const sortEl = document.getElementById('sort');
 
