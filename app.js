@@ -39,6 +39,27 @@ function addressSortKey(addressRaw) {
   return { street, num };
 }
 
+function splitMainAddendum(arr) {
+  const main = [];
+  const addendum = [];
+
+  for (const r of arr) {
+    const id =
+      Number(r.resident_id) ||
+      Number(r.ResidentID) ||
+      Number(r.residentId) ||
+      0;
+
+    if (id >= 227 && id <= 242) {
+      addendum.push(r);
+    } else {
+      main.push(r);
+    }
+  }
+
+  return { main, addendum };
+}
+
 // ResidentID 1–226 sortable, 227–242 fixed addendum at bottom
 function splitMainAddendum(arr) {
   const main = [];
@@ -52,19 +73,33 @@ function splitMainAddendum(arr) {
 }
 
 function applySortKeepingAddendum(arr) {
+
   const { main, addendum } = splitMainAddendum(arr);
 
   if (currentSort === 'full_name') {
-    main.sort((a, b) => (a.full_name || '').localeCompare((b.full_name || ''), undefined, { sensitivity: 'base' }));
+
+    main.sort((a, b) =>
+      (a.full_name || '').localeCompare(b.full_name || '', undefined, { sensitivity: 'base' })
+    );
+
   } else {
+
     main.sort((a, b) => {
+
       const ax = addressSortKey(a.address);
       const ay = addressSortKey(b.address);
+
       if (ax.street < ay.street) return -1;
       if (ax.street > ay.street) return 1;
+
       return ax.num - ay.num;
+
     });
+
   }
+
+  return [...main, ...addendum];
+}
 
   return [...main, ...addendum];
 }
