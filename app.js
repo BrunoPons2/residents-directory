@@ -48,6 +48,59 @@ function getAddress(r) {
   return (r?.Address || '').toString().trim();
 }
 
+function slugifyName(name) {
+  return (name || '')
+    .toString()
+    .trim()
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function photoCandidates(r, kind) {
+
+  const folder = kind === 'profile'
+    ? 'photos/profile/'
+    : 'photos/thumb/';
+
+  const id = Number(r.resident_id);
+  const full = r.full_name || '';
+  const slug = slugifyName(full);
+
+  const fromCsv = kind === 'profile'
+    ? r.photo_profile
+    : r.photo_thumb;
+
+  const list = [];
+
+  if (fromCsv) list.push(fromCsv);                     // CSV path
+  if (Number.isFinite(id)) list.push(folder + id + '.jpg');      // 1.jpg
+  if (Number.isFinite(id)) list.push(folder + (id + 1000) + '.jpg'); // 1001.jpg
+  if (slug) list.push(folder + slug + '.jpg');         // cheryl-hall.jpg
+
+  return list;
+}
+
+function setImageWithFallback(img, candidates) {
+
+  let i = 0;
+
+  function tryNext() {
+    if (i >= candidates.length) return;
+
+    img.onerror = function() {
+      i++;
+      tryNext();
+    };
+
+    img.src = candidates[i];
+  }
+
+  tryNext();
+}
+
+
 function addressNumber(addressRaw) {
   const m = String(addressRaw || '').match(/\d+/);
   return m ? parseInt(m[0], 10) : Number.MAX_SAFE_INTEGER;
@@ -119,7 +172,7 @@ function render() {
     img.className = 'avatar';
     img.alt = '';
     img.loading = 'lazy';
-    img.src = r.photo_thumb ? r.photo_thumb : '';
+    setImageWithFallback(img, photoCandidates(r, 'thumb'));
     btn.appendChild(img);
 
     const row = document.createElement('div');
@@ -149,7 +202,10 @@ function render() {
 
 function openProfile(r) {
   modalName.textContent = getName(r) || '';
-  modalPhoto.src = r.photo_profile || r.photo_thumb || '';
+  setImageWithFallback(
+  modalPhoto,
+  photoCandidates(r, 'profile').concat(photoCandidates(r, 'thumb'))
+);
 
   modalMeta.textContent = [
     r.phone ? `Phone: ${r.phone}` : '',
