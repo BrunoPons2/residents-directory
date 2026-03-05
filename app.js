@@ -16,11 +16,16 @@ let filtered = [];
 let currentSort = 'address';
 
 // Naive CSV parser (OK because your fields are comma-free)
-function csvToRows(csvText) {
-  const lines = csvText.split(/\r?\n/).filter(l => l.trim().length);
-  const headers = lines[0].split(',').map(h => h.trim());
+function csvToRows(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+
+  // Detect delimiter: TAB if present, else comma
+  const delim = lines[0].includes('\t') ? '\t' : ',';
+
+  const headers = lines[0].split(delim).map(h => h.trim());
+
   return lines.slice(1).map(line => {
-    const cols = line.split(',');
+    const cols = line.split(delim);
     const obj = {};
     headers.forEach((h, i) => (obj[h] = (cols[i] || '').trim()));
     return obj;
