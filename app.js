@@ -175,6 +175,21 @@ async function loadData() {
   const text = await res.text();
 
   residents = csvToRows(text);
+
+// Keep addendum (227–242) always at the bottom (never sorted)
+const mainResidents = residents.filter(r => Number(r.resident_id) <= 226);
+const addendumResidents = residents.filter(r => Number(r.resident_id) >= 227 && Number(r.resident_id) <= 242);
+
+// Apply the current sort to MAIN only (address sort won't do anything until address exists)
+if (currentSort === 'full_name') {
+  mainResidents.sort((a, b) =>
+    (a.full_name || '').localeCompare((b.full_name || ''), undefined, { sensitivity: 'base' })
+  );
+}
+
+residents = [...mainResidents, ...addendumResidents];
+filtered = residents.slice();
+  
   residents = applySortKeepingAddendum(residents);
   filtered = residents.slice();
 
