@@ -44,6 +44,20 @@ function addressSortKey(addressRaw) {
   return { street, num };
 }
 
+function getId(r) {
+  return Number(r.resident_id);
+}
+
+function getName(r) {
+  return (r.full_name || '').toString().trim();
+}
+
+function getAddress(r) {
+  // Your CSV uses "Address" with capital A
+  return (r.Address || '').toString().trim();
+}
+
+
 function splitMainAddendum(arr) {
   const main = [];
   const addendum = [];
