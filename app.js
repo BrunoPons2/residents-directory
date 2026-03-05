@@ -13,11 +13,11 @@ const emailBtn = document.getElementById('emailBtn');
 
 let residents = [];
 let filtered = [];
-let currentSort = 'address';
+let currentSort = 'default'; // DEFAULT on load = resident_id
 
-// Naive CSV parser (OK because your fields are comma-free)
 function csvToRows(text) {
   const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+  if (!lines.length) return [];
 
   // Detect delimiter: TAB if present, else comma
   const delim = lines[0].includes('\t') ? '\t' : ',';
@@ -36,90 +36,69 @@ function norm(s) {
   return (s || '').toString().trim().toLowerCase();
 }
 
-function addressSortKey(addressRaw) {
-  const a = norm(addressRaw);
-  const m = a.match(/\d+/);
-  const num = m ? parseInt(m[0], 10) : Number.MAX_SAFE_INTEGER;
-  const street = a.replace(/^\s*\d+\s*/, '').trim();
-  return { street, num };
-}
-
 function getId(r) {
-  return Number(r.resident_id);
+  const n = Number(String(r?.resident_id ?? '').trim());
+  return Number.isFinite(n) ? n : NaN;
 }
-
 function getName(r) {
-  return (r.full_name || '').toString().trim();
+  return (r?.full_name || '').toString().trim();
 }
-
 function getAddress(r) {
-  // Your CSV uses "Address" with capital A
-  return (r.Address || '').toString().trim();
+  // Your header uses capital A: Address
+  return (r?.Address || '').toString().trim();
 }
 
-
-function splitMainAddendum(arr) {
-  const main = [];
-  const addendum = [];
-
-  for (const r of arr) {
-    const id =
-      Number(r.resident_id) ||
-      Number(r.ResidentID) ||
-      Number(r.residentId) ||
-      0;
-
-    if (id >= 227 && id <= 242) {
-      addendum.push(r);
-    } else {
-      main.push(r);
-    }
-  }
-
-  return { main, addendum };
+function addressNumber(addressRaw) {
+  const m = String(addressRaw || '').match(/\d+/);
+  return m ? parseInt(m[0], 10) : Number.MAX_SAFE_INTEGER;
 }
 
-// ResidentID 1–226 sortable, 227–242 fixed addendum at bottom
+// Main: 1–226, Addendum: 227–242 pinned at bottom, never sorted
 function splitMainAddendum(arr) {
   const main = [];
   const addendum = [];
   for (const r of arr) {
-    const id = Number(r.resident_id);
-    if (id >= 227) addendum.push(r);
+    const id = getId(r);
+    if (Number.isFinite(id) && id >= 227 && id <= 242) addendum.push(r);
     else main.push(r);
   }
   return { main, addendum };
 }
 
-function applySortKeepingAddendum(arr) {
-
-  const { main, addendum } = splitMainAddendum(arr);
-
+function sortMain(mainArr) {
   if (currentSort === 'full_name') {
-
-    main.sort((a, b) =>
-      (a.full_name || '').localeCompare(b.full_name || '', undefined, { sensitivity: 'base' })
+    mainArr.sort((a, b) =>
+      getName(a).localeCompare(getName(b), undefined, { sensitivity: 'base' })
     );
-
-  } else {
-
-    main.sort((a, b) => {
-
-      const ax = addressSortKey(a.address);
-      const ay = addressSortKey(b.address);
-
-      if (ax.street < ay.street) return -1;
-      if (ax.street > ay.street) return 1;
-
-      return ax.num - ay.num;
-
-    });
-
+    return;
   }
 
-  return [...main, ...addendum];
+  if (currentSort === 'address') {
+    mainArr.sort((a, b) => {
+      const na = addressNumber(getAddress(a));
+      const nb = addressNumber(getAddress(b));
+      if (na !== nb) return na - nb;
+      // tie-breaker: name (keeps 2–4 people at same address stable)
+      return getName(a).localeCompare(getName(b), undefined, { sensitivity: 'base' });
+    });
+    return;
+  }
+
+  // default
+  mainArr.sort((a, b) => {
+    const ia = getId(a);
+    const ib = getId(b);
+    // keep non-numeric IDs at the bottom of the MAIN block (shouldn't happen, but safe)
+    if (!Number.isFinite(ia) && !Number.isFinite(ib)) return 0;
+    if (!Number.isFinite(ia)) return 1;
+    if (!Number.isFinite(ib)) return -1;
+    return ia - ib;
+  });
 }
 
+function applySortKeepingAddendum(arr) {
+  const { main, addendum } = splitMainAddendum(arr);
+  sortMain(main);
   return [...main, ...addendum];
 }
 
@@ -148,7 +127,7 @@ function render() {
 
     const name = document.createElement('div');
     name.className = 'name';
-    name.textContent = r.full_name || '(no name)';
+    name.textContent = getName(r) || '(no name)';
 
     const sub = document.createElement('div');
     sub.className = 'sub';
@@ -159,8 +138,8 @@ function render() {
 
     row.appendChild(name);
     row.appendChild(sub);
-    btn.appendChild(row);
 
+    btn.appendChild(row);
     li.appendChild(btn);
     frag.appendChild(li);
   }
@@ -169,13 +148,14 @@ function render() {
 }
 
 function openProfile(r) {
-  modalName.textContent = r.full_name || '';
+  modalName.textContent = getName(r) || '';
   modalPhoto.src = r.photo_profile || r.photo_thumb || '';
+
   modalMeta.textContent = [
     r.phone ? `Phone: ${r.phone}` : '',
     r.email ? `Email: ${r.email}` : '',
-    r.address ? `Address: ${r.address}` : '',
-    r.resident_id ? `ResidentID: ${r.resident_id}` : ''
+    getAddress(r) ? `Address: ${getAddress(r)}` : '',
+    Number.isFinite(getId(r)) ? `ResidentID: ${getId(r)}` : ''
   ].filter(Boolean).join(' • ');
 
   callBtn.href = r.phone ? `tel:${r.phone}` : '#';
@@ -189,34 +169,18 @@ if (closeBtn) closeBtn.addEventListener('click', () => modal.close());
 async function loadData() {
   if (statusEl) statusEl.textContent = 'Loading…';
 
-  // You already wanted no-store for the CSV (keep it)
+  // always fetch latest data
   const res = await fetch('data/residents.csv', { cache: 'no-store' });
   const text = await res.text();
 
   residents = csvToRows(text);
-
-// Keep addendum (227–242) always at the bottom (never sorted)
-const mainResidents = residents.filter(r => Number(r.resident_id) <= 226);
-const addendumResidents = residents.filter(r => Number(r.resident_id) >= 227 && Number(r.resident_id) <= 242);
-
-// Apply the current sort to MAIN only (address sort won't do anything until address exists)
-if (currentSort === 'full_name') {
-  mainResidents.sort((a, b) =>
-    (a.full_name || '').localeCompare((b.full_name || ''), undefined, { sensitivity: 'base' })
-  );
-}
-
-residents = [...mainResidents, ...addendumResidents];
-filtered = residents.slice();
-  
   residents = applySortKeepingAddendum(residents);
-  filtered = residents.slice();
 
+  filtered = residents.slice();
   if (statusEl) statusEl.textContent = `${residents.length} residents`;
   render();
 }
 
-// Search
 if (searchEl) {
   searchEl.addEventListener('input', () => {
     const q = norm(searchEl.value);
@@ -224,7 +188,10 @@ if (searchEl) {
       filtered = residents.slice();
     } else {
       const matches = residents.filter(r =>
-        norm(r.full_name).includes(q) || norm(r.address).includes(q) || norm(r.phone).includes(q) || norm(r.email).includes(q)
+        norm(getName(r)).includes(q) ||
+        norm(getAddress(r)).includes(q) ||
+        norm(r.phone).includes(q) ||
+        norm(r.email).includes(q)
       );
       filtered = applySortKeepingAddendum(matches);
     }
@@ -232,21 +199,30 @@ if (searchEl) {
   });
 }
 
-// Sort dropdown
 if (sortEl) {
   sortEl.value = currentSort;
   sortEl.addEventListener('change', () => {
-    currentSort = sortEl.value || 'address';
+    currentSort = sortEl.value || 'default';
+
     residents = applySortKeepingAddendum(residents);
-    // reapply current search
+
+    // Keep current search applied
     const q = norm(searchEl?.value);
-    if (!q) filtered = residents.slice();
-    else filtered = applySortKeepingAddendum(residents.filter(r => norm(r.full_name).includes(q) || norm(r.address).includes(q)));
+    if (!q) {
+      filtered = residents.slice();
+    } else {
+      const matches = residents.filter(r =>
+        norm(getName(r)).includes(q) ||
+        norm(getAddress(r)).includes(q) ||
+        norm(r.phone).includes(q) ||
+        norm(r.email).includes(q)
+      );
+      filtered = applySortKeepingAddendum(matches);
+    }
     render();
   });
 }
 
-// Service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
