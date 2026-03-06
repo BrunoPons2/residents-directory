@@ -6,7 +6,8 @@ const sortEl = document.getElementById('sort');
 const modal = document.getElementById('modal');
 const closeBtn = document.getElementById('closeBtn');
 const modalPhoto = document.getElementById('modalPhoto');
-const modalName = document.getElementById('modalName');
+const modalTitle = document.getElementById('modalTitle');
+const modalSub = document.getElementById('modalSub');
 const modalMeta = document.getElementById('modalMeta');
 const callBtn = document.getElementById('callBtn');
 const emailBtn = document.getElementById('emailBtn');
@@ -180,15 +181,15 @@ function render() {
 
     const name = document.createElement('div');
     name.className = 'name';
-    name.textContent = getName(r) || '(no name)';
-
+    name.textContent = `${getName(r) || '(no name)'}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
+    
     const sub = document.createElement('div');
     sub.className = 'sub';
     const bits = [];
     if (r.phone) bits.push(r.phone);
     if (r.email) bits.push(r.email);
     sub.textContent = bits.join(' • ');
-
+    
     row.appendChild(name);
     row.appendChild(sub);
 
@@ -201,18 +202,19 @@ function render() {
 }
 
 function openProfile(r) {
-  modalName.textContent = getName(r) || '';
-  setImageWithFallback(
-  modalPhoto,
-  photoCandidates(r, 'profile').concat(photoCandidates(r, 'thumb'))
-);
+  modalTitle.textContent = `${getName(r) || ''}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
 
-  modalMeta.textContent = [
-    r.phone ? `Phone: ${r.phone}` : '',
-    r.email ? `Email: ${r.email}` : '',
-    getAddress(r) ? `Address: ${getAddress(r)}` : '',
-    Number.isFinite(getId(r)) ? `ResidentID: ${getId(r)}` : ''
-  ].filter(Boolean).join(' • ');
+  setImageWithFallback(
+    modalPhoto,
+    photoCandidates(r, 'profile').concat(photoCandidates(r, 'thumb'))
+  );
+
+  const bits = [];
+  if (r.phone) bits.push(r.phone);
+  if (r.email) bits.push(r.email);
+  modalSub.textContent = bits.join(' • ');
+
+  if (modalMeta) modalMeta.textContent = '';
 
   callBtn.href = r.phone ? `tel:${r.phone}` : '#';
   emailBtn.href = r.email ? `mailto:${r.email}` : '#';
