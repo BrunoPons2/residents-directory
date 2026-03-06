@@ -1,4 +1,4 @@
-﻿resident_id,Address,full_name,phone,email,photo_thumb,photo_profile
+resident_id,Address,full_name,phone,email,photo_thumb,photo_profile
 1,1 Paradise Ave,Cheryl Hall,0412674792,cherylk.46@icloud.com,photos/thumb/1.jpg,photos/profile/1.jpg
 2,1 Paradise Ave,Colin Hall,0447290180,col44@icloud.com,photos/thumb/2.jpg,photos/profile/2.jpg
 3,2 Paradise Ave,,,,photos/thumb/3.jpg,photos/profile/3.jpg
@@ -137,12 +137,12 @@
 136,66 Bloom St,Joanne Gill,0407962710,joanneltgill@gmail.com,photos/thumb/136.jpg,photos/profile/136.jpg
 137,67 Bloom St,Robert Olsen,0411333441,robolsen@bigpond.com,photos/thumb/137.jpg,photos/profile/137.jpg
 138,67 Bloom St,Margaret Olsen,0413106090,megamyolsen@icloud.com,photos/thumb/138.jpg,photos/profile/138.jpg
-139,68 Bloom St,,,,photos/thumb/139.jpg,photos/profile/139.jpg
-140,68 Bloom St,,,,photos/thumb/140.jpg,photos/profile/140.jpg
+139,68 Bloom St,Gregory Komitas,0412554242,gkomitas@mail.com,photos/thumb/139.jpg,photos/profile/139.jpg
+140,68 Bloom St,Danielle McCarroll,0412628476,mccarrolld@mail.com,photos/thumb/140.jpg,photos/profile/140.jpg
 141,69 Bloom St,David Stone,0413681415,dja_stone@hotmail.com,photos/thumb/141.jpg,photos/profile/141.jpg
 142,69 Bloom St,Prue Stone,0421094583,prueystone@hotmail.co.uk,photos/thumb/142.jpg,photos/profile/142.jpg
-143,70 Bloom St,,,,photos/thumb/143.jpg,photos/profile/143.jpg
-144,70 Bloom St,,,,photos/thumb/144.jpg,photos/profile/144.jpg
+143,70 Bloom St,Walter Tink,042719038,wetink21@gmail.com,photos/thumb/143.jpg,photos/profile/143.jpg
+144,70 Bloom St,Mary Wood,0455045928,marywood45@icloud.com,photos/thumb/144.jpg,photos/profile/144.jpg
 145,71 Bloom St,Bill Cooper,0417821219,annabayclubcooper1@bigpond.com,photos/thumb/145.jpg,photos/profile/145.jpg
 146,71 Bloom St,Ruth Cooper,0417821219,annabayclubcooper1@bigpond.com,photos/thumb/146.jpg,photos/profile/146.jpg
 147,72 Bloom St,Jan Shields,0419616730,jan.shields94@gmail.com,photos/thumb/147.jpg,photos/profile/147.jpg
