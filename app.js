@@ -181,17 +181,9 @@ function render() {
 
     const name = document.createElement('div');
     name.className = 'name';
-    name.textContent = `${getName(r) || '(no name)'}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
-    
-    const sub = document.createElement('div');
-    sub.className = 'sub';
-    const bits = [];
-    if (r.phone) bits.push(r.phone);
-    if (r.email) bits.push(r.email);
-    sub.textContent = bits.join(' • ');
-    
+    name.textContent = `${getAddress(r) || ''}${getAddress(r) && getName(r) ? ' - ' : ''}${getName(r) || '(no name)'}`;
+
     row.appendChild(name);
-    row.appendChild(sub);
 
     btn.appendChild(row);
     li.appendChild(btn);
@@ -200,7 +192,6 @@ function render() {
 
   listEl.appendChild(frag);
 }
-
 function openProfile(r) {
   modalTitle.textContent = `${getName(r) || ''}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
 
