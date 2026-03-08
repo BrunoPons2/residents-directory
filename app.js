@@ -59,7 +59,7 @@ function slugifyName(name) {
     .replace(/^-+|-+$/g, '');
 }
 
-function photoCandidates(r, kind) {
+function (r, kind) {
 
   const folder = kind === 'profile'
     ? 'photos/profile/'
@@ -84,23 +84,36 @@ function photoCandidates(r, kind) {
 }
 
 function setImageWithFallback(img, candidates) {
+  const valid = (candidates || []).filter(Boolean);
 
+  img.onerror = null;
+
+  if (!valid.length) {
+    img.removeAttribute('src');
+    img.style.display = 'none';
+    return;
+  }
+
+  img.style.display = '';
   let i = 0;
 
   function tryNext() {
-    if (i >= candidates.length) return;
+    if (i >= valid.length) {
+      img.removeAttribute('src');
+      img.style.display = 'none';
+      return;
+    }
 
-    img.onerror = function() {
+    img.onerror = function () {
       i++;
       tryNext();
     };
 
-    img.src = candidates[i];
+    img.src = valid[i];
   }
 
   tryNext();
 }
-
 
 function addressNumber(addressRaw) {
   const m = String(addressRaw || '').match(/\d+/);
@@ -173,7 +186,7 @@ function render() {
     img.className = 'avatar';
     img.alt = '';
     img.loading = 'lazy';
-    setImageWithFallback(img, photoCandidates(r, 'thumb'));
+    setImageWithFallback(img, [r.photo_thumb]);
     btn.appendChild(img);
 
     const row = document.createElement('div');
@@ -196,8 +209,8 @@ function openProfile(r) {
   modalTitle.textContent = `${getName(r) || ''}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
 
   setImageWithFallback(
-    modalPhoto,
-    photoCandidates(r, 'profile').concat(photoCandidates(r, 'thumb'))
+  modalPhoto,
+  [r.photo_profile, r.photo_thumb]
   );
 
   const bits = [];
