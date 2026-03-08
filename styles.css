@@ -58,11 +58,30 @@
   min-height: auto;
 }
 
-/* Smaller popup width */
+/* Popup should hug its contents */
 .modal .modal-inner {
-  width: min(360px, 92vw);
+  width: fit-content;
   max-width: 92vw;
   padding: 12px;
+}
+
+/* Keep photo size consistent */
+.modal-photo {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+}
+
+/* Buttons fit neatly under photo */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modal-actions .btn {
+  flex: 1 1 0;
 }
 
 /* Move popup toward the left */
@@ -76,8 +95,13 @@ dialog.modal[open] {
 /* Keep it sensible on phones */
 @media (max-width: 600px) {
   .modal .modal-inner {
-    width: min(340px, 94vw);
+    width: fit-content;
+    max-width: 94vw;
     padding: 10px;
+  }
+
+  .modal-photo {
+    max-width: min(320px, 100%);
   }
 
   dialog.modal[open] {
