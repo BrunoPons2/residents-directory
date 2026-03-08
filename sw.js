@@ -20,9 +20,7 @@ self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
+        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
       )
     ).then(() => self.clients.claim())
   );
@@ -31,7 +29,6 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
 
-  // Never cache CSV data or resident photos while debugging
   if (
     url.pathname.includes('/data/residents.csv') ||
     url.pathname.includes('/photos/')
@@ -40,10 +37,7 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Cache-first for core app shell files only
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      return cached || fetch(e.request);
-    })
+    caches.match(e.request).then(cached => cached || fetch(e.request))
   );
 });
