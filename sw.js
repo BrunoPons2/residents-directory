@@ -1,5 +1,5 @@
 // Minimal service worker for offline caching (prototype)
-const CACHE_NAME = 'residents-pwa-v6';
+const CACHE_NAME = 'residents-pwa-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -9,22 +9,41 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)).then(()=>self.skipWaiting()));
+  e.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(c => c.addAll(ASSETS))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', (e) => {
-  e.waitUntil(self.clients.claim());
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      )
+    ).then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener('fetch', (e) => {
+  const url = new URL(e.request.url);
+
+  // Never cache CSV data or resident photos while debugging
+  if (
+    url.pathname.includes('/data/residents.csv') ||
+    url.pathname.includes('/photos/')
+  ) {
+    e.respondWith(fetch(e.request, { cache: 'no-store' }));
+    return;
+  }
+
+  // Cache-first for core app shell files only
   e.respondWith(
-    caches.match(e.request).then((cached) => cached || fetch(e.request).then((resp)=>{
-      // Cache new GET requests
-      if (e.request.method === 'GET') {
-        const copy = resp.clone();
-        caches.open(CACHE_NAME).then(c=>c.put(e.request, copy)).catch(()=>{});
-      }
-      return resp;
-    }).catch(()=>cached))
+    caches.match(e.request).then(cached => {
+      return cached || fetch(e.request);
+    })
   );
 });
