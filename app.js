@@ -83,6 +83,11 @@ function (r, kind) {
   return list;
 }
 
+function photoCandidates(r, kind) {
+  const fromCsv = kind === 'profile' ? r.photo_profile : r.photo_thumb;
+  return fromCsv ? [fromCsv] : [];
+}
+
 function setImageWithFallback(img, candidates) {
   const valid = (candidates || []).filter(Boolean);
 
@@ -209,8 +214,8 @@ function openProfile(r) {
   modalTitle.textContent = `${getName(r) || ''}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
 
   setImageWithFallback(
-  modalPhoto,
-  [r.photo_profile, r.photo_thumb]
+    modalPhoto,
+    [r.photo_profile, r.photo_thumb]
   );
 
   const bits = [];
