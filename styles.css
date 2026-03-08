@@ -11,7 +11,13 @@
 .sub{font-size:13px;color:#666}
 .row{display:flex;flex-direction:column;gap:2px;min-width:0}
 .card button{all:unset;cursor:pointer;display:flex;gap:12px;align-items:center;width:100%}
-.modal{border:none;border-radius:18px;padding:0;max-width:520px;width:92vw}
+.modal{
+  border:none;
+  border-radius:18px;
+  padding:0;
+  width: fit-content;
+  max-width: min(360px, 92vw);
+}
 .modal::backdrop{background:rgba(0,0,0,.45)}
 .modal-inner{padding:14px;position:relative}
 .icon-btn{position:absolute;right:10px;top:10px;border:none;background:#f2f2f2;border-radius:12px;padding:8px 10px;cursor:pointer}
@@ -100,6 +106,12 @@ dialog.modal[open] {
   padding: 10px;
 }
 
+  .modal .modal-inner {
+    width: fit-content;
+    max-width: min(320px, 94vw);
+    padding: 10px;
+  }
+  
   .modal-photo {
   display: block;
   width: 100%;
