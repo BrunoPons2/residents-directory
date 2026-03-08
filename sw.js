@@ -1,12 +1,11 @@
 // Minimal service worker for offline caching (prototype)
-const CACHE_NAME = 'residents-pwa-v5';
+const CACHE_NAME = 'residents-pwa-v6';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
   './app.js',
   './manifest.json',
-  './data/residents.csv'
 ];
 
 self.addEventListener('install', (e) => {
