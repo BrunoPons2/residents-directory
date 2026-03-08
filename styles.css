@@ -61,7 +61,7 @@
 /* Popup should hug its contents */
 .modal .modal-inner {
   width: fit-content;
-  max-width: 92vw;
+  max-width: min(340px, 92vw);
   padding: 12px;
 }
 
@@ -95,14 +95,17 @@ dialog.modal[open] {
 /* Keep it sensible on phones */
 @media (max-width: 600px) {
   .modal .modal-inner {
-    width: fit-content;
-    max-width: 94vw;
-    padding: 10px;
-  }
+  width: fit-content;
+  max-width: min(320px, 94vw);
+  padding: 10px;
+}
 
   .modal-photo {
-    max-width: min(320px, 100%);
-  }
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+}
 
   dialog.modal[open] {
     top: 8vh;
