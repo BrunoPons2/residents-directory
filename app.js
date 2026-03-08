@@ -59,30 +59,10 @@ function slugifyName(name) {
     .replace(/^-+|-+$/g, '');
 }
 
-function (r, kind) {
-
-  const folder = kind === 'profile'
-    ? 'photos/profile/'
-    : 'photos/thumb/';
-
-  const id = Number(r.resident_id);
-  const full = r.full_name || '';
-  const slug = slugifyName(full);
-
-  const fromCsv = kind === 'profile'
-    ? r.photo_profile
-    : r.photo_thumb;
-
-  const list = [];
-
-  if (fromCsv) list.push(fromCsv);                     // CSV path
-  if (Number.isFinite(id)) list.push(folder + id + '.jpg');      // 1.jpg
-  if (Number.isFinite(id)) list.push(folder + (id + 1000) + '.jpg'); // 1001.jpg
-  if (slug) list.push(folder + slug + '.jpg');         // cheryl-hall.jpg
-
-  return list;
+function photoCandidates(r, kind) {
+  const fromCsv = kind === 'profile' ? r.photo_profile : r.photo_thumb;
+  return fromCsv ? [fromCsv] : [];
 }
-
 function photoCandidates(r, kind) {
   const fromCsv = kind === 'profile' ? r.photo_profile : r.photo_thumb;
   return fromCsv ? [fromCsv] : [];
