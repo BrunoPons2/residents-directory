@@ -203,7 +203,7 @@ function openProfile(r) {
   if (r.email) bits.push(r.email);
   modalSub.textContent = bits.join(' • ');
 
-  if (modalMeta) modalMeta.textContent = '';
+  if (modalMeta) modalMeta.style.display = 'none';
 
   callBtn.href = r.phone ? `tel:${r.phone}` : '#';
   emailBtn.href = r.email ? `mailto:${r.email}` : '#';
