@@ -65,14 +65,16 @@
   display:flex;
   gap:10px;
   margin-top:10px;
+  justify-content:flex-start;
 }
 
 .btn{
   display:inline-flex;
   justify-content:center;
   align-items:center;
-  flex:1;
-  padding:12px;
+  flex:0 0 auto;
+  min-width:110px;
+  padding:10px 16px;
   border-radius:14px;
   border:1px solid #ddd;
   text-decoration:none;
@@ -117,10 +119,11 @@
 
 /* Smaller action buttons */
 .modal-actions .btn {
-  padding: 6px 10px;
+  padding: 8px 14px;
   font-size: 0.9em;
   line-height: 1.1;
   min-height: auto;
+  min-width: 110px;
 }
 
 /* Desktop - Move popup toward the left */
