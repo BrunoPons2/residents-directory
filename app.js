@@ -63,10 +63,6 @@ function photoCandidates(r, kind) {
   const fromCsv = kind === 'profile' ? r.photo_profile : r.photo_thumb;
   return fromCsv ? [fromCsv] : [];
 }
-function photoCandidates(r, kind) {
-  const fromCsv = kind === 'profile' ? r.photo_profile : r.photo_thumb;
-  return fromCsv ? [fromCsv] : [];
-}
 
 function setImageWithFallback(img, candidates) {
   const valid = (candidates || []).filter(Boolean);
