@@ -15,18 +15,77 @@
   border:none;
   border-radius:18px;
   padding:0;
-  width: fit-content;
-  max-width: min(360px, 92vw);
+  width:auto;
+  max-width:fit-content;
+  background:transparent;
 }
-.modal::backdrop{background:rgba(0,0,0,.45)}
-.modal-inner{padding:14px;position:relative}
-.icon-btn{position:absolute;right:10px;top:10px;border:none;background:#f2f2f2;border-radius:12px;padding:8px 10px;cursor:pointer}
-.modal-photo{width:100%;max-height:55vh;object-fit:contain;border-radius:16px;background:#f6f6f6}
-.modal-name{margin-top:10px;font-size:20px;font-weight:750}
-.modal-actions{display:flex;gap:10px;margin-top:10px}
-.btn{display:inline-flex;justify-content:center;align-items:center;flex:1;padding:12px;border-radius:14px;border:1px solid #ddd;text-decoration:none;color:#111;font-weight:650}
-.modal-meta{margin-top:10px;font-size:13px;color:#666;word-break:break-word}
 
+.modal::backdrop{
+  background:rgba(0,0,0,.45);
+}
+
+.modal-inner{
+  padding:10px;
+  position:relative;
+  width:auto;
+  max-width:min(320px, 92vw);
+  background:#fff;
+  border-radius:18px;
+}
+
+.icon-btn{
+  position:absolute;
+  right:10px;
+  top:10px;
+  border:none;
+  background:#f2f2f2;
+  border-radius:12px;
+  padding:8px 10px;
+  cursor:pointer;
+}
+
+.modal-photo{
+  display:block;
+  width:100%;
+  max-width:300px;
+  height:auto;
+  max-height:55vh;
+  object-fit:contain;
+  border-radius:16px;
+  background:#f6f6f6;
+}
+
+.modal-name{
+  margin-top:10px;
+  font-size:20px;
+  font-weight:750;
+}
+
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.btn{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  flex:1;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  text-decoration:none;
+  color:#111;
+  font-weight:650;
+}
+
+.modal-meta{
+  margin-top:10px;
+  font-size:13px;
+  color:#666;
+  word-break:break-word;
+}
 /* Cards: top line bold, bottom line smaller */
 .name {
   font-weight: 700;
@@ -64,38 +123,13 @@
   min-height: auto;
 }
 
-/* Popup should hug its contents */
-.modal .modal-inner {
-  width: fit-content;
-  max-width: min(340px, 92vw);
-  padding: 12px;
-}
-
-/* Keep photo size consistent */
-.modal-photo {
-  display: block;
-  width: 100%;
-  max-width: 340px;
-  height: auto;
-}
-
-/* Buttons fit neatly under photo */
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.modal-actions .btn {
-  flex: 1 1 0;
-}
-
-/* Move popup toward the left */
+/* Desktop - Move popup toward the left */
 dialog.modal[open] {
   margin: 0;
   position: fixed;
   top: 10vh;
   left: 12px;
+  width: auto;
 }
 
 /* Keep it sensible on phones */
