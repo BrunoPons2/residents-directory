@@ -149,6 +149,7 @@ function render() {
   const frag = document.createDocumentFragment();
 
   for (const r of filtered) {
+    const name = (r.full
     if (!getName(r)) continue;
     
     const li = document.createElement('li');
