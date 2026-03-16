@@ -15,6 +15,7 @@ const emailBtn = document.getElementById('emailBtn');
 let residents = [];
 let filtered = [];
 let currentSort = 'address';
+let searchTimer;
 
 function csvToRows(text) {
   const lines = text.split(/\r?\n/).filter(line => line.trim().length);
@@ -245,10 +246,14 @@ async function loadData() {
 
   if (statusEl) statusEl.textContent = `${residents.length} residents`;
   render();
+  if (searchEl) searchEl.focus();
 }
 
 if (searchEl) {
   searchEl.addEventListener('input', () => {
+
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
     const q = norm(searchEl.value);
 
     if (!q) {
@@ -289,6 +294,7 @@ if (sortEl) {
     }
 
     render();
+    }, 150);
   });
 }
 
