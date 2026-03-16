@@ -226,7 +226,9 @@ async function loadData() {
   const res = await fetch('data/residents.csv', { cache: 'no-store' });
   const text = await res.text();
 
-  residents = csvToRows(text);
+  residents = csvToRows(text)
+  .filter(r => (r.full_name || '').trim() !== '');
+
   residents = applySortKeepingAddendum(residents);
   filtered = residents.slice();
 
