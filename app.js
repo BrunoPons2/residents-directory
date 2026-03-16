@@ -246,7 +246,8 @@ async function loadData() {
 
   if (statusEl) statusEl.textContent = `${residents.length} residents`;
   render();
-  if (searchEl) searchEl.focus();
+  if (searchEconst isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if (searchEl && !isTouch) searchEl.focus();l) searchEl.focus();
 }
 
 if (searchEl) {
