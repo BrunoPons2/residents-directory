@@ -116,14 +116,13 @@ function sortMain(mainArr) {
   }
 
   if (currentSort === 'address') {
-    mainArr.sort((a, b) => {
-      const na = addressNumber(getAddress(a));
-      const nb = addressNumber(getAddress(b));
-      if (na !== nb) return na - nb;
-      return getName(a).localeCompare(getName(b), undefined, { sensitivity: 'base' });
-    });
-    return;
-  }
+  mainArr.sort((a, b) => {
+    const na = addressNumber(getAddress(a));
+    const nb = addressNumber(getAddress(b));
+    return na - nb;
+  });
+  return;
+}
 
   mainArr.sort((a, b) => {
     const ia = getId(a);
