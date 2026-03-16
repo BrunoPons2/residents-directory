@@ -149,6 +149,8 @@ function render() {
   const frag = document.createDocumentFragment();
 
   for (const r of filtered) {
+    if (!getName(r)) continue;
+    
     const li = document.createElement('li');
     li.className = 'card';
 
