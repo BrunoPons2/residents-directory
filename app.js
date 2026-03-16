@@ -14,7 +14,7 @@ const emailBtn = document.getElementById('emailBtn');
 
 let residents = [];
 let filtered = [];
-let currentSort = 'default';
+let currentSort = 'address';
 
 function csvToRows(text) {
   const lines = text.split(/\r?\n/).filter(line => line.trim().length);
