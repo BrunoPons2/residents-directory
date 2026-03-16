@@ -149,9 +149,11 @@ function render() {
   const frag = document.createDocumentFragment();
 
   for (const r of filtered) {
-    const name = (r.full
-    if (!getName(r)) continue;
-    
+
+    // Skip empty residents
+    const residentName = (r.full_name || '').trim();
+    if (residentName === '') continue;
+
     const li = document.createElement('li');
     li.className = 'card';
 
@@ -171,7 +173,8 @@ function render() {
 
     const name = document.createElement('div');
     name.className = 'name';
-    name.textContent = `${getName(r) || '(no name)'}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
+    name.textContent =
+      `${getName(r)}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
 
     const sub = document.createElement('div');
     sub.className = 'sub';
