@@ -29,14 +29,29 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
 
-  if (
-    url.pathname.includes('/data/residents.csv') ||
-    url.pathname.includes('/photos/')
-  ) {
-    e.respondWith(fetch(e.request, { cache: 'no-store' }));
+  if (url.pathname.includes('/data/residents.csv')) {
+
+    e.respondWith(
+      fetch(e.request, { cache: 'no-store' })
+        .catch(() => caches.match(e.request))
+    );
+
     return;
   }
 
+  if (url.pathname.includes('/photos/')) {
+    e.respondWith(
+      caches.open('photo-cache').then(cache =>
+        cache.match(e.request).then(resp => {
+          return resp || fetch(e.request).then(networkResp => {
+            cache.put(e.request, networkResp.clone());
+            return networkResp;
+          });
+        })
+      )
+    );
+  }
+});
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
