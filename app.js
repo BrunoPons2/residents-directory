@@ -155,6 +155,9 @@ function render() {
 
   for (const r of validResidents) {
 
+    const residentName = (r.full_name || r.fullname || r.name || '').trim();
+    if (!residentName) continue;
+
     const li = document.createElement('li');
     li.className = 'card';
 
@@ -175,7 +178,7 @@ function render() {
     const name = document.createElement('div');
     name.className = 'name';
     name.textContent =
-      `${getName(r)}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
+      `${residentName}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
 
     const sub = document.createElement('div');
     sub.className = 'sub';
@@ -232,12 +235,11 @@ async function loadData() {
   const text = await res.text();
 
   residents = csvToRows(text).filter(r => {
-  const name = (r.full_name || '').trim();
-  const phone = (r.phone || '').trim();
-  const email = (r.email || '').trim();
-  return name !== '' || phone !== '' || email !== '';
-});
-  .filter(r => (r.full_name || '').trim() !== '');
+    const name = (r.full_name || '').trim();
+    const phone = (r.phone || '').trim();
+    const email = (r.email || '').trim();
+    return name !== '' || phone !== '' || email !== '';
+  });
 
   residents = applySortKeepingAddendum(residents);
   filtered = residents.slice();
