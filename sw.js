@@ -29,15 +29,14 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
 
-  if (url.pathname.includes('/data/residents.csv')) {
-
-    e.respondWith(
-      fetch(e.request, { cache: 'no-store' })
-        .catch(() => caches.match(e.request))
-    );
-
+  if (
+    url.pathname.includes('/data/residents.csv') ||
+    url.pathname.includes('/photos/')
+  ) {
+    e.respondWith(fetch(e.request, { cache: 'no-store' }));
     return;
   }
+});
 
   if (url.pathname.includes('/photos/')) {
     e.respondWith(
