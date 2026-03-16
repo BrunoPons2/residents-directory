@@ -148,11 +148,12 @@ function render() {
   listEl.innerHTML = '';
   const frag = document.createDocumentFragment();
 
-  for (const r of filtered) {
+  const validResidents = filtered.filter(r => {
+    const name = (r.full_name || '').trim();
+    return name !== '';
+  });
 
-    // Skip empty residents
-    const residentName = (r.full_name || '').trim();
-    if (residentName === '') continue;
+  for (const r of validResidents) {
 
     const li = document.createElement('li');
     li.className = 'card';
