@@ -117,13 +117,13 @@ function sortMain(mainArr) {
   }
 
   if (currentSort === 'address') {
-  mainArr.sort((a, b) => {
-    const na = addressNumber(getAddress(a));
-    const nb = addressNumber(getAddress(b));
-    return na - nb;
-  });
-  return;
-}
+    mainArr.sort((a, b) => {
+      const na = addressNumber(getAddress(a));
+      const nb = addressNumber(getAddress(b));
+      return na - nb;
+    });
+    return;
+  }
 
   mainArr.sort((a, b) => {
     const ia = getId(a);
@@ -154,7 +154,6 @@ function render() {
   });
 
   for (const r of validResidents) {
-
     const residentName = (r.full_name || r.fullname || r.name || '').trim();
     if (!residentName) continue;
 
@@ -177,8 +176,7 @@ function render() {
 
     const name = document.createElement('div');
     name.className = 'name';
-    name.textContent =
-      `${residentName}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
+    name.textContent = `${residentName}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
 
     const sub = document.createElement('div');
     sub.className = 'sub';
@@ -250,24 +248,24 @@ async function loadData() {
 
 if (searchEl) {
   searchEl.addEventListener('input', () => {
-
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
-    const q = norm(searchEl.value);
+      const q = norm(searchEl.value);
 
-    if (!q) {
-      filtered = residents.slice();
-    } else {
-      const matches = residents.filter(r =>
-        norm(getName(r)).includes(q) ||
-        norm(getAddress(r)).includes(q) ||
-        norm(r.phone).includes(q) ||
-        norm(r.email).includes(q)
-      );
-      filtered = applySortKeepingAddendum(matches);
-    }
+      if (!q) {
+        filtered = residents.slice();
+      } else {
+        const matches = residents.filter(r =>
+          norm(getName(r)).includes(q) ||
+          norm(getAddress(r)).includes(q) ||
+          norm(r.phone).includes(q) ||
+          norm(r.email).includes(q)
+        );
+        filtered = applySortKeepingAddendum(matches);
+      }
 
-    render();
+      render();
+    }, 150);
   });
 }
 
@@ -293,7 +291,6 @@ if (sortEl) {
     }
 
     render();
-    }, 150);
   });
 }
 
