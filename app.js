@@ -48,7 +48,7 @@ function getName(r) {
 }
 
 function getAddress(r) {
-  return (r?.address || '').toString().trim();
+  return (r?.Address || r?.address || '').toString().trim();
 }
 
 function addressNumber(addressRaw) {
