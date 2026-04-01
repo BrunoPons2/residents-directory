@@ -176,7 +176,7 @@ function render() {
 
     const name = document.createElement('div');
     name.className = 'name';
-    name.textContent = `${residentName}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
+    name.textContent = `${getAddress(r) ? getAddress(r) + ' — ' : ''}${residentName}`;
 
     const sub = document.createElement('div');
     sub.className = 'sub';
@@ -197,7 +197,7 @@ function render() {
 }
 
 function openProfile(r) {
-  modalTitle.textContent = `${getName(r) || ''}${getAddress(r) ? ' — ' + getAddress(r) : ''}`;
+  modalTitle.textContent = `${getAddress(r) ? getAddress(r) + ' — ' : ''}${getName(r) || ''}`;
 
   setImageWithFallback(
     modalPhoto,
