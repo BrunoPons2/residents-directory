@@ -9,6 +9,7 @@ const modalPhoto = document.getElementById('modalPhoto');
 const modalTitle = document.getElementById('modalTitle');
 const modalSub = document.getElementById('modalSub');
 const modalMeta = document.getElementById('modalMeta');
+const textBtn = document.getElementById('textBtn');
 const callBtn = document.getElementById('callBtn');
 const emailBtn = document.getElementById('emailBtn');
 
@@ -214,6 +215,7 @@ function openProfile(r) {
     modalMeta.style.display = 'none';
   }
 
+  textBtn.href = r.phone ? `sms:${r.phone}` : '#';
   callBtn.href = r.phone ? `tel:${r.phone}` : '#';
   emailBtn.href = r.email ? `mailto:${r.email}` : '#';
 
