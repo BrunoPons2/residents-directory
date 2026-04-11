@@ -118,7 +118,7 @@
 }
 
 /* Smaller action buttons */
-.modal-actions .btn {
+. .btn {
   padding: 8px 14px;
   font-size: 0.9em;
   line-height: 1.1;
@@ -159,4 +159,21 @@ dialog.modal[open] {
     padding: 5px 8px;
     font-size: 0.85em;
   }
+  .modal-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.modal-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 0;
+  padding: 6px 10px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
 }
