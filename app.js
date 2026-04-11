@@ -9,7 +9,7 @@ const modalPhoto = document.getElementById('modalPhoto');
 const modalTitle = document.getElementById('modalTitle');
 const modalSub = document.getElementById('modalSub');
 const modalMeta = document.getElementById('modalMeta');
-const modalInner = document.querySelector('.modal-inner');
+
 const textBtn = document.getElementById('textBtn');
 const callBtn = document.getElementById('callBtn');
 const emailBtn = document.getElementById('emailBtn');
@@ -46,7 +46,7 @@ function getId(r) {
 }
 
 function getName(r) {
-  return (r?.full_name || '').toString().trim();
+  return (r?.full_name || r?.fullname || r?.name || '').toString().trim();
 }
 
 function getAddress(r) {
@@ -150,13 +150,10 @@ function render() {
   listEl.innerHTML = '';
   const frag = document.createDocumentFragment();
 
-  const validResidents = filtered.filter(r => {
-    const name = (r.full_name || '').trim();
-    return name !== '';
-  });
+  const validResidents = filtered.filter(r => getName(r) !== '');
 
   for (const r of validResidents) {
-    const residentName = (r.full_name || r.fullname || r.name || '').trim();
+    const residentName = getName(r);
     if (!residentName) continue;
 
     const li = document.createElement('li');
@@ -199,7 +196,7 @@ function render() {
 }
 
 function openProfile(r) {
-  modalTitle.textContent = `${getAddress(r) ? getAddress(r) + ' — ' : ''}${getName(r) || ''}`;
+  modalTitle.textContent = `${getAddress(r) ? getAddress(r) + ' — ' : ''}${getName(r)}`;
 
   setImageWithFallback(
     modalPhoto,
@@ -216,24 +213,39 @@ function openProfile(r) {
     modalMeta.style.display = 'none';
   }
 
-  textBtn.href = r.phone ? `sms:${r.phone}` : '#';
-  callBtn.href = r.phone ? `tel:${r.phone}` : '#';
-  emailBtn.href = r.email ? `mailto:${r.email}` : '#';
+  if (textBtn) {
+    textBtn.href = r.phone ? `sms:${r.phone}` : '#';
+    textBtn.style.display = r.phone ? '' : 'none';
+  }
 
-  if (typeof modal.showModal === 'function') {
+  if (callBtn) {
+    callBtn.href = r.phone ? `tel:${r.phone}` : '#';
+    callBtn.style.display = r.phone ? '' : 'none';
+  }
+
+  if (emailBtn) {
+    emailBtn.href = r.email ? `mailto:${r.email}` : '#';
+    emailBtn.style.display = r.email ? '' : 'none';
+  }
+
+  if (modal && typeof modal.showModal === 'function') {
     modal.showModal();
   }
 }
 
-if (closeBtn) {
+if (closeBtn && modal) {
   closeBtn.addEventListener('click', () => modal.close());
 }
 
-if (modal && modalInner) {
+if (modal) {
   modal.addEventListener('click', (e) => {
-    if (!modalInner.contains(e.target)) {
+    if (e.target === modal) {
       modal.close();
     }
+  });
+
+  modal.addEventListener('cancel', () => {
+    modal.close();
   });
 }
 
@@ -244,7 +256,7 @@ async function loadData() {
   const text = await res.text();
 
   residents = csvToRows(text).filter(r => {
-    const name = (r.full_name || '').trim();
+    const name = getName(r);
     const phone = (r.phone || '').trim();
     const email = (r.email || '').trim();
     return name !== '' || phone !== '' || email !== '';
@@ -257,26 +269,28 @@ async function loadData() {
   render();
 }
 
+function applySearchAndRender() {
+  const q = norm(searchEl?.value);
+
+  if (!q) {
+    filtered = residents.slice();
+  } else {
+    const matches = residents.filter(r =>
+      norm(getName(r)).includes(q) ||
+      norm(getAddress(r)).includes(q) ||
+      norm(r.phone).includes(q) ||
+      norm(r.email).includes(q)
+    );
+    filtered = applySortKeepingAddendum(matches);
+  }
+
+  render();
+}
+
 if (searchEl) {
   searchEl.addEventListener('input', () => {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => {
-      const q = norm(searchEl.value);
-
-      if (!q) {
-        filtered = residents.slice();
-      } else {
-        const matches = residents.filter(r =>
-          norm(getName(r)).includes(q) ||
-          norm(getAddress(r)).includes(q) ||
-          norm(r.phone).includes(q) ||
-          norm(r.email).includes(q)
-        );
-        filtered = applySortKeepingAddendum(matches);
-      }
-
-      render();
-    }, 150);
+    searchTimer = setTimeout(applySearchAndRender, 150);
   });
 }
 
@@ -286,22 +300,7 @@ if (sortEl) {
   sortEl.addEventListener('change', () => {
     currentSort = sortEl.value || 'default';
     residents = applySortKeepingAddendum(residents);
-
-    const q = norm(searchEl?.value);
-
-    if (!q) {
-      filtered = residents.slice();
-    } else {
-      const matches = residents.filter(r =>
-        norm(getName(r)).includes(q) ||
-        norm(getAddress(r)).includes(q) ||
-        norm(r.phone).includes(q) ||
-        norm(r.email).includes(q)
-      );
-      filtered = applySortKeepingAddendum(matches);
-    }
-
-    render();
+    applySearchAndRender();
   });
 }
 
