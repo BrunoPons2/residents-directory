@@ -9,6 +9,7 @@ const modalPhoto = document.getElementById('modalPhoto');
 const modalTitle = document.getElementById('modalTitle');
 const modalSub = document.getElementById('modalSub');
 const modalMeta = document.getElementById('modalMeta');
+const modalInner = document.querySelector('.modal-inner');
 const textBtn = document.getElementById('textBtn');
 const callBtn = document.getElementById('callBtn');
 const emailBtn = document.getElementById('emailBtn');
@@ -226,6 +227,14 @@ function openProfile(r) {
 
 if (closeBtn) {
   closeBtn.addEventListener('click', () => modal.close());
+}
+
+if (modal && modalInner) {
+  modal.addEventListener('click', (e) => {
+    if (!modalInner.contains(e.target)) {
+      modal.close();
+    }
+  });
 }
 
 async function loadData() {
