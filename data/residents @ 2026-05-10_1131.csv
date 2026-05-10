@@ -1,0 +1,244 @@
+﻿resident_id,address,full_name,phone,email,photo_thumb,photo_profile
+ResidentID,Address,Full Name,Mobile No,Email Address,,
+1,1 Paradise Ave,Cheryl Hall,412674792,cherylk.46@icloud.com,photos/thumb/cheryl-hall.jpg,photos/profile/cheryl-hall.jpg
+2,1 Paradise Ave,Colin Hall,447290180,col44@icloud.com,photos/thumb/colin-hall.jpg,photos/profile/colin-hall.jpg
+3,2 Paradise Ave,,,,,
+4,2 Paradise Ave,,,,,
+5,3 Paradise Ave,,,,,
+6,3 Paradise Ave,,,,,
+7,4 Paradise Ave,,,,,
+8,4 Paradise Ave,,,,,
+9,5 Paradise Ave,,,,,
+10,5 Paradise Ave,,,,,
+11,6 Paradise Ave,,,,,
+12,6 Paradise Ave,,,,,
+13,7 Paradise Ave,,,,,
+14,7 Paradise Ave,,,,,
+15,8 Paradise Ave,,,,,
+16,8 Paradise Ave,,,,,
+17,9 Paradise Ave,,,,,
+18,9 Paradise Ave,,,,,
+19,10 Paradise Ave,,,,,
+20,10 Paradise Ave,,,,,
+21,11 Paradise Ave,,,,,
+22,11 Paradise Ave,,,,,
+23,12 Jubilee St,,,,,
+24,12 Jubilee St,,,,,
+25,13 Jubilee St,,,,,
+26,13 Jubilee St,,,,,
+27,14 Jubilee St,,,,,
+28,14 Jubilee St,,,,,
+29,15 Jubilee St,Jean Richardson,410526048,jeanrich1066@gmail.com,photos/thumb/jean-richardson.jpg,photos/profile/jean-richardson.jpg
+30,15 Jubilee St,,,,,
+31,16 Jubilee St,Noel Charnock,417682752,noelcharnock@hotmail.com,photos/thumb/noel-charnock.jpg,photos/profile/noel-charnock.jpg
+32,16 Jubilee St,Angela Smart,409715198,angelagsmart@hotmail.com,photos/thumb/angela-smart.jpg,photos/profile/angela-smart.jpg
+33,17 Jubilee St,Sigrid Hurl,407720468,dresdend39@proton.me,,
+34,17 Jubilee St,ICE: Kristy Sneddon (niece),409392178,,,
+35,18 Jubilee St,Rob Hunter,417160001,kevin.hunter2@bigpond.com,,
+36,18 Jubilee St,Cecily Hunter,407780008,popma51@gmail.com,photos/thumb/cecily-hunter.jpg,photos/profile/cecily-hunter.jpg
+37,19 Jubilee St,Rod Harris,478607957,rharris54@hotmail.com,photos/thumb/rod-harris.jpg,photos/profile/rod-harris.jpg
+38,19 Jubilee St,Vicki Harris,402857606,vharris55@hotmail.com,photos/thumb/vicki-harris.jpg,photos/profile/vicki-harris.jpg
+39,20 Jubilee St,Greg Blackmore,459177080,gregblackmore49@gmail.com,photos/thumb/greg-blackmore.jpg,photos/profile/greg-blackmore.jpg
+40,20 Jubilee St,Kath Blackmore,417220898,kjblackmore51@gmail.com,photos/thumb/kath-blackmore.jpg,photos/profile/kath-blackmore.jpg
+41,21 Jubilee St,Philip Plimmer,408571953,philplim@optusnet.com.au,photos/thumb/philip-plimmer.jpg,photos/profile/philip-plimmer.jpg
+42,21 Jubilee St,Julie Plimmer,419200098,julie.plimmer@hotmail.com,photos/thumb/julie-plimmer.jpg,photos/profile/julie-plimmer.jpg
+43,22 Jubilee St,Brigitte Thiebes,434277516,brigittethiebes@gmail.com,photos/thumb/brigitte-thiebes.jpg,photos/profile/brigitte-thiebes.jpg
+44,22 Jubilee St,,,,,
+45,23 Jubilee St,Peter Melhuish,411700230,pmelhuish@iinet.net.au,,
+46,23 Jubilee St,,,,,
+47,24 Heirloom Drv,Chris Noble,418645101,cnoble@tpg.com.au,,
+48,24 Heirloom Drv,,,,,
+49,25 Heirloom Drv,David Underwood,,davidunderwood42@hotmail.com,,
+50,25 Heirloom Drv,Jeanette Underwood,409920134,tish1957@hotmail.com,,
+51,26 Heirloom Drv,Robyn Spencer,417240268,robyneandneilw@bigpond.com,photos/thumb/robyn-spencer.jpg,photos/profile/robyn-spencer.jpg
+52,26 Heirloom Drv,,,,,
+53,27 Heirloom Drv,Joy Jeffrey,421313919,joyjeffrey13@gmail.com,photos/thumb/joy-jeffrey.jpg,photos/profile/joy-jeffrey.jpg
+54,27 Heirloom Drv,,,,,
+55,28 Heirloom Drv,John Sommerville,400390855,,,
+56,28 Heirloom Drv,Margaret Sommerville,402415967,mjsommerville@bigpond.com,,
+57,29 Heirloom Drv,Anne Crick,417403034,anneswaterfront@bigpond.com,,
+58,29 Heirloom Drv,,,,,
+59,30 Heirloom Drv,Debra Holmes,419240974,debbieholmes@outlook.com.au,photos/thumb/debra-holmes.jpg,photos/profile/debra-holmes.jpg
+60,30 Heirloom Drv,,,,,
+61,31 Heirloom Drv,Sue Smallwood,407688711,snoozeeight@gmail.com,photos/thumb/sue-smallwood.jpg,photos/profile/sue-smallwood.jpg
+62,31 Heirloom Drv,,,,,
+63,32 Heirloom Drv,David Lewis,404540276,j3d1lewis@outlook.com,photos/thumb/david-lewis.jpg,photos/profile/david-lewis.jpg
+64,32 Heirloom Drv,Jean Lewis,406078574,j3d1lewis@outlook.com,photos/thumb/jean-lewis.jpg,photos/profile/jean-lewis.jpg
+65,33 Heirloom Drv,Hans Gotfredsen,450357105,hgotfredsen@hotmail.com,photos/thumb/hans-gotfredsen.jpg,photos/profile/hans-gotfredsen.jpg
+66,33 Heirloom Drv,Carol Gotfredsen,414631024,hgotfredsen@hotmail.com,photos/thumb/carol-gotfredsen.jpg,photos/profile/carol-gotfredsen.jpg
+67,34 Heirloom Drv,Gordon Roberts,418222135,gorwill@ozemail.com.au,photos/thumb/gordon-roberts.jpg,photos/profile/gordon-roberts.jpg
+68,34 Heirloom Drv,Judy Roberts,414477007,judy12@ozemail.com.au,photos/thumb/judy-roberts.jpg,photos/profile/judy-roberts.jpg
+69,35 Autumn Ave,Bruno Pons,422906105,bpons@tpg.com.au,photos/thumb/bruno-pons.jpg,photos/profile/bruno-pons.jpg
+70,35 Autumn Ave,ICE: Rachel Pons,422258322,rach.pons@gmail.com,,
+71,35 Autumn Ave,Trish Larter,410889295,patricia.larter@outlook.com,photos/thumb/trish-larter.jpg,photos/profile/trish-larter.jpg
+72,35 Autumn Ave,ICE: Steve Larter,487355008,,,
+73,36 Autumn Ave,Phillip Bird,,phillip.bird@bigpond.com,,
+74,36 Autumn Ave,Di Bird,,,,
+75,37 Autumn Ave,Mark Sutherland,402774748,fleet7@bigpond.net.au,,
+76,37 Autumn Ave,Ruth Sutherland,411245225,ruth.sutherland1@gmail.com,,
+77,38 Autumn Ave,Michael Blechynden,407270254,michael.blechynden@outlook.com,,
+78,38 Autumn Ave,Karan Blechynden,418403378,karan.ivsic58@outlook.com,,
+79,39 Autumn Ave,Rob Wallace,418453900,randrwallace@bigpond.com,,
+80,39 Autumn Ave,Ruth Wallace,409819508,susanwallace2@bigpond.com,,
+81,40 Autumn Ave,Phil Johns,408269484,airnautic@mail.com,photos/thumb/phil-johns.jpg,photos/profile/phil-johns.jpg
+82,40 Autumn Ave,Pat Johns,459859585,pajojo48@gmail.com,photos/thumb/pat-johns.jpg,photos/profile/pat-johns.jpg
+83,41 Autumn Ave,Heather Taylor,403210470,taylorbh12@gmail.com,,
+84,41 Autumn Ave,,,,,
+85,42 Autumn Ave,Steve Ryan,419999030,twoscompany@bigpond.com,photos/thumb/steve-ryan.jpg,photos/profile/steve-ryan.jpg
+86,42 Autumn Ave,Kay Ryan,419645587,,photos/thumb/kay-ryan.jpg,photos/profile/kay-ryan.jpg
+87,43 Autumn Ave,Pauline Bliim,477668817,paulinebliim@gmail.com,photos/thumb/pauline-bliim.jpg,photos/profile/pauline-bliim.jpg
+88,43 Autumn Ave,,,,,
+89,44 Autumn Ave,Prue Pryor,,pruepinitaly@hotmail.com,,
+90,44 Autumn Ave,Lisa Pryor,,lisa.pryor@bigpond.com,,
+91,45 Autumn Ave,Gayle Wilson,428755351,oconnor.ferries@bigpond.com,,
+92,45 Autumn Ave,George Cernechez,403755352,,,
+93,46 Autumn Ave,Sales Office,,,,
+94,46 Autumn Ave,,,,,
+95,47 Autumn Ave,Raewyn Graham,433533189,chookyrooster2@icloud.com,,
+96,47 Autumn Ave,Jaynette Coleman,412606675,nameloc8@icloud.com,,
+97,48 Autumn Ave,Mike Dunn,431055880,gourmetgreynomads1@bigpond.com,,
+98,48 Autumn Ave,Di Dunn,402042999,,,
+99,49 Autumn Ave,Ann Peel,411718392,ann_peel@hotmail.com,,
+100,49 Autumn Ave,,,,,
+101,50 Autumn Ave,John Barnes,409989842,johnbarnes20011@bigpond.com,,
+102,50 Autumn Ave,Christine Higgerson,418426232,christinehiggerson@hotmail.com,,
+103,51 Autumn Ave,Barry Willis,403199673,bcwillis6@bigpond.com,,
+104,51 Autumn Ave,Cheryl Willis,408639975,cl.willis@hotmail.com,,
+105,52 Autumn Ave,Stuart Salvage,407315850,stuart.salvage@bigpond.com,photos/thumb/stuart-salvage.jpg,photos/profile/stuart-salvage.jpg
+106,52 Autumn Ave,Louise Salvage,409522032,salvages2@bigpond.com,photos/thumb/louise-salvage.jpg,photos/profile/louise-salvage.jpg
+107,53 Autumn Ave,Owen Cross,418205099,owen3cross@gmail.com,,
+108,53 Autumn Ave,Debbie Cook,407240918,debbie-cook@bigpond.com,,
+109,54 Autumn Ave,Steve Fowler,414722363,smfowler1946@gmail.com,photos/thumb/steve-fowler.jpg,photos/profile/steve-fowler.jpg
+110,54 Autumn Ave,ICE: David Fowler,419703919,,,
+111,54 Autumn Ave,Jan Jolley,452487958,janjolley8@gmail.com,photos/thumb/jan-jolley.jpg,photos/profile/jan-jolley.jpg
+112,54 Autumn Ave,ICE: Patrick Luxton,421589264,,,
+113,55 Autumn Ave,Robyn Annis-Brown,405802504,robynannis-brown@bigpond.com,,
+114,55 Autumn Ave,,,,,
+115,56 Autumn Ave,George Smith,434629967,gtsmith@live.com.au,photos/thumb/george-smith.jpg,photos/profile/george-smith.jpg
+116,56 Autumn Ave,Janine Smith,402245817,janinelynnsmith@hotmail.com,photos/thumb/janine-smith.jpg,photos/profile/janine-smith.jpg
+117,57 Heirloom Drv,Mary Richards,406529934,richardsgreg892@gmail.com,,
+118,57 Heirloom Drv,,,,,
+119,58 Heirloom Drv,Stephen Shaw,415421316,steveandkerrieshaw@bigpond.com,photos/thumb/stephen-shaw.jpg,photos/profile/stephen-shaw.jpg
+120,58 Heirloom Drv,Kerrie Shaw,412785124,kerrieshaw526@gmail.com,photos/thumb/kerrie-shaw.jpg,photos/profile/kerrie-shaw.jpg
+121,59 Bloom St,,,,,
+122,59 Bloom St,,,,,
+123,60 Bloom St,Andy Thornburrow,457193379,,photos/thumb/andy-thornburrow.jpg,photos/profile/andy-thornburrow.jpg
+124,60 Bloom St,Suzette Thornburrow,436396399,athorn1510@gmail.com,photos/thumb/suzette-thornburrow.jpg,photos/profile/suzette-thornburrow.jpg
+125,61 Bloom St,Gail Holdforth,417061820,ghgail9@gmail.com,,
+126,61 Bloom St,,,,,
+127,62 Bloom St,Kerry Said,414253272,pksaid@yahoo.com.au,photos/thumb/kerry-said.jpg,photos/profile/kerry-said.jpg
+128,62 Bloom St,,,,,
+129,63 Bloom St,Mario Fantini,402527539,amfantini@gmail.com,photos/thumb/mario-fantini.jpg,photos/profile/mario-fantini.jpg
+130,63 Bloom St,Audrey Fantini,411524805,amfantini@gmail.com,photos/thumb/audrey-fantini.jpg,photos/profile/audrey-fantini.jpg
+131,64 Bloom St,Christine Haywood,419785939,haywood1@outlook.com,,
+132,64 Bloom St,,,,,
+133,65 Bloom St,Ruth Harling,433464838,ruth.harling@icloud.com,photos/thumb/ruth-harling.jpg,photos/profile/ruth-harling.jpg
+134,65 Bloom St,Phillip Shelton,412159167,phillip.shelton1@icloud.com,photos/thumb/phillip-shelton.jpg,photos/profile/phillip-shelton.jpg
+135,66 Bloom St,Richard Gill,418962710,richredgill@gmail.com,,
+136,66 Bloom St,Joanne Gill,407962710,joanneltgill@gmail.com,,
+137,67 Bloom St,Robert Olsen,411333441,robolsen@bigpond.com,,
+138,67 Bloom St,Margaret Olsen,413106090,megamyolsen@icloud.com,,
+139,68 Bloom St,Gregory Komitas,412554242,gkomitas@mail.com,,
+140,68 Bloom St,Danielle McCarroll,413628476,mccarrolld@mail.com,,
+141,69 Bloom St,David Stone,413681415,dja_stone@hotmail.com,,
+142,69 Bloom St,Prue Stone,421094583,prueystone@hotmail.co.uk,,
+143,70 Bloom St,Walter Tink,427190353,wetink21@gmail.com,,
+144,70 Bloom St,Mary Wood,455045928,marywood45@icloud.com,,
+145,71 Bloom St,Bill Cooper,417821219,annabayclubcooper1@bigpond.com,photos/thumb/bill-cooper.jpg,photos/profile/bill-cooper.jpg
+146,71 Bloom St,Ruth Cooper,417821219,annabayclubcooper1@bigpond.com,photos/thumb/ruth-cooper.jpg,photos/profile/ruth-cooper.jpg
+147,72 Bloom St,Jan Shields,419616730,jan.shields94@gmail.com,,
+148,72 Bloom St,,,,,
+149,73 Bloom St,Terry Graham,409778347,,photos/thumb/terry-graham.jpg,photos/profile/terry-graham.jpg
+150,73 Bloom St,Merril Graham,418245023,merril.graham54@gmail.com,,
+151,74 Bloom St,Rod Bryant,402607451,rod.bryan6@bigpond.com,photos/thumb/rod-bryant.jpg,photos/profile/rod-bryant.jpg
+152,74 Bloom St,Joan Bryant ,421943949,rod.bryan6@bigpond.com,,
+153,75 Bloom St,Walter Gibson,408551033,gibsongator@gmail.com,photos/thumb/walter-gibson.jpg,photos/profile/walter-gibson.jpg
+154,75 Bloom St,Linda Gibson,417248075,gibsonj5654@gmail.com,,
+155,76 Bloom St,,,,,
+156,76 Bloom St,,,,,
+157,77 Bloom St,Geoff Olson,439034103,geoff.olson@me.com,photos/thumb/geoff-olson.jpg,photos/profile/geoff-olson.jpg
+158,77 Bloom St,Michelle Olson,417621016,michelle.m.olson@me.com,photos/thumb/michelle-olson.jpg,photos/profile/michelle-olson.jpg
+159,78 Bloom St,Renato De Marchi,419563000,demarchi17@bigpond.com,photos/thumb/renato-de-marchi.jpg,photos/profile/renato-de-marchi.jpg
+160,78 Bloom St,Sue De Marchi,419239642,demarchi17@bigpond.com,photos/thumb/sue-de-marchi.jpg,photos/profile/sue-de-marchi.jpg
+161,79 Bloom St,Peter Stone,458413264,thestones@y7mail.com,,
+162,79 Bloom St,Kay Stone,418433202,,,
+163,80 Bloom St,David Williams,412164742,djw71204@gmail.com,photos/thumb/david-williams.jpg,photos/profile/david-williams.jpg
+164,80 Bloom St,Mandy Williams,406494038,willma6205@gmail.com,photos/thumb/mandy-williams.jpg,photos/profile/mandy-williams.jpg
+165,81 Heirloom Drv,Alan Verity,417119349,adverity@yahoo.com.au,,
+166,81 Heirloom Drv,Jenny Verity,439726856,jennyverity@yahoo.com.au,,
+167,82 Heirloom Drv,,,,,
+168,82 Heirloom Drv,,,,,
+169,83 Melody St,Tony Mayers,410021603,tonymayers54@gmail.com,photos/thumb/tony-mayers.jpg,photos/profile/tony-mayers.jpg
+170,83 Melody St,Cheryl Mayers,412130187,mayerscheryl54@gmail.com,,
+171,84 Melody St,Terry O'Brien,419736641,tobens@bigpond.com,,
+172,84 Melody St,Jan O'Brien,49190492,tobens@bigpond.com,,
+173,85 Melody St,Deborah Drinan,434812332,deb.drinan@hotmail.com,photos/thumb/deborah-drinan.jpg,photos/profile/deborah-drinan.jpg
+174,85 Melody St,,,,,
+175,86 Melody St,Wendy Blaim,414872440,,,
+176,86 Melody St,Glenn Blaim,419213116,,,
+177,87 Melody St,,,,,
+178,87 Melody St,,,,,
+179,88 Melody St,,,,,
+180,88 Melody St,,,,,
+181,89 Melody St,,,,,
+182,89 Melody St,,,,,
+183,90 Melody St,,,,,
+184,90 Melody St,,,,,
+185,91 Melody St,Michael Davidson,422144217,Jmdavo@gmail.com,photos/thumb/michael-davidson.jpg,photos/profile/michael-davidson.jpg
+186,91 Melody St,Jenny Davidson,412109214,Jennifer.davo1201@gmail.com,photos/thumb/jenny-davidson.jpg,photos/profile/jenny-davidson.jpg
+187,92 Melody St,,,,,
+188,92 Melody St,,,,,
+189,93 Melody St,Michael Horne,408908889,hornema@bigpond.net.au,photos/thumb/michael-horne.jpg,photos/profile/michael-horne.jpg
+190,93 Melody St,Catherine Horne,438195200,chorne@bigpond.net.au,photos/thumb/catherine-horne.jpg,photos/profile/catherine-horne.jpg
+191,94 Melody St,,,,,
+192,94 Melody St,,,,,
+193,95 Heirloom Drv,Rhonda Harris,414320875,rhondasharris@gmail.com,,
+194,95 Heirloom Drv,Keith Harris,428157754,k.harris.consulting@gmail.com,,
+195,96 Heirloom Drv,Charles Donaldson,418476538,charles.donaldson@bigpond.com,photos/thumb/charles-donaldson.jpg,photos/profile/charles-donaldson.jpg
+196,96 Heirloom Drv,Lyndall Donaldson,422403670,lyndall.donaldson@bigpond.com,photos/thumb/lyndall-donaldson.jpg,photos/profile/lyndall-donaldson.jpg
+197,97 Heirloom Drv,John Mackay,407412420,jdm_55@hotmail.com,,
+198,97 Heirloom Drv,Felicity Alexander,407412420,felicity_alex@hotmail.com,,
+199,98 Heirloom Drv,Barry Williams,409362157,brwilliams@msn.com.au,,
+200,98 Heirloom Drv,Alison Williams,409816601,ali.j.williams@gmail.com,,
+201,99 Heirloom Drv,,,,,
+202,99 Heirloom Drv,,,,,
+203,100 Melody St,,,,,
+204,100 Melody St,,,,,
+205,101 Melody St,Karl Christoffel,419249007,karl.christoffel@outlook.com,,
+206,101 Melody St,,,,,
+207,102 Melody St,Kathryn Davis,419256043,knkdavis70@hotmail.com,,
+208,102 Melody St,,,,,
+209,103 Lakeview Drv,,,,,
+210,103 Lakeview Drv,,,,,
+211,104 Lakeview Drv,Rod Moore,419584399,chaplain@bigpond.net.au,,
+212,104 Lakeview Drv,Lee Moore,409315858,lily31lou@hotmail.com,,
+213,105 Lakeview Drv,,,,,
+214,105 Lakeview Drv,,,,,
+215,106 Lakeview Drv,John Myers,447606477,jmyers@netspeed.com.au,,
+216,106 Lakeview Drv,Jayne Myers,409710334,jmyers@netspeed.com.au,,
+217,107 Lakeview Drv,,,,,
+218,107 Lakeview Drv,,,,,
+219,108 Lakeview Drv,,,,,
+220,108 Lakeview Drv,,,,,
+221,109 Lakeview Drv,Francoise Kingsley,431771939,fkingsley50@gmail.com,photos/thumb/francoise-kingsley.jpg,photos/profile/francoise-kingsley.jpg
+222,109 Lakeview Drv,ICE: Laetitia Wills,412231757,,,
+223,110 Lakeview Drv,,,,,
+224,110 Lakeview Drv,,,,,
+225,111 Lakeview Drv,,,,,
+226,111 Lakeview Drv,,,,,
+227,12 Trotter Road,Melinda Hope,402015673,melindahope155@gmail.com,,
+228,12 Trotter Road,Chris Hope,412616051,chrisjhope123@gmail.com,,
+229,Ingenia Staff,,,,,
+230,Head Ops NSW & VIC,Misty Lovis,491229258,mlovis@ingeniacommunities.com.au,,
+231,Area Manager NSW,Olivia Gralton,491229258,ogralton@ingeniacommunities.com.au,,
+232,Community Manager,Shirley Truong,492340269,struong@ingeniacommunities.com.au,,
+233,Community Manager,Shirley Truong,,naturamgr@ingenialifestyle.com.au,,
+234,Sales Manager,Christine Hill,408295737,christinehill@ingenialifestyle.com.au,,
+235,Customer Experience,,437749805,,,
+236,Maintenance,Jacquie Smith,,maintenance.natura@ingeniacommunities.com.au,,
+237,Maintenance,Jacquie Smith,429936704,jasmith@ingeniacommunities.com.au,,
+238,Justice of Peace,Anne Crick,417403034,anneswaterfront@bigpond.com,,
+239,Admin Assistant,,,,,
+240,Sales Associate,Jayne Stone,461408814,jstone@ingenialifestyle.com.au,,
+241,Grounds Maintenance,Jessica McClurg - Bradley,419740102,,,
+242,Project Manager,Sam Young,,maintenance.natura@ingeniacommunities.com.au,,
