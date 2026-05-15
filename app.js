@@ -314,5 +314,55 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   });
 }
+// Add to Home Screen / Install App button
+let deferredInstallPrompt = null;
 
+const installBtn = document.getElementById('installBtn');
+
+function isIosDevice() {
+  return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+}
+
+function isInStandaloneMode() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+if (installBtn) {
+  if (isInStandaloneMode()) {
+    installBtn.classList.add('hidden');
+  }
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installBtn.classList.remove('hidden');
+  });
+
+  installBtn.addEventListener('click', async () => {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+
+      const choice = await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+
+      if (choice && choice.outcome === 'accepted') {
+        installBtn.classList.add('hidden');
+      }
+
+      return;
+    }
+
+    if (isIosDevice()) {
+      alert('To add this Residents Directory to your Home Screen:\n\n1. Open this page in Safari.\n2. Tap the Share button.\n3. Tap Add to Home Screen.\n4. Tap Add.');
+      return;
+    }
+
+    alert('To add this Residents Directory to your Home Screen:\n\nUse your browser menu and choose Add to Home screen or Install app.');
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installBtn.classList.add('hidden');
+    deferredInstallPrompt = null;
+  });
+}
 loadData();
