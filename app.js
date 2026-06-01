@@ -359,11 +359,17 @@ function isIosDevice() {
   return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
 }
 
+function isInStandaloneMode() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
 if (installBtn) {
+  installBtn.classList.toggle('hidden', isInStandaloneMode());
+
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     deferredInstallPrompt = event;
-    installBtn.classList.remove('hidden');
+    installBtn.classList.toggle('hidden', isInStandaloneMode());
   });
 
   installBtn.addEventListener('click', async () => {
@@ -372,6 +378,10 @@ if (installBtn) {
 
       const choice = await deferredInstallPrompt.userChoice;
       deferredInstallPrompt = null;
+
+      if (choice && choice.outcome === 'accepted') {
+        installBtn.classList.add('hidden');
+      }
 
       return;
     }
@@ -385,6 +395,7 @@ if (installBtn) {
   });
 
   window.addEventListener('appinstalled', () => {
+    installBtn.classList.add('hidden');
     deferredInstallPrompt = null;
   });
 }
