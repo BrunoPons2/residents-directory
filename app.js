@@ -354,6 +354,7 @@ if ('serviceWorker' in navigator) {
 let deferredInstallPrompt = null;
 
 const installBtn = document.getElementById('installBtn');
+const installStateKey = 'residentsDirectoryInstalled';
 
 function isIosDevice() {
   return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
@@ -363,13 +364,31 @@ function isInStandaloneMode() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 }
 
+function hasRememberedInstall() {
+  try {
+    return window.localStorage.getItem(installStateKey) === 'yes';
+  } catch {
+    return false;
+  }
+}
+
+function rememberInstall() {
+  try {
+    window.localStorage.setItem(installStateKey, 'yes');
+  } catch {}
+}
+
+function shouldHideInstallButton() {
+  return isInStandaloneMode() || hasRememberedInstall();
+}
+
 if (installBtn) {
-  installBtn.classList.toggle('hidden', isInStandaloneMode());
+  installBtn.classList.toggle('hidden', shouldHideInstallButton());
 
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     deferredInstallPrompt = event;
-    installBtn.classList.toggle('hidden', isInStandaloneMode());
+    installBtn.classList.toggle('hidden', shouldHideInstallButton());
   });
 
   installBtn.addEventListener('click', async () => {
@@ -380,6 +399,7 @@ if (installBtn) {
       deferredInstallPrompt = null;
 
       if (choice && choice.outcome === 'accepted') {
+        rememberInstall();
         installBtn.classList.add('hidden');
       }
 
@@ -395,6 +415,7 @@ if (installBtn) {
   });
 
   window.addEventListener('appinstalled', () => {
+    rememberInstall();
     installBtn.classList.add('hidden');
     deferredInstallPrompt = null;
   });
