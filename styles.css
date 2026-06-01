@@ -1,19 +1,23 @@
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#fff;color:#111}
-.topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #eaeaea;padding:12px 14px;display:flex;gap:10px;align-items:center}
-.brand{font-weight:700}
-.search{flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:12px;font-size:16px}
-.container{padding:10px 10px 40px}
+html{background:#f7f7f7;overflow-x:hidden}
+body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#fff;color:#111;overflow-x:hidden}
+.topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #eaeaea;padding:12px 14px;display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.topbar-main{display:flex;gap:10px;align-items:center}
+.topbar-actions{display:flex;justify-content:flex-start}
+.brand{font-weight:700;flex:0 0 auto}
+.search{flex:1;min-width:0;padding:10px 12px;border:1px solid #ddd;border-radius:12px;font-size:16px}
+.container{width:100%;padding:10px 10px 40px}
 .status{padding:8px 4px;color:#555;font-size:14px}
 .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
-.card{display:flex;gap:12px;align-items:center;border:1px solid #eee;border-radius:16px;padding:10px 10px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.card{display:flex;width:100%;gap:12px;align-items:center;border:1px solid #eee;border-radius:16px;padding:10px 10px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.03)}
 .avatar{width:46px;height:46px;border-radius:14px;object-fit:cover;background:#f2f2f2;flex:0 0 auto}
-.row{display:flex;flex-direction:column;gap:2px;min-width:0}
-.card button{all:unset;cursor:pointer;display:flex;gap:12px;align-items:center;width:100%}
+.row{display:flex;flex-direction:column;gap:2px;min-width:0;max-width:100%}
+.card button{all:unset;cursor:pointer;display:flex;gap:12px;align-items:center;width:100%;min-width:0}
 
 .name{
   font-weight:700;
   line-height:1.25;
+  overflow-wrap:anywhere;
 }
 
 .sub{
@@ -22,6 +26,7 @@ body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-ser
   opacity:.9;
   margin-top:4px;
   line-height:1.25;
+  overflow-wrap:anywhere;
 }
 
 .modal{
@@ -122,6 +127,37 @@ dialog.modal[open]{
 }
 
 @media (max-width:600px){
+  body{
+    max-width:none;
+  }
+
+  .topbar{
+    padding:10px;
+  }
+
+  .topbar-main{
+    gap:8px;
+  }
+
+  .brand{
+    font-size:15px;
+  }
+
+  .container{
+    padding:8px 8px 36px;
+  }
+
+  .card{
+    gap:10px;
+    padding:9px;
+  }
+
+  .avatar{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+  }
+
   .modal-inner{
     width:auto;
     max-width:min(320px,94vw);

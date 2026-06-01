@@ -1,7 +1,6 @@
 const listEl = document.getElementById('list');
 const statusEl = document.getElementById('status');
 const searchEl = document.getElementById('search');
-const sortEl = document.getElementById('sort');
 
 const modal = document.getElementById('modal');
 const closeBtn = document.getElementById('closeBtn');
@@ -19,14 +18,51 @@ let currentSort = 'address';
 let searchTimer;
 
 function csvToRows(text) {
-  const lines = text.split(/\r?\n/).filter(line => line.trim().length);
-  if (!lines.length) return [];
+  const rows = [];
+  let row = [];
+  let field = '';
+  let inQuotes = false;
+  const delim = text.slice(0, text.indexOf('\n')).includes('\t') ? '\t' : ',';
 
-  const delim = lines[0].includes('\t') ? '\t' : ',';
-  const headers = lines[0].split(delim).map(h => h.trim().replace(/^\uFEFF/, ''));
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    const next = text[i + 1];
 
-  return lines.slice(1).map(line => {
-    const cols = line.split(delim);
+    if (char === '"') {
+      if (inQuotes && next === '"') {
+        field += '"';
+        i += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+
+    if (char === delim && !inQuotes) {
+      row.push(field.trim());
+      field = '';
+      continue;
+    }
+
+    if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && next === '\n') i += 1;
+      row.push(field.trim());
+      if (row.some(value => value !== '')) rows.push(row);
+      row = [];
+      field = '';
+      continue;
+    }
+
+    field += char;
+  }
+
+  row.push(field.trim());
+  if (row.some(value => value !== '')) rows.push(row);
+  if (!rows.length) return [];
+
+  const headers = rows[0].map(h => h.trim().replace(/^\uFEFF/, ''));
+
+  return rows.slice(1).map(cols => {
     const obj = {};
     headers.forEach((h, i) => {
       obj[h] = (cols[i] || '').trim();
@@ -255,23 +291,33 @@ document.addEventListener('keydown', e => {
 });
 
 async function loadData() {
-  if (statusEl) statusEl.textContent = 'Loading…';
+  try {
+    if (statusEl) statusEl.textContent = 'Loading…';
 
-  const res = await fetch('data/residents.csv', { cache: 'no-store' });
-  const text = await res.text();
+    const res = await fetch('data/residents.csv', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Could not load residents.csv (${res.status})`);
 
-  residents = csvToRows(text).filter(r => {
-    const name = getName(r);
-    const phone = (r.phone || '').trim();
-    const email = (r.email || '').trim();
-    return name !== '' || phone !== '' || email !== '';
-  });
+    const text = await res.text();
 
-  residents = applySortKeepingAddendum(residents);
-  filtered = residents.slice();
+    residents = csvToRows(text).filter(r => {
+      const name = getName(r);
+      const phone = (r.phone || '').trim();
+      const email = (r.email || '').trim();
+      return name !== '' || phone !== '' || email !== '';
+    });
 
-  if (statusEl) statusEl.textContent = `${residents.length} residents`;
-  render();
+    residents = applySortKeepingAddendum(residents);
+    filtered = residents.slice();
+
+    if (statusEl) statusEl.textContent = `${residents.length} residents`;
+    render();
+  } catch (error) {
+    console.error(error);
+    residents = [];
+    filtered = [];
+    if (statusEl) statusEl.textContent = 'Unable to load residents directory.';
+    render();
+  }
 }
 
 function applySearchAndRender() {
@@ -296,16 +342,6 @@ if (searchEl) {
   searchEl.addEventListener('input', () => {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(applySearchAndRender, 150);
-  });
-}
-
-if (sortEl) {
-  sortEl.value = currentSort;
-
-  sortEl.addEventListener('change', () => {
-    currentSort = sortEl.value || 'default';
-    residents = applySortKeepingAddendum(residents);
-    applySearchAndRender();
   });
 }
 
