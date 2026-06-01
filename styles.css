@@ -3,7 +3,7 @@ html{background:#f7f7f7;overflow-x:hidden}
 body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#fff;color:#111;overflow-x:hidden}
 .topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #eaeaea;padding:12px 14px;display:flex;flex-direction:column;gap:8px;align-items:stretch}
 .topbar-main{display:flex;gap:10px;align-items:center}
-.topbar-actions{display:flex;justify-content:flex-start}
+.topbar-actions{display:flex;gap:8px;justify-content:flex-start;flex-wrap:wrap}
 .brand{font-weight:700;flex:0 0 auto}
 .search{flex:1;min-width:0;padding:10px 12px;border:1px solid #ddd;border-radius:12px;font-size:16px}
 .container{width:100%;padding:10px 10px 40px}
@@ -187,20 +187,30 @@ dialog.modal[open]{
   }
 }
 
-.install-button {
+.install-button,
+.document-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background: #ffffff;
+  color: #111;
   font-size: 14px;
+  font-family: inherit;
+  line-height: 1.2;
+  text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
 }
 
-.install-button:hover {
+.install-button:hover,
+.document-button:hover {
   background: #f0f0f0;
 }
 
-.install-button.hidden {
+.install-button.hidden,
+.document-button.hidden {
   display: none;
 }

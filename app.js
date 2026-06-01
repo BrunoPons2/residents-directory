@@ -354,7 +354,10 @@ if ('serviceWorker' in navigator) {
 let deferredInstallPrompt = null;
 
 const installBtn = document.getElementById('installBtn');
+const printPdfBtn = document.getElementById('printPdfBtn');
+const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 const installStateKey = 'residentsDirectoryInstalled';
+const pdfDocumentUrl = 'documents/residents-directory-hard-copy.pdf';
 
 function isIosDevice() {
   return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
@@ -382,13 +385,55 @@ function shouldHideInstallButton() {
   return isInStandaloneMode() || hasRememberedInstall();
 }
 
+function updateInstallUi() {
+  const installed = shouldHideInstallButton();
+  if (installBtn) installBtn.classList.toggle('hidden', installed);
+  if (printPdfBtn) printPdfBtn.classList.toggle('hidden', !installed);
+  if (downloadPdfBtn) downloadPdfBtn.classList.toggle('hidden', !installed);
+}
+
+function printPdfDocument() {
+  const printFrameId = 'residentPdfPrintFrame';
+  const existingFrame = document.getElementById(printFrameId);
+  if (existingFrame) existingFrame.remove();
+
+  const frame = document.createElement('iframe');
+  frame.id = printFrameId;
+  frame.src = `${pdfDocumentUrl}?v=${Date.now()}`;
+  frame.style.position = 'fixed';
+  frame.style.right = '0';
+  frame.style.bottom = '0';
+  frame.style.width = '1px';
+  frame.style.height = '1px';
+  frame.style.border = '0';
+
+  frame.onload = () => {
+    try {
+      frame.contentWindow.focus();
+      frame.contentWindow.print();
+    } catch {
+      window.open(pdfDocumentUrl, '_blank', 'noopener');
+    }
+  };
+
+  document.body.appendChild(frame);
+}
+
+if (downloadPdfBtn) {
+  downloadPdfBtn.href = pdfDocumentUrl;
+}
+
+if (printPdfBtn) {
+  printPdfBtn.addEventListener('click', printPdfDocument);
+}
+
 if (installBtn) {
-  installBtn.classList.toggle('hidden', shouldHideInstallButton());
+  updateInstallUi();
 
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     deferredInstallPrompt = event;
-    installBtn.classList.toggle('hidden', shouldHideInstallButton());
+    updateInstallUi();
   });
 
   installBtn.addEventListener('click', async () => {
@@ -400,7 +445,7 @@ if (installBtn) {
 
       if (choice && choice.outcome === 'accepted') {
         rememberInstall();
-        installBtn.classList.add('hidden');
+        updateInstallUi();
       }
 
       return;
@@ -416,7 +461,7 @@ if (installBtn) {
 
   window.addEventListener('appinstalled', () => {
     rememberInstall();
-    installBtn.classList.add('hidden');
+    updateInstallUi();
     deferredInstallPrompt = null;
   });
 }

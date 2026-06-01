@@ -1,5 +1,6 @@
 const NO_STORE_PATHS = [
   '/data/residents.csv',
+  '/documents/',
   '/photos/thumb/',
   '/photos/profile/',
 ];
