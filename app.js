@@ -79,6 +79,35 @@ function norm(s) {
   return (s || '').toString().trim().toLowerCase();
 }
 
+function digitsOnly(s) {
+  return (s || '').toString().replace(/\D/g, '');
+}
+
+function searchTerms(query) {
+  return norm(query).split(/\s+/).filter(Boolean);
+}
+
+function residentSearchText(r) {
+  return [
+    getName(r),
+    getAddress(r),
+    r.phone,
+    r.email,
+    digitsOnly(r.phone),
+  ].map(norm).join(' ');
+}
+
+function residentMatchesSearch(r, query) {
+  const terms = searchTerms(query);
+  if (!terms.length) return true;
+
+  const haystack = residentSearchText(r);
+  return terms.every(term => {
+    const numericTerm = digitsOnly(term);
+    return haystack.includes(term) || (numericTerm && haystack.includes(numericTerm));
+  });
+}
+
 function getId(r) {
   const n = Number(String(r?.resident_id ?? '').trim());
   return Number.isFinite(n) ? n : NaN;
@@ -471,12 +500,7 @@ function applySearchAndRender() {
   if (!q) {
     filtered = residents.slice();
   } else {
-    const matches = residents.filter(r =>
-      norm(getName(r)).includes(q) ||
-      norm(getAddress(r)).includes(q) ||
-      norm(r.phone).includes(q) ||
-      norm(r.email).includes(q)
-    );
+    const matches = residents.filter(r => residentMatchesSearch(r, q));
     filtered = applySortKeepingAddendum(matches);
   }
 
