@@ -269,27 +269,57 @@ function readCachedResidentsCsv() {
 
 function saveCachedResidentsCsv(text) {
   try {
+    const cachedAt = new Date().toISOString();
     window.localStorage.setItem(residentsCsvCacheKey, text);
-    window.localStorage.setItem(residentsCsvCachedAtKey, new Date().toISOString());
+    window.localStorage.setItem(residentsCsvCachedAtKey, cachedAt);
+    return cachedAt;
   } catch {}
+
+  return '';
+}
+
+function cachedResidentsDate() {
+  try {
+    const cachedAt = window.localStorage.getItem(residentsCsvCachedAtKey);
+    if (!cachedAt) return null;
+
+    const date = new Date(cachedAt);
+    if (Number.isNaN(date.getTime())) return null;
+
+    return date;
+  } catch {
+    return null;
+  }
 }
 
 function cachedResidentsLabel() {
-  try {
-    const cachedAt = window.localStorage.getItem(residentsCsvCachedAtKey);
-    if (!cachedAt) return 'offline cached copy';
+  const date = cachedResidentsDate();
+  if (!date) return 'offline cached copy';
 
-    const date = new Date(cachedAt);
-    if (Number.isNaN(date.getTime())) return 'offline cached copy';
+  return `offline cached copy from ${date.toLocaleDateString(undefined, {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })}`;
+}
 
-    return `offline cached copy from ${date.toLocaleDateString(undefined, {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    })}`;
-  } catch {
-    return 'offline cached copy';
-  }
+function dataUpdatedLabel() {
+  const date = cachedResidentsDate();
+  if (!date) return '';
+
+  return `Data updated ${date.toLocaleString(undefined, {
+    day: 'numeric',
+    month: 'short',
+    hour: 'numeric',
+    minute: '2-digit',
+  })}`;
+}
+
+function updateDataUpdatedLabel() {
+  if (!dataUpdatedEl) return;
+
+  dataUpdatedEl.textContent = dataUpdatedLabel();
+  updateInstallUi();
 }
 
 function setResidentsFromCsv(text) {
@@ -470,6 +500,7 @@ async function loadData(options = {}) {
     saveCachedResidentsCsv(text);
 
     setResidentsFromCsv(text);
+    updateDataUpdatedLabel();
 
     setDirectoryStatus(isRefresh ? `Refreshed - ${residents.length} residents` : `${residents.length} residents`);
     render();
@@ -480,6 +511,7 @@ async function loadData(options = {}) {
 
     if (cachedCsv) {
       setResidentsFromCsv(cachedCsv);
+      updateDataUpdatedLabel();
       setDirectoryStatus(isRefresh
         ? `Could not refresh - showing ${cachedResidentsLabel()}`
         : `${residents.length} residents - ${cachedResidentsLabel()}`
@@ -572,6 +604,7 @@ const installBtn = document.getElementById('installBtn');
 const printPdfBtn = document.getElementById('printPdfBtn');
 const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 const refreshDataBtn = document.getElementById('refreshDataBtn');
+const dataUpdatedEl = document.getElementById('dataUpdated');
 const pdfUpdatedEl = document.getElementById('pdfUpdated');
 const installStateKey = 'residentsDirectoryInstalled';
 const pdfDocumentUrl = 'documents/residents-directory-hard-copy.pdf';
@@ -610,6 +643,7 @@ function updateInstallUi() {
   if (printPdfBtn) printPdfBtn.classList.toggle('hidden', !installed);
   if (downloadPdfBtn) downloadPdfBtn.classList.toggle('hidden', !installed);
   if (refreshDataBtn) refreshDataBtn.classList.toggle('hidden', !installed);
+  if (dataUpdatedEl) dataUpdatedEl.classList.toggle('hidden', !installed || !dataUpdatedEl.textContent);
   if (pdfUpdatedEl) pdfUpdatedEl.classList.toggle('hidden', !installed || !pdfUpdatedEl.textContent);
 }
 

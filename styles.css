@@ -238,6 +238,7 @@ dialog.modal[open]{
   display: none;
 }
 
+.updated-note,
 .pdf-updated {
   align-self: center;
   color: #555;
@@ -245,6 +246,7 @@ dialog.modal[open]{
   line-height: 1.2;
 }
 
+.updated-note.hidden,
 .pdf-updated.hidden {
   display: none;
 }
