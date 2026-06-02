@@ -356,8 +356,10 @@ let deferredInstallPrompt = null;
 const installBtn = document.getElementById('installBtn');
 const printPdfBtn = document.getElementById('printPdfBtn');
 const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+const pdfUpdatedEl = document.getElementById('pdfUpdated');
 const installStateKey = 'residentsDirectoryInstalled';
 const pdfDocumentUrl = 'documents/residents-directory-hard-copy.pdf';
+const pdfMetadataUrl = 'documents/residents-directory-hard-copy.json';
 
 function isIosDevice() {
   return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
@@ -390,6 +392,23 @@ function updateInstallUi() {
   if (installBtn) installBtn.classList.toggle('hidden', installed);
   if (printPdfBtn) printPdfBtn.classList.toggle('hidden', !installed);
   if (downloadPdfBtn) downloadPdfBtn.classList.toggle('hidden', !installed);
+  if (pdfUpdatedEl) pdfUpdatedEl.classList.toggle('hidden', !installed || !pdfUpdatedEl.textContent);
+}
+
+async function loadPdfMetadata() {
+  if (!pdfUpdatedEl) return;
+
+  try {
+    const res = await fetch(pdfMetadataUrl, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Could not load PDF metadata (${res.status})`);
+
+    const meta = await res.json();
+    pdfUpdatedEl.textContent = meta.generatedDisplay ? `PDF updated ${meta.generatedDisplay}` : '';
+  } catch {
+    pdfUpdatedEl.textContent = '';
+  }
+
+  updateInstallUi();
 }
 
 function printPdfDocument() {
@@ -429,6 +448,7 @@ if (printPdfBtn) {
 
 if (installBtn) {
   updateInstallUi();
+  loadPdfMetadata();
 
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();

@@ -214,3 +214,14 @@ dialog.modal[open]{
 .document-button.hidden {
   display: none;
 }
+
+.pdf-updated {
+  align-self: center;
+  color: #555;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.pdf-updated.hidden {
+  display: none;
+}
