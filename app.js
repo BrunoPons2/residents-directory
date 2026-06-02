@@ -543,6 +543,13 @@ function updateSearchStatus(query) {
     : `${count} matching residents`;
 }
 
+function scrollResultsToTop() {
+  const topbar = document.querySelector('.topbar');
+  const top = Math.max(0, (topbar?.offsetTop || 0));
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+}
+
 function applySearchAndRender() {
   const q = norm(searchEl?.value);
 
@@ -555,6 +562,7 @@ function applySearchAndRender() {
 
   updateSearchStatus(q);
   render();
+  scrollResultsToTop();
 }
 
 function focusSearchFromLaunch() {
