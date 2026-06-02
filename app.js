@@ -513,6 +513,19 @@ if (searchEl) {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(applySearchAndRender, 150);
   });
+
+  searchEl.addEventListener('keydown', event => {
+    if (event.key !== 'Enter') return;
+
+    clearTimeout(searchTimer);
+    applySearchAndRender();
+
+    const firstMatch = filtered.find(r => getName(r) !== '');
+    if (!firstMatch) return;
+
+    event.preventDefault();
+    openProfile(firstMatch, searchEl);
+  });
 }
 
 if ('serviceWorker' in navigator) {
