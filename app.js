@@ -16,6 +16,7 @@ let residents = [];
 let filtered = [];
 let currentSort = 'address';
 let searchTimer;
+let directoryStatusText = '';
 const residentsCsvCacheKey = 'residentsDirectoryCsvCache';
 const residentsCsvCachedAtKey = 'residentsDirectoryCsvCachedAt';
 
@@ -265,6 +266,11 @@ function setResidentsFromCsv(text) {
   filtered = residents.slice();
 }
 
+function setDirectoryStatus(text) {
+  directoryStatusText = text;
+  if (statusEl) statusEl.textContent = text;
+}
+
 function render() {
   if (!listEl) return;
 
@@ -399,7 +405,7 @@ async function loadData(options = {}) {
 
     setResidentsFromCsv(text);
 
-    if (statusEl) statusEl.textContent = isRefresh ? `Refreshed - ${residents.length} residents` : `${residents.length} residents`;
+    setDirectoryStatus(isRefresh ? `Refreshed - ${residents.length} residents` : `${residents.length} residents`);
     render();
     return 'live';
   } catch (error) {
@@ -408,20 +414,33 @@ async function loadData(options = {}) {
 
     if (cachedCsv) {
       setResidentsFromCsv(cachedCsv);
-      if (statusEl) {
-        statusEl.textContent = isRefresh
-          ? `Could not refresh - showing ${cachedResidentsLabel()}`
-          : `${residents.length} residents - ${cachedResidentsLabel()}`;
-      }
+      setDirectoryStatus(isRefresh
+        ? `Could not refresh - showing ${cachedResidentsLabel()}`
+        : `${residents.length} residents - ${cachedResidentsLabel()}`
+      );
     } else {
       residents = [];
       filtered = [];
-      if (statusEl) statusEl.textContent = 'Unable to load residents directory.';
+      setDirectoryStatus('Unable to load residents directory.');
     }
 
     render();
     return cachedCsv ? 'cached' : 'failed';
   }
+}
+
+function updateSearchStatus(query) {
+  if (!statusEl) return;
+
+  if (!query) {
+    statusEl.textContent = directoryStatusText || `${residents.length} residents`;
+    return;
+  }
+
+  const count = filtered.length;
+  statusEl.textContent = count === 1
+    ? '1 matching resident'
+    : `${count} matching residents`;
 }
 
 function applySearchAndRender() {
@@ -439,6 +458,7 @@ function applySearchAndRender() {
     filtered = applySortKeepingAddendum(matches);
   }
 
+  updateSearchStatus(q);
   render();
 }
 
