@@ -88,6 +88,10 @@ function getAddress(r) {
   return (r?.Address || r?.address || '').toString().trim();
 }
 
+function isIceResident(r) {
+  return /^ICE:/i.test(getName(r));
+}
+
 function addressNumber(addressRaw) {
   const m = String(addressRaw || '').match(/\d+/);
   return m ? parseInt(m[0], 10) : Number.MAX_SAFE_INTEGER;
@@ -193,6 +197,7 @@ function render() {
 
     const li = document.createElement('li');
     li.className = 'card';
+    if (isIceResident(r)) li.classList.add('ice-card');
 
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -204,6 +209,13 @@ function render() {
     img.loading = 'lazy';
     setImageWithFallback(img, photoCandidates(r, 'thumb'));
     btn.appendChild(img);
+
+    if (isIceResident(r)) {
+      const badge = document.createElement('span');
+      badge.className = 'ice-badge';
+      badge.textContent = 'ICE';
+      btn.appendChild(badge);
+    }
 
     const row = document.createElement('div');
     row.className = 'row';
