@@ -92,8 +92,8 @@ body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:syste
 
 .modal-actions{
   display:flex;
-  gap:6px;
-  margin-top:10px;
+  gap:10px;
+  margin-top:12px;
   justify-content:center;
   flex-wrap:wrap;
 }
@@ -103,9 +103,10 @@ body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:syste
   justify-content:center;
   align-items:center;
   width:auto;
-  min-width:0;
+  min-width:72px;
+  min-height:44px;
   flex:0 0 auto;
-  padding:6px 10px;
+  padding:9px 14px;
   border-radius:14px;
   border:1px solid #ddd;
   text-decoration:none;
@@ -180,13 +181,15 @@ dialog.modal[open]{
   }
 
   .modal-actions{
-    gap:6px;
+    gap:10px;
     justify-content:center;
   }
 
   .modal-actions .btn{
-    padding:5px 8px;
-    font-size:.85em;
+    min-width:78px;
+    min-height:46px;
+    padding:10px 14px;
+    font-size:.95em;
   }
 }
 
