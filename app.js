@@ -104,13 +104,48 @@ function photoCandidates(r, kind) {
   return fromCsv ? [fromCsv] : [];
 }
 
-function setImageWithFallback(img, candidates) {
+function residentInitials(name) {
+  const cleaned = String(name || '')
+    .replace(/^ICE:\s*/i, '')
+    .replace(/\([^)]*\)/g, ' ')
+    .trim();
+  const parts = cleaned.split(/\s+/).filter(Boolean);
+
+  if (!parts.length) return '?';
+
+  return parts
+    .slice(0, 2)
+    .map(part => part.charAt(0).toUpperCase())
+    .join('');
+}
+
+function initialsColor(name) {
+  const colors = ['#245c73', '#6a4f9b', '#2f6f5e', '#8a4d32', '#6b5b2f', '#5c6f2f'];
+  const text = String(name || '');
+  let hash = 0;
+
+  for (let i = 0; i < text.length; i += 1) {
+    hash = (hash + text.charCodeAt(i) * (i + 1)) % colors.length;
+  }
+
+  return colors[hash];
+}
+
+function initialsPlaceholder(name) {
+  const initials = residentInitials(name);
+  const background = initialsColor(name);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" rx="22" fill="${background}"/><text x="48" y="55" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#fff">${initials}</text></svg>`;
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+function setImageWithFallback(img, candidates, fallbackName) {
   const valid = (candidates || []).filter(Boolean);
   img.onerror = null;
 
   if (!valid.length) {
-    img.removeAttribute('src');
-    img.style.display = 'none';
+    img.src = initialsPlaceholder(fallbackName);
+    img.style.display = '';
     return;
   }
 
@@ -119,8 +154,8 @@ function setImageWithFallback(img, candidates) {
 
   function tryNext() {
     if (i >= valid.length) {
-      img.removeAttribute('src');
-      img.style.display = 'none';
+      img.src = initialsPlaceholder(fallbackName);
+      img.style.display = '';
       return;
     }
 
@@ -254,7 +289,7 @@ function render() {
     img.className = 'avatar';
     img.alt = '';
     img.loading = 'lazy';
-    setImageWithFallback(img, photoCandidates(r, 'thumb'));
+    setImageWithFallback(img, photoCandidates(r, 'thumb'), residentName);
     btn.appendChild(img);
 
     if (isIceResident(r)) {
@@ -294,7 +329,8 @@ function openProfile(r) {
 
   setImageWithFallback(
     modalPhoto,
-    photoCandidates(r, 'profile').concat(photoCandidates(r, 'thumb'))
+    photoCandidates(r, 'profile').concat(photoCandidates(r, 'thumb')),
+    getName(r)
   );
 
   const bits = [];
