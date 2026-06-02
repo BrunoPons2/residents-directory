@@ -385,9 +385,11 @@ document.addEventListener('keydown', e => {
   }
 });
 
-async function loadData() {
+async function loadData(options = {}) {
+  const isRefresh = options.reason === 'refresh';
+
   try {
-    if (statusEl) statusEl.textContent = 'Loading…';
+    if (statusEl) statusEl.textContent = isRefresh ? 'Refreshing data...' : 'Loading...';
 
     const res = await fetch('data/residents.csv', { cache: 'no-store' });
     if (!res.ok) throw new Error(`Could not load residents.csv (${res.status})`);
@@ -397,15 +399,20 @@ async function loadData() {
 
     setResidentsFromCsv(text);
 
-    if (statusEl) statusEl.textContent = `${residents.length} residents`;
+    if (statusEl) statusEl.textContent = isRefresh ? `Refreshed - ${residents.length} residents` : `${residents.length} residents`;
     render();
+    return 'live';
   } catch (error) {
     console.error(error);
     const cachedCsv = readCachedResidentsCsv();
 
     if (cachedCsv) {
       setResidentsFromCsv(cachedCsv);
-      if (statusEl) statusEl.textContent = `${residents.length} residents - ${cachedResidentsLabel()}`;
+      if (statusEl) {
+        statusEl.textContent = isRefresh
+          ? `Could not refresh - showing ${cachedResidentsLabel()}`
+          : `${residents.length} residents - ${cachedResidentsLabel()}`;
+      }
     } else {
       residents = [];
       filtered = [];
@@ -413,6 +420,7 @@ async function loadData() {
     }
 
     render();
+    return cachedCsv ? 'cached' : 'failed';
   }
 }
 
@@ -557,12 +565,22 @@ if (printPdfBtn) {
 
 if (refreshDataBtn) {
   refreshDataBtn.addEventListener('click', async () => {
-    await loadData();
-    await loadPdfMetadata();
+    const originalLabel = refreshDataBtn.textContent;
 
-    if ('serviceWorker' in navigator) {
-      const registration = await navigator.serviceWorker.getRegistration();
-      if (registration) registration.update().catch(() => {});
+    refreshDataBtn.disabled = true;
+    refreshDataBtn.textContent = 'Refreshing...';
+
+    try {
+      await loadData({ reason: 'refresh' });
+      await loadPdfMetadata();
+
+      if ('serviceWorker' in navigator) {
+        const registration = await navigator.serviceWorker.getRegistration();
+        if (registration) registration.update().catch(() => {});
+      }
+    } finally {
+      refreshDataBtn.disabled = false;
+      refreshDataBtn.textContent = originalLabel;
     }
   });
 }

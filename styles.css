@@ -212,6 +212,13 @@ dialog.modal[open]{
   background: #f0f0f0;
 }
 
+.install-button:disabled,
+.document-button:disabled {
+  color: #777;
+  cursor: wait;
+  opacity: .75;
+}
+
 .install-button.hidden,
 .document-button.hidden {
   display: none;
