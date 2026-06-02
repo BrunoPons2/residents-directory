@@ -14,7 +14,7 @@
     <div class="topbar-main">
       <div class="brand">Residents Directory</div>
 
-      <input id="search" class="search" type="search" placeholder="Search residents…" autocomplete="off" />
+      <input id="search" class="search" type="search" placeholder="Search residents…" autocomplete="off" aria-label="Search residents" />
     </div>
 
     <div class="topbar-actions">
@@ -35,11 +35,11 @@
   </header>
 
   <main class="container">
-    <div id="status" class="status"></div>
-    <ul id="list" class="list"></ul>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <ul id="list" class="list" aria-label="Residents"></ul>
   </main>
 
-  <dialog id="modal" class="modal">
+  <dialog id="modal" class="modal" aria-labelledby="modalTitle" aria-describedby="modalSub">
     <div class="modal-inner">
       <button id="closeBtn" class="icon-btn" aria-label="Close">✕</button>
       <img id="modalPhoto" class="modal-photo" alt="" />
@@ -48,7 +48,7 @@
       <div class="modal-actions">
         <a id="textBtn" class="btn" href="#">Text</a>
         <a id="callBtn" class="btn" href="#">Call</a>
-        <a id="emailBtn" class="btn" href="#">email</a>
+        <a id="emailBtn" class="btn" href="#">Email</a>
       </div>
       <div id="modalMeta" class="modal-meta"></div>
     </div>

@@ -289,6 +289,7 @@ function render() {
 
     const btn = document.createElement('button');
     btn.type = 'button';
+    btn.setAttribute('aria-label', `Open resident details for ${residentName}`);
     btn.addEventListener('click', () => openProfile(r));
 
     const img = document.createElement('img');
