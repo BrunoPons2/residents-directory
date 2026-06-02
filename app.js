@@ -17,6 +17,7 @@ let filtered = [];
 let currentSort = 'address';
 let searchTimer;
 let directoryStatusText = '';
+let lastProfileTrigger = null;
 const residentsCsvCacheKey = 'residentsDirectoryCsvCache';
 const residentsCsvCachedAtKey = 'residentsDirectoryCsvCachedAt';
 
@@ -290,7 +291,7 @@ function render() {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.setAttribute('aria-label', `Open resident details for ${residentName}`);
-    btn.addEventListener('click', () => openProfile(r));
+    btn.addEventListener('click', () => openProfile(r, btn));
 
     const img = document.createElement('img');
     img.className = 'avatar';
@@ -331,7 +332,8 @@ function render() {
   listEl.appendChild(frag);
 }
 
-function openProfile(r) {
+function openProfile(r, trigger) {
+  lastProfileTrigger = trigger || null;
   modalTitle.textContent = `${getAddress(r) ? getAddress(r) + ' — ' : ''}${getName(r)}`;
 
   setImageWithFallback(
@@ -367,6 +369,7 @@ function openProfile(r) {
 
   if (modal && typeof modal.showModal === 'function') {
     modal.showModal();
+    if (closeBtn) closeBtn.focus();
   }
 }
 
@@ -383,6 +386,13 @@ if (modal) {
 
   modal.addEventListener('cancel', () => {
     modal.close();
+  });
+
+  modal.addEventListener('close', () => {
+    if (lastProfileTrigger && typeof lastProfileTrigger.focus === 'function') {
+      lastProfileTrigger.focus();
+    }
+    lastProfileTrigger = null;
   });
 }
 
