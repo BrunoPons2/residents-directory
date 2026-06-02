@@ -83,6 +83,14 @@ function digitsOnly(s) {
   return (s || '').toString().replace(/\D/g, '');
 }
 
+function phoneLinkValue(s) {
+  return (s || '').toString().trim().replace(/[^\d+]/g, '');
+}
+
+function cleanEmail(s) {
+  return (s || '').toString().trim();
+}
+
 function searchTerms(query) {
   return norm(query).split(/\s+/).filter(Boolean);
 }
@@ -374,7 +382,11 @@ function render() {
 
 function openProfile(r, trigger) {
   lastProfileTrigger = trigger || null;
-  modalTitle.textContent = `${getAddress(r) ? getAddress(r) + ' — ' : ''}${getName(r)}`;
+  const residentName = getName(r);
+  const phoneHref = phoneLinkValue(r.phone);
+  const emailHref = cleanEmail(r.email);
+
+  modalTitle.textContent = `${getAddress(r) ? getAddress(r) + ' — ' : ''}${residentName}`;
 
   setImageWithFallback(
     modalPhoto,
@@ -393,18 +405,21 @@ function openProfile(r, trigger) {
   }
 
   if (textBtn) {
-    textBtn.href = r.phone ? `sms:${r.phone}` : '#';
-    textBtn.style.display = r.phone ? '' : 'none';
+    textBtn.href = phoneHref ? `sms:${phoneHref}` : '#';
+    textBtn.style.display = phoneHref ? '' : 'none';
+    textBtn.setAttribute('aria-label', `Text ${residentName}`);
   }
 
   if (callBtn) {
-    callBtn.href = r.phone ? `tel:${r.phone}` : '#';
-    callBtn.style.display = r.phone ? '' : 'none';
+    callBtn.href = phoneHref ? `tel:${phoneHref}` : '#';
+    callBtn.style.display = phoneHref ? '' : 'none';
+    callBtn.setAttribute('aria-label', `Call ${residentName}`);
   }
 
   if (emailBtn) {
-    emailBtn.href = r.email ? `mailto:${r.email}` : '#';
-    emailBtn.style.display = r.email ? '' : 'none';
+    emailBtn.href = emailHref ? `mailto:${emailHref}` : '#';
+    emailBtn.style.display = emailHref ? '' : 'none';
+    emailBtn.setAttribute('aria-label', `Email ${residentName}`);
   }
 
   if (modal && typeof modal.showModal === 'function') {
