@@ -418,11 +418,12 @@ function openProfile(r, trigger) {
   const emailHref = cleanEmail(r.email);
 
   modalTitle.textContent = `${getAddress(r) ? getAddress(r) + ' — ' : ''}${residentName}`;
+  modalPhoto.alt = `Photo of ${residentName}`;
 
   setImageWithFallback(
     modalPhoto,
     photoCandidates(r, 'profile').concat(photoCandidates(r, 'thumb')),
-    getName(r)
+    residentName
   );
 
   const bits = [];
