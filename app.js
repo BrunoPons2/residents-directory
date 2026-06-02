@@ -280,6 +280,17 @@ function render() {
 
   const validResidents = filtered.filter(r => getName(r) !== '');
 
+  if (!validResidents.length) {
+    const li = document.createElement('li');
+    li.className = 'empty-state';
+    li.textContent = searchEl && searchEl.value.trim()
+      ? 'No residents found'
+      : 'No residents to display';
+    frag.appendChild(li);
+    listEl.appendChild(frag);
+    return;
+  }
+
   for (const r of validResidents) {
     const residentName = getName(r);
     if (!residentName) continue;
