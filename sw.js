@@ -1,3 +1,14 @@
+const SHELL_CACHE = 'residents-directory-shell-v1';
+const SHELL_ASSETS = [
+  './',
+  'index.html',
+  'styles.css',
+  'app.js',
+  'manifest.json',
+  'icon-192.png',
+  'icon-512.png',
+];
+
 const NO_STORE_PATHS = [
   '/data/residents.csv',
   '/documents/',
@@ -5,13 +16,45 @@ const NO_STORE_PATHS = [
   '/photos/profile/',
 ];
 
-self.addEventListener('install', () => {
-  self.skipWaiting();
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(SHELL_CACHE)
+      .then(cache => cache.addAll(SHELL_ASSETS))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(
+        keys
+          .filter(key => key !== SHELL_CACHE)
+          .map(key => caches.delete(key))
+      ))
+      .then(() => self.clients.claim())
+  );
 });
+
+async function networkFirst(request) {
+  const cache = await caches.open(SHELL_CACHE);
+
+  try {
+    const fresh = await fetch(request);
+    cache.put(request, fresh.clone());
+    return fresh;
+  } catch {
+    const cached = await cache.match(request);
+    if (cached) return cached;
+
+    if (request.mode === 'navigate') {
+      const appShell = await cache.match('./');
+      if (appShell) return appShell;
+    }
+
+    throw new Error('No cached response available');
+  }
+}
 
 self.addEventListener('fetch', event => {
   const { request } = event;
@@ -22,5 +65,10 @@ self.addEventListener('fetch', event => {
 
   if (shouldBypassCache) {
     event.respondWith(fetch(request, { cache: 'no-store' }));
+    return;
+  }
+
+  if (url.origin === self.location.origin) {
+    event.respondWith(networkFirst(request));
   }
 });
