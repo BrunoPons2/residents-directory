@@ -10,7 +10,9 @@ body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:syste
 .container{width:100%;padding:10px 10px 40px}
 .status{padding:8px 4px;color:#555;font-size:14px}
 .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
-.empty-state{border:1px solid #eee;border-radius:16px;padding:18px 12px;background:#fff;color:#666;text-align:center;font-size:14px}
+.empty-state{display:flex;flex-direction:column;align-items:center;gap:12px;border:1px solid #eee;border-radius:16px;padding:18px 12px;background:#fff;color:#666;text-align:center;font-size:14px}
+.empty-clear{border:1px solid #ccc;border-radius:10px;background:#fff;color:#111;font:inherit;font-weight:650;min-height:40px;padding:8px 14px;cursor:pointer}
+.empty-clear:hover{background:#f0f0f0}
 .card{display:flex;width:100%;gap:12px;align-items:center;border:1px solid #eee;border-radius:16px;padding:10px 10px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.03)}
 .card.ice-card{border-color:#d4b15f;background:#fffaf0}
 .avatar{width:46px;height:46px;border-radius:14px;object-fit:cover;background:#f2f2f2;flex:0 0 auto}
@@ -69,6 +71,7 @@ body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:syste
 
 .icon-btn:focus-visible,
 .btn:focus-visible,
+.empty-clear:focus-visible,
 .install-button:focus-visible,
 .document-button:focus-visible{
   outline:3px solid #1f6feb;

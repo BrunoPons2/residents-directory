@@ -351,9 +351,27 @@ function render() {
   if (!validResidents.length) {
     const li = document.createElement('li');
     li.className = 'empty-state';
-    li.textContent = searchEl && searchEl.value.trim()
-      ? 'No residents found'
-      : 'No residents to display';
+
+    if (searchEl && searchEl.value.trim()) {
+      const message = document.createElement('div');
+      message.textContent = 'No residents found';
+
+      const clearBtn = document.createElement('button');
+      clearBtn.className = 'empty-clear';
+      clearBtn.type = 'button';
+      clearBtn.textContent = 'Clear Search';
+      clearBtn.addEventListener('click', () => {
+        searchEl.value = '';
+        applySearchAndRender();
+        searchEl.focus();
+      });
+
+      li.appendChild(message);
+      li.appendChild(clearBtn);
+    } else {
+      li.textContent = 'No residents to display';
+    }
+
     frag.appendChild(li);
     listEl.appendChild(frag);
     return;
