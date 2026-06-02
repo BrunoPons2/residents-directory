@@ -457,6 +457,7 @@ const pdfUpdatedEl = document.getElementById('pdfUpdated');
 const installStateKey = 'residentsDirectoryInstalled';
 const pdfDocumentUrl = 'documents/residents-directory-hard-copy.pdf';
 const pdfMetadataUrl = 'documents/residents-directory-hard-copy.json';
+let pdfDocumentVersion = '';
 
 function isIosDevice() {
   return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
@@ -493,19 +494,29 @@ function updateInstallUi() {
   if (pdfUpdatedEl) pdfUpdatedEl.classList.toggle('hidden', !installed || !pdfUpdatedEl.textContent);
 }
 
-async function loadPdfMetadata() {
-  if (!pdfUpdatedEl) return;
+function currentPdfUrl() {
+  const version = pdfDocumentVersion || Date.now().toString();
+  return `${pdfDocumentUrl}?v=${encodeURIComponent(version)}`;
+}
 
+function updatePdfDownloadUrl() {
+  if (downloadPdfBtn) downloadPdfBtn.href = currentPdfUrl();
+}
+
+async function loadPdfMetadata() {
   try {
     const res = await fetch(pdfMetadataUrl, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Could not load PDF metadata (${res.status})`);
 
     const meta = await res.json();
-    pdfUpdatedEl.textContent = meta.generatedDisplay ? `PDF updated ${meta.generatedDisplay}` : '';
+    pdfDocumentVersion = meta.generatedAt || '';
+    if (pdfUpdatedEl) pdfUpdatedEl.textContent = meta.generatedDisplay ? `PDF updated ${meta.generatedDisplay}` : '';
   } catch {
-    pdfUpdatedEl.textContent = '';
+    pdfDocumentVersion = '';
+    if (pdfUpdatedEl) pdfUpdatedEl.textContent = '';
   }
 
+  updatePdfDownloadUrl();
   updateInstallUi();
 }
 
@@ -516,7 +527,7 @@ function printPdfDocument() {
 
   const frame = document.createElement('iframe');
   frame.id = printFrameId;
-  frame.src = `${pdfDocumentUrl}?v=${Date.now()}`;
+  frame.src = currentPdfUrl();
   frame.style.position = 'fixed';
   frame.style.right = '0';
   frame.style.bottom = '0';
@@ -529,7 +540,7 @@ function printPdfDocument() {
       frame.contentWindow.focus();
       frame.contentWindow.print();
     } catch {
-      window.open(pdfDocumentUrl, '_blank', 'noopener');
+      window.open(currentPdfUrl(), '_blank', 'noopener');
     }
   };
 
@@ -537,7 +548,7 @@ function printPdfDocument() {
 }
 
 if (downloadPdfBtn) {
-  downloadPdfBtn.href = pdfDocumentUrl;
+  updatePdfDownloadUrl();
 }
 
 if (printPdfBtn) {
