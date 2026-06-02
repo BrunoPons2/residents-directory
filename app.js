@@ -76,7 +76,7 @@ function csvToRows(text) {
 }
 
 function norm(s) {
-  return (s || '').toString().trim().toLowerCase();
+  return (s || '').toString().trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
 function digitsOnly(s) {
