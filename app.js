@@ -523,6 +523,15 @@ function applySearchAndRender() {
   render();
 }
 
+function focusSearchFromLaunch() {
+  if (!searchEl) return;
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('focus') !== 'search') return;
+
+  searchEl.focus();
+}
+
 if (searchEl) {
   searchEl.addEventListener('input', () => {
     clearTimeout(searchTimer);
@@ -726,4 +735,4 @@ if (installBtn) {
     deferredInstallPrompt = null;
   });
 }
-loadData();
+loadData().then(focusSearchFromLaunch);
