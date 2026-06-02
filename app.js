@@ -515,6 +515,14 @@ if (searchEl) {
   });
 
   searchEl.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && searchEl.value) {
+      event.preventDefault();
+      clearTimeout(searchTimer);
+      searchEl.value = '';
+      applySearchAndRender();
+      return;
+    }
+
     if (event.key !== 'Enter') return;
 
     clearTimeout(searchTimer);
