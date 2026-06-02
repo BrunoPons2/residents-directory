@@ -16,6 +16,8 @@ let residents = [];
 let filtered = [];
 let currentSort = 'address';
 let searchTimer;
+const residentsCsvCacheKey = 'residentsDirectoryCsvCache';
+const residentsCsvCachedAtKey = 'residentsDirectoryCsvCachedAt';
 
 function csvToRows(text) {
   const rows = [];
@@ -183,6 +185,51 @@ function applySortKeepingAddendum(arr) {
   return [...main, ...addendum];
 }
 
+function readCachedResidentsCsv() {
+  try {
+    return window.localStorage.getItem(residentsCsvCacheKey) || '';
+  } catch {
+    return '';
+  }
+}
+
+function saveCachedResidentsCsv(text) {
+  try {
+    window.localStorage.setItem(residentsCsvCacheKey, text);
+    window.localStorage.setItem(residentsCsvCachedAtKey, new Date().toISOString());
+  } catch {}
+}
+
+function cachedResidentsLabel() {
+  try {
+    const cachedAt = window.localStorage.getItem(residentsCsvCachedAtKey);
+    if (!cachedAt) return 'offline cached copy';
+
+    const date = new Date(cachedAt);
+    if (Number.isNaN(date.getTime())) return 'offline cached copy';
+
+    return `offline cached copy from ${date.toLocaleDateString(undefined, {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    })}`;
+  } catch {
+    return 'offline cached copy';
+  }
+}
+
+function setResidentsFromCsv(text) {
+  residents = csvToRows(text).filter(r => {
+    const name = getName(r);
+    const phone = (r.phone || '').trim();
+    const email = (r.email || '').trim();
+    return name !== '' || phone !== '' || email !== '';
+  });
+
+  residents = applySortKeepingAddendum(residents);
+  filtered = residents.slice();
+}
+
 function render() {
   if (!listEl) return;
 
@@ -310,24 +357,25 @@ async function loadData() {
     if (!res.ok) throw new Error(`Could not load residents.csv (${res.status})`);
 
     const text = await res.text();
+    saveCachedResidentsCsv(text);
 
-    residents = csvToRows(text).filter(r => {
-      const name = getName(r);
-      const phone = (r.phone || '').trim();
-      const email = (r.email || '').trim();
-      return name !== '' || phone !== '' || email !== '';
-    });
-
-    residents = applySortKeepingAddendum(residents);
-    filtered = residents.slice();
+    setResidentsFromCsv(text);
 
     if (statusEl) statusEl.textContent = `${residents.length} residents`;
     render();
   } catch (error) {
     console.error(error);
-    residents = [];
-    filtered = [];
-    if (statusEl) statusEl.textContent = 'Unable to load residents directory.';
+    const cachedCsv = readCachedResidentsCsv();
+
+    if (cachedCsv) {
+      setResidentsFromCsv(cachedCsv);
+      if (statusEl) statusEl.textContent = `${residents.length} residents - ${cachedResidentsLabel()}`;
+    } else {
+      residents = [];
+      filtered = [];
+      if (statusEl) statusEl.textContent = 'Unable to load residents directory.';
+    }
+
     render();
   }
 }
