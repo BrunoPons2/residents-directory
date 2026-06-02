@@ -356,6 +356,7 @@ let deferredInstallPrompt = null;
 const installBtn = document.getElementById('installBtn');
 const printPdfBtn = document.getElementById('printPdfBtn');
 const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+const refreshDataBtn = document.getElementById('refreshDataBtn');
 const pdfUpdatedEl = document.getElementById('pdfUpdated');
 const installStateKey = 'residentsDirectoryInstalled';
 const pdfDocumentUrl = 'documents/residents-directory-hard-copy.pdf';
@@ -392,6 +393,7 @@ function updateInstallUi() {
   if (installBtn) installBtn.classList.toggle('hidden', installed);
   if (printPdfBtn) printPdfBtn.classList.toggle('hidden', !installed);
   if (downloadPdfBtn) downloadPdfBtn.classList.toggle('hidden', !installed);
+  if (refreshDataBtn) refreshDataBtn.classList.toggle('hidden', !installed);
   if (pdfUpdatedEl) pdfUpdatedEl.classList.toggle('hidden', !installed || !pdfUpdatedEl.textContent);
 }
 
@@ -444,6 +446,18 @@ if (downloadPdfBtn) {
 
 if (printPdfBtn) {
   printPdfBtn.addEventListener('click', printPdfDocument);
+}
+
+if (refreshDataBtn) {
+  refreshDataBtn.addEventListener('click', async () => {
+    await loadData();
+    await loadPdfMetadata();
+
+    if ('serviceWorker' in navigator) {
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (registration) registration.update().catch(() => {});
+    }
+  });
 }
 
 if (installBtn) {
