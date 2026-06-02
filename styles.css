@@ -72,6 +72,8 @@ body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:syste
 .icon-btn:focus-visible,
 .btn:focus-visible,
 .empty-clear:focus-visible,
+.back-to-top:focus-visible,
+.update-notice button:focus-visible,
 .install-button:focus-visible,
 .document-button:focus-visible{
   outline:3px solid #1f6feb;
@@ -241,6 +243,21 @@ dialog.modal[open]{
   display: none;
 }
 
+.connection-status {
+  align-self: center;
+  border-radius: 999px;
+  background: #fff3cd;
+  color: #5d4300;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.2;
+  padding: 5px 8px;
+}
+
+.connection-status.hidden {
+  display: none;
+}
+
 .updated-note,
 .pdf-updated {
   align-self: center;
@@ -251,5 +268,63 @@ dialog.modal[open]{
 
 .updated-note.hidden,
 .pdf-updated.hidden {
+  display: none;
+}
+
+.back-to-top {
+  position: fixed;
+  right: max(12px, calc((100vw - 460px) / 2 + 12px));
+  bottom: 14px;
+  z-index: 20;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  min-height: 42px;
+  padding: 8px 13px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.14);
+  cursor: pointer;
+}
+
+.back-to-top.hidden {
+  display: none;
+}
+
+.update-notice {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  z-index: 30;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(430px, calc(100vw - 24px));
+  border: 1px solid #d6d6d6;
+  border-radius: 12px;
+  background: #111;
+  color: #fff;
+  padding: 10px 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.22);
+  font-size: 14px;
+}
+
+.update-notice button {
+  margin-left: auto;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 10px;
+  background: #fff;
+  color: #111;
+  font: inherit;
+  font-weight: 700;
+  min-height: 38px;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+.update-notice.hidden {
   display: none;
 }

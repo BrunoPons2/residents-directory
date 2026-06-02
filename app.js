@@ -11,6 +11,10 @@ const modalMeta = document.getElementById('modalMeta');
 const textBtn = document.getElementById('textBtn');
 const callBtn = document.getElementById('callBtn');
 const emailBtn = document.getElementById('emailBtn');
+const connectionStatusEl = document.getElementById('connectionStatus');
+const updateNotice = document.getElementById('updateNotice');
+const reloadAppBtn = document.getElementById('reloadAppBtn');
+const backToTopBtn = document.getElementById('backToTopBtn');
 
 let residents = [];
 let filtered = [];
@@ -18,6 +22,8 @@ let currentSort = 'address';
 let searchTimer;
 let directoryStatusText = '';
 let lastProfileTrigger = null;
+let waitingServiceWorker = null;
+let refreshingForUpdate = false;
 const residentsCsvCacheKey = 'residentsDirectoryCsvCache';
 const residentsCsvCachedAtKey = 'residentsDirectoryCsvCachedAt';
 
@@ -620,11 +626,77 @@ if (searchEl) {
   });
 }
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+function updateConnectionStatus() {
+  if (!connectionStatusEl) return;
+
+  const offline = window.navigator.onLine === false;
+  connectionStatusEl.textContent = offline ? 'Offline' : '';
+  connectionStatusEl.classList.toggle('hidden', !offline);
+}
+
+function updateBackToTop() {
+  if (!backToTopBtn) return;
+
+  backToTopBtn.classList.toggle('hidden', window.scrollY < 500);
+}
+
+function showUpdateNotice(worker) {
+  waitingServiceWorker = worker;
+  if (updateNotice) updateNotice.classList.remove('hidden');
+}
+
+function watchInstallingWorker(worker) {
+  if (!worker) return;
+
+  worker.addEventListener('statechange', () => {
+    if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+      showUpdateNotice(worker);
+    }
   });
 }
+
+window.addEventListener('online', updateConnectionStatus);
+window.addEventListener('offline', updateConnectionStatus);
+window.addEventListener('scroll', updateBackToTop, { passive: true });
+
+if (backToTopBtn) {
+  backToTopBtn.addEventListener('click', scrollResultsToTop);
+}
+
+if (reloadAppBtn) {
+  reloadAppBtn.addEventListener('click', () => {
+    if (!waitingServiceWorker) return;
+    waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
+  });
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshingForUpdate) return;
+    refreshingForUpdate = true;
+    window.location.reload();
+  });
+
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(registration => {
+        if (registration.waiting) {
+          showUpdateNotice(registration.waiting);
+        }
+
+        watchInstallingWorker(registration.installing);
+
+        registration.addEventListener('updatefound', () => {
+          watchInstallingWorker(registration.installing);
+        });
+      })
+      .catch(() => {});
+  });
+}
+
+updateConnectionStatus();
+updateBackToTop();
+
 // Add to Home Screen / Install App button
 let deferredInstallPrompt = null;
 

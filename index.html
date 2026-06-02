@@ -30,6 +30,7 @@
       <button id="refreshDataBtn" class="document-button hidden" type="button">
         Refresh Data
       </button>
+      <span id="connectionStatus" class="connection-status hidden" role="status" aria-live="polite"></span>
       <span id="dataUpdated" class="updated-note hidden"></span>
       <span id="pdfUpdated" class="pdf-updated hidden"></span>
     </div>
@@ -54,6 +55,13 @@
       <div id="modalMeta" class="modal-meta"></div>
     </div>
   </dialog>
+
+  <div id="updateNotice" class="update-notice hidden" role="status" aria-live="polite">
+    <span>New version ready</span>
+    <button id="reloadAppBtn" type="button">Reload</button>
+  </div>
+
+  <button id="backToTopBtn" class="back-to-top hidden" type="button" aria-label="Back to top">Top</button>
 
   <script src="app.js"></script>
 </body>
