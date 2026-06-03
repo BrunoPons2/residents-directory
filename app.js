@@ -313,7 +313,7 @@ function dataUpdatedLabel() {
   const date = cachedResidentsDate();
   if (!date) return '';
 
-  return `Data updated ${date.toLocaleString(undefined, {
+  return `Updated ${date.toLocaleString(undefined, {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
