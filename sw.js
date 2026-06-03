@@ -1,4 +1,4 @@
-const SHELL_CACHE = 'residents-directory-shell-v2';
+const SHELL_CACHE = 'residents-directory-shell-v3';
 const SHELL_ASSETS = [
   './',
   'index.html',

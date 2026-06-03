@@ -733,6 +733,12 @@ function rememberInstall() {
   } catch {}
 }
 
+function forgetRememberedInstall() {
+  try {
+    window.localStorage.removeItem(installStateKey);
+  } catch {}
+}
+
 function shouldHideInstallButton() {
   return isInStandaloneMode() || hasRememberedInstall();
 }
@@ -831,6 +837,10 @@ if (refreshDataBtn) {
 }
 
 if (installBtn) {
+  if (new URLSearchParams(window.location.search).has('reset-install')) {
+    forgetRememberedInstall();
+  }
+
   updateInstallUi();
   loadPdfMetadata();
 
@@ -860,7 +870,10 @@ if (installBtn) {
       return;
     }
 
-    alert('To add this Residents Directory to your Home Screen:\n\nUse your browser menu and choose Add to Home screen or Install app.');
+    if (confirm('To add this Residents Directory to your Home Screen:\n\nUse your browser menu and choose Add to Home screen or Install app.\n\nIf you have already installed it, click OK now to show the installed-app controls.\n\nIf you have not installed it yet, click Cancel and install it from your browser menu first.')) {
+      rememberInstall();
+      updateInstallUi();
+    }
   });
 
   window.addEventListener('appinstalled', () => {
