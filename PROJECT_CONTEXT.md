@@ -76,3 +76,14 @@ When the user says "bye", "goodbye", "that's all", "done for now", or otherwise 
 - Test Macro 9 from Excel after the helper fix.
 - Before future app edits, inspect `git status` and the relevant files read-only.
 - Keep this file updated when project rules or workflow assumptions change.
+
+- Photo Workflow Step 1 was updated on 2026-06-04 to run as clean slate preflight: backup current staged photos if any exist, delete generated/review worksheets including Photo Review * sheets, then run PhotoWorkflowPreflight. Admin and User panels now label Step 1 as '1 Clean Slate / Photo Workflow Preflight'.
+- The clean slate worksheet cleanup must not delete core sheets: ADMIN_CONTROL_PANEL, USER_CONTROL_PANEL, Residents, Archives, APP_SETTINGS, PWA_EXPORT, or GITHUB_SYNC_GUIDE; it must not touch resident data, CSV files, GitHub repo files, workbook backups, or delete/move/rename source photos.
+
+- Photo Workflow Step 1 was refined on 2026-06-04: after backing up root staged images and STANDARDISED images into a timestamped folder under PhotosStagingBackupFolder, the macro verifies copied counts, then clears only verified image files from PhotosStagingFolder and its STANDARDISED subfolder. The folders themselves and non-image files are left in place and reported.
+
+- Folder spelling corrected: use 'Current Residents Photos on GitHub' everywhere, not 'Currant'. Remaining text references across the project were replaced on 2026-06-04.
+- Photo Workflow Step 9 now archives confirmed staged photos and then copies current staged original image files into PhotosCurrentGitHubMirrorFolder, set to D:\Bruno\Documents\App Projects\Residents Directory\Photos\Current Residents Photos on GitHub. Admin and User panels label Step 9 as '9 Archive Confirmed Staged Photos + Update Current GitHub Photos'.
+- Missing-photo email workflow now uses a permanent workbook sheet named 'Email Unsubscribe List' with columns Recorded At, full_name, address, email, source, and notes. This sheet is not part of generated worksheet cleanup. The draft-email macro skips residents matching the unsubscribe list by email or by name+address, and the email footer asks residents to reply with 'unsubscribe' to stop future Residents Directory emails from Bruno.
+
+- App service-worker update behavior changed on 2026-06-04: `sw.js` is now `residents-directory-shell-v4` and no longer calls `self.skipWaiting()` during install. New app versions should show the existing "New version ready" prompt and only reload after the user clicks Reload. The Reload button still sends the `SKIP_WAITING` message, so the app updates by choice instead of auto-reloading and appearing to load residents data twice. This was pushed to GitHub in commit `9439e7e`.
