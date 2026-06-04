@@ -1,4 +1,4 @@
-const SHELL_CACHE = 'residents-directory-shell-v3';
+const SHELL_CACHE = 'residents-directory-shell-v4';
 const SHELL_ASSETS = [
   './',
   'index.html',
@@ -20,7 +20,6 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(SHELL_CACHE)
       .then(cache => cache.addAll(SHELL_ASSETS))
-      .then(() => self.skipWaiting())
   );
 });
 
