@@ -1,6 +1,6 @@
 # Residents Directory Project Status
 
-Last updated: 2026-06-07 17:48 +10:00
+Last updated: 2026-06-07 18:39 +10:00
 
 This file is the short handover status for ChatGPT and Codex. `PROJECT_CONTEXT.md` remains the longer standing project context and rules file.
 
@@ -11,6 +11,7 @@ This file is the short handover status for ChatGPT and Codex. `PROJECT_CONTEXT.m
 - Existing long-form shared context file: `PROJECT_CONTEXT.md`
 - Latest confirmed recent data commit before this status file was created: `73307592d897909bedd92e0a1968ef1774455f9c` with message `Update residents PWA data 2026-06-07 17:38`.
 - `PROJECT_STATUS.md` was created on GitHub on 2026-06-07 so both ChatGPT and Codex have a short status file to read.
+- Latest context correction pushed: `cb1c5ac` with message `Correct project context user panel wording`.
 
 ## Recent GitHub Data Notes
 
@@ -116,8 +117,8 @@ Key VBA areas installed or updated:
 
 ### GitHub Repo Status
 
-- `PROJECT_STATUS.md` is being updated with both the GitHub handover notes and the Codex workbook/photo workflow checkpoint.
-- `PROJECT_CONTEXT.md` was already modified locally from earlier project-context work and is not part of this status checkpoint unless separately committed later.
+- `PROJECT_STATUS.md` contains both the GitHub handover notes and the Codex workbook/photo workflow checkpoint.
+- `PROJECT_CONTEXT.md` has been updated and pushed. It now uses the original control-panel names `Admin` and `User`.
 
 ### Workbook Backup
 
@@ -150,7 +151,7 @@ Latest pre-install backup recorded:
 - The full real-photo workflow has not yet been run end-to-end on the 26-photo batch.
 - Step 4 review corrections still need to be made by the operator on `Photo Staging Review`.
 - The duplicate `Shirley Truong` match requires a manual choice of the correct Resident ID.
-- The User1 relocation flow should still be tested on User1's computer with the copied project folder.
+- The User-side relocation flow should still be tested on the other user's computer with the copied project folder.
 - No GitHub upload/publish step has been run for the current 26-photo batch yet.
 - I did not verify that every referenced image file physically exists in both `photos/thumb` and `photos/profile`.
 - Treat the master workbook `Master Natura Residents Directory.xlsm` as the source of truth for resident records and photo availability.
