@@ -1,6 +1,6 @@
 # Residents Directory Project Status
 
-Last updated: 2026-06-09 14:17 +10:00
+Last updated: 2026-06-09 20:43 +10:00
 
 This file is the short handover status for ChatGPT and Codex. `PROJECT_CONTEXT.md` remains the longer standing project context and rules file.
 
@@ -32,7 +32,7 @@ Excel was closed and no workbook lock file was visible during the final Codex ch
 
 Latest pre-install workbook backup recorded:
 
-- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-portable-project-relocation 9-06-2026_2-07-51_PM.xlsm`
+- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-portable-project-relocation 9-06-2026_8-41-15_PM.xlsm`
 
 ## What Changed In The Workbook
 
@@ -50,6 +50,8 @@ Latest pre-install workbook backup recorded:
 - Critical missing items block the choice and tell the user to choose the correct project folder/path and contact the administrator on `0422 906 105`, signed `Bruno Pons @ 35 Autumn Ave.`
 - Missing working folders can be created after confirmation.
 - Existing control-panel buttons are rebound after relocation.
+- Startup performance was repaired on 2026-06-09. Normal workbook open now checks whether `APP_SETTINGS` already matches the workbook's current folder and skips the heavy portable path regeneration/button rebind when everything is current. Full path regeneration still runs after relocation, missing/stale settings, or the `Set Project Location` workflow.
+- Admin control-panel layout was coded from Bruno's manually adjusted trial layout on 2026-06-09. The current User control-panel layout was also coded for preservation. The installer and portable button repair now preserve both layouts. The reset button caption is now `Reset Tick Buttons`; the Residents button caption on both Admin and User panels is now `Open Residents Sheet & edit/update Records`.
 
 ### Photo Workflow
 
@@ -175,11 +177,15 @@ Latest pre-install backup recorded:
 - Confirmed the saved reminder text contains `Before Step 3` and the `New Residents Photos for GitHub` staging folder wording.
 - Confirmed saved control positions moved Step 3 below Step 2 on both Admin and User panels.
 - Confirmed the GitHub repo working tree had `PROJECT_CONTEXT.md` modified before this status update.
+- Installed the startup fast-path repair and confirmed saved `APP_SETTINGS` values match the live workbook folder, including `LastKnownWorkbookFolder`, `WorkbookFolder`, `WorkingDirectory`, `ThisWorkbookFullName`, `PhotosStagingFolder`, `PhotosCurrentGitHubMirrorFolder`, `GitHubRepoFolder`, `PhotosThumbPath`, and `PhotosProfilePath`.
+- Confirmed the saved workbook package still contains 72 tracked control-panel button assignments and 2 direct reset-button assignments after the startup repair.
+- Installed the coded Admin control-panel trial layout and caption changes. Verified saved captions for Admin/User reset buttons and Admin/User Residents buttons. Verified the saved workbook package still contains 72 tracked control-panel button assignments and 2 direct reset-button assignments.
+- Installed the User control-panel layout preservation pass. Verified key User panel captions/positions, including `Reset Tick Buttons`, `Open Residents Sheet & edit/update Records`, the Step 3 reminder, `Open Staging Folder`, Step 14, and `Administrator Login`. Excel may round some Form Control positions slightly when saving.
 
 ## Problems Or Items Needing Verification
 
 - Keep closing the workbook before Codex installs or tests workbook changes.
-- The latest Step 1 safety cleanup, progress-tick changes, and Step 3 staging checkpoint should be tested by Bruno from Excel in the normal operator flow.
+- The latest Step 1 safety cleanup, progress-tick changes, Step 3 staging checkpoint, all-button tick tracker, and startup fast path should be tested by Bruno from Excel in the normal operator flow.
 - Excel COM macro-level verification for the new Step 3 checkpoint hung twice; hidden verifier processes were stopped and no workbook lock file remained afterward. Package-level workbook verification passed.
 - The duplicate `Shirley Truong` match requires a manual choice of the correct Resident ID whenever both active records are possible matches.
 - The User-side relocation flow should still be tested on the other user's computer with the copied project folder.
@@ -189,17 +195,21 @@ Latest pre-install backup recorded:
 ## Next Recommended Step
 
 1. Open the workbook and confirm the login bypass/button captions behave correctly.
-2. On the Admin and User panels, confirm the new "Before Step 3" reminder and `Open Staging Folder` button appear between Step 2 and Step 3.
-3. Run Photo Workflow Step 1 from Excel and confirm the improved Step 1 prompts, All Residents Photos safety check, backup/clear report, and progress tick.
-4. After Step 2, use `Open Staging Folder`, load/copy the new resident photos into the root staging folder, then run Step 3.
-5. Continue the photo workflow only after Step 3 creates/checks the `Photo Staging Review`.
-6. Use Step 4 to correct any non-Exact yellow rows:
+2. Confirm the workbook opens promptly now that normal startup skips the heavy portable path regeneration/button rebind when settings are current.
+3. On the Admin panel, visually confirm the coded layout matches Bruno's latest trial layout closely enough.
+4. On the User panel, visually confirm the preserved layout is acceptable and still easy for User to follow.
+5. On Admin and User panels, confirm `Reset Tick Buttons` and `Open Residents Sheet & edit/update Records` captions are acceptable.
+6. On the Admin and User panels, confirm the new "Before Step 3" reminder and `Open Staging Folder` button appear between Step 2 and Step 3.
+7. Run Photo Workflow Step 1 from Excel and confirm the improved Step 1 prompts, All Residents Photos safety check, backup/clear report, and progress tick.
+8. After Step 2, use `Open Staging Folder`, load/copy the new resident photos into the root staging folder, then run Step 3.
+9. Continue the photo workflow only after Step 3 creates/checks the `Photo Staging Review`.
+10. Use Step 4 to correct any non-Exact yellow rows:
    - Walter Wood -> Walter Tink
    - Meg Olsen -> Margaret Olsen
    - Mel Hope -> Melinda Hope
    - choose the correct Shirley Truong Resident ID
-7. Re-run the name check.
-8. Continue only when all intended rows are `Exact` or deliberately corrected to `Process`.
-9. If the workbook is correct after the photo workflow, rebuild/export `data/residents.csv` from the workbook and redeploy normally when needed.
-10. If any GitHub CSV value differs from the workbook, correct the workbook first, then export and redeploy the CSV again rather than manually editing the CSV.
-11. After any Codex or ChatGPT session, update both this file and `PROJECT_CONTEXT.md` when the change is important enough to affect future work.
+11. Re-run the name check.
+12. Continue only when all intended rows are `Exact` or deliberately corrected to `Process`.
+13. If the workbook is correct after the photo workflow, rebuild/export `data/residents.csv` from the workbook and redeploy normally when needed.
+14. If any GitHub CSV value differs from the workbook, correct the workbook first, then export and redeploy the CSV again rather than manually editing the CSV.
+15. After any Codex or ChatGPT session, update both this file and `PROJECT_CONTEXT.md` when the change is important enough to affect future work.
