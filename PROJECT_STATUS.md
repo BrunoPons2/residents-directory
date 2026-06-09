@@ -61,9 +61,9 @@ The staged photo folder contained 26 image files at the time of this checkpoint:
   - Clean generated/review worksheets.
   - Run Photo Workflow Preflight after cleanup.
 - Generated/review worksheet cleanup includes `STANDARDISED`.
-- The folder name typo was resolved: use `Current Residents Photos on GitHub`, not `Currant`.
+- The folder name typo was resolved: use `All Residents Photos on GitHub`, not `Currant`.
 - Step 8 is now `Backup Staged Photos`.
-- Step 9 now archives confirmed staged photos and copies confirmed originals into `Current Residents Photos on GitHub`.
+- Step 9 now archives confirmed staged photos and copies confirmed originals into `All Residents Photos on GitHub`.
 - Step 10 is now `Create Standardised Copies`.
 
 ### Step 3 / Step 4 Cropping And Review
