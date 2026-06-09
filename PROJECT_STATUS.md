@@ -1,6 +1,6 @@
 # Residents Directory Project Status
 
-Last updated: 2026-06-07 18:39 +10:00
+Last updated: 2026-06-09 14:17 +10:00
 
 This file is the short handover status for ChatGPT and Codex. `PROJECT_CONTEXT.md` remains the longer standing project context and rules file.
 
@@ -24,15 +24,15 @@ This file is the short handover status for ChatGPT and Codex. `PROJECT_CONTEXT.m
 
 ## Latest Codex Workbook Checkpoint
 
-The workbook/photo workflow upgrade has been installed into:
+The latest workbook/photo workflow upgrades have been installed into:
 
 - `D:\Bruno\Documents\App Projects\Residents Directory\Master Natura Residents Directory.xlsm`
 
-Excel was open at the time of this checkpoint, so no further workbook automation should be run until Bruno closes it.
+Excel was closed and no workbook lock file was visible during the final Codex check on 2026-06-09.
 
-The staged photo folder contained 26 image files at the time of this checkpoint:
+Latest pre-install workbook backup recorded:
 
-- `D:\Bruno\Documents\App Projects\Residents Directory\Photos\New Residents Photos for GitHub`
+- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-portable-project-relocation 9-06-2026_2-07-51_PM.xlsm`
 
 ## What Changed In The Workbook
 
@@ -54,23 +54,36 @@ The staged photo folder contained 26 image files at the time of this checkpoint:
 ### Photo Workflow
 
 - Step 1 now starts with a real clean slate:
+  - Copy/update root staged original image files into `All Residents Photos on GitHub` before cleanup.
+  - Verify each root staged original by filename and file size in the All Residents Photos folder.
   - Back up staged photo image files first.
   - Verify copied image count matches staged image count.
-  - Clear only backed-up staged image files from `New Residents Photos for GitHub`.
+  - Clear only backed-up staged image files from `New Residents Photos for GitHub` and its `STANDARDISED` subfolder.
   - Report skipped/non-image files separately.
   - Clean generated/review worksheets.
   - Run Photo Workflow Preflight after cleanup.
+- The folders themselves are not deleted.
+- `STANDARDISED` images are backed up/cleared but are not copied into `All Residents Photos on GitHub`.
 - Generated/review worksheet cleanup includes `STANDARDISED`.
 - The folder naming was updated: use `All Residents Photos on GitHub`; prior current/currant wording is obsolete.
 - Step 8 is now `Backup Staged Photos`.
 - Step 9 now archives confirmed staged photos and copies confirmed originals into `All Residents Photos on GitHub`.
 - Step 10 is now `Create Standardised Copies`.
+- Numbered Photo Workflow prompt/message-box title bars now start with `Step X -`.
+- Successful numbered Photo Workflow steps now add a green tick to the matching Admin and User control-panel buttons.
+- Step 1 resets the workflow tick marks for a fresh run.
+- Photo Workflow completion progress is stored in `APP_SETTINGS` and refreshed when the workbook opens.
 
 ### Step 3 / Step 4 Cropping And Review
 
 - Step 3 button caption on both control panels is now:
   - `3 Confirm Cropping + Check Names`
-- Step 3 now asks whether staged photos are already properly cropped, face-centred, and saved.
+- Admin and User panels now include a "Before Step 3" reminder plus an `Open Staging Folder` button between Step 2 and Step 3.
+- The reminder text is refreshed from `PhotosStagingFolder` in `APP_SETTINGS`, so relocated User workbooks show their own staging path.
+- The reminder tells the operator to load/copy new resident photos into the root `New Residents Photos for GitHub` staging folder and to leave `STANDARDISED` empty for Step 10.
+- Step 3 now asks whether all new resident photos have been copied into staging, properly cropped, face-centred, and saved.
+- Step 3 blocks if no staged image files are present before the crop confirmation.
+- Step 3 also blocks if the staged image count becomes zero after a manual review pause.
 - If the operator answers Yes, Step 3 records the confirmation and runs the staged-photo name check.
 - If the operator answers No, Step 3 opens the staged photo folder in a maximised Explorer window using Extra Large Icons, then waits for the operator to continue.
 - Step 3 records crop confirmation details in `APP_SETTINGS`.
@@ -106,6 +119,11 @@ Key VBA areas installed or updated:
 - `modAppSettings`
 - `modCheckStagedPhotoNames`
 - `modWorkbookLogin`
+- `modCurrentGitHubPhotos`
+- `modWorkbookCleanup`
+- `modPhotoWorkflowProgress`
+- `modPhotoWorkflowPreflight`
+- `modPhotoWorkflowContinue`
 - related existing workflow modules imported during the installer run
 
 ### Codex Working Files
@@ -113,18 +131,21 @@ Key VBA areas installed or updated:
 - `C:\Users\bpons\Documents\Codex\2026-06-04\photo-workflow\work\install_portable_project_relocation.vbs`
 - `C:\Users\bpons\Documents\Codex\2026-06-04\photo-workflow\work\export_current_workbook_state.vbs`
 - `C:\Users\bpons\Documents\Codex\2026-06-04\photo-workflow\work\smoke_test_portable_relocation.vbs`
+- `C:\Users\bpons\Documents\Codex\2026-06-04\photo-workflow\work\verify_step3_staging_checkpoint.vbs`
+- `C:\Users\bpons\Documents\Codex\2026-06-04\photo-workflow\work\verify_xlsm_package_20260609_1415\`
 - `C:\Users\bpons\Documents\Codex\2026-06-04\photo-workflow\work\current-vba-export\`
 
 ### GitHub Repo Status
 
 - `PROJECT_STATUS.md` contains both the GitHub handover notes and the Codex workbook/photo workflow checkpoint.
 - `PROJECT_CONTEXT.md` has been updated and pushed. It now uses the original control-panel names `Admin` and `User`.
+- This status update is local until Bruno explicitly approves a commit/push.
 
 ### Workbook Backup
 
 Latest pre-install backup recorded:
 
-- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-portable-project-relocation 7-06-2026_3-01-16_PM.xlsm`
+- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-portable-project-relocation 9-06-2026_2-07-51_PM.xlsm`
 
 ## Tests And Checks Done
 
@@ -142,33 +163,43 @@ Latest pre-install backup recorded:
 - Exported the current workbook VBA/state using `export_current_workbook_state.vbs`.
 - Ran `smoke_test_portable_relocation.vbs`.
 - Portable relocation smoke test passed.
-- Confirmed the staged photo folder contains 26 image files.
+- Ran a non-destructive Step 1 All Residents Photos mirror safety test: 26 root staged originals found, 0 copied/updated, 26 already present with the same size, 26 verified, 0 non-image files skipped.
+- Verified the repaired login bypass opens to `ADMIN_CONTROL_PANEL` when `BypassWorkbookLoginToAdmin=Yes`.
+- Verified the Photo Workflow progress helper updates matching Admin/User button captions.
+- Verified the green tick character stored on button captions is Unicode character code 9989.
+- Installed the Step 3 staging checkpoint controls into the workbook and confirmed the saved XLSM package contains:
+  - `txtAdminStagePhotosReminder`
+  - `btnAdminOpenStagingFolder` assigned to `OpenPhotoWorkflowStagingFolder`
+  - `txtUserStagePhotosReminder`
+  - `btnUserOpenStagingFolder` assigned to `UserOpenPhotoWorkflowStagingFolder`
+- Confirmed the saved reminder text contains `Before Step 3` and the `New Residents Photos for GitHub` staging folder wording.
+- Confirmed saved control positions moved Step 3 below Step 2 on both Admin and User panels.
 - Confirmed the GitHub repo working tree had `PROJECT_CONTEXT.md` modified before this status update.
 
 ## Problems Or Items Needing Verification
 
-- Excel was open with `Master Natura Residents Directory.xlsm` at the time of this checkpoint; close it before Codex installs or tests any further workbook changes.
-- The full real-photo workflow has not yet been run end-to-end on the 26-photo batch.
-- Step 4 review corrections still need to be made by the operator on `Photo Staging Review`.
-- The duplicate `Shirley Truong` match requires a manual choice of the correct Resident ID.
+- Keep closing the workbook before Codex installs or tests workbook changes.
+- The latest Step 1 safety cleanup, progress-tick changes, and Step 3 staging checkpoint should be tested by Bruno from Excel in the normal operator flow.
+- Excel COM macro-level verification for the new Step 3 checkpoint hung twice; hidden verifier processes were stopped and no workbook lock file remained afterward. Package-level workbook verification passed.
+- The duplicate `Shirley Truong` match requires a manual choice of the correct Resident ID whenever both active records are possible matches.
 - The User-side relocation flow should still be tested on the other user's computer with the copied project folder.
-- No GitHub upload/publish step has been run for the current 26-photo batch yet.
 - I did not verify that every referenced image file physically exists in both `photos/thumb` and `photos/profile`.
 - Treat the master workbook `Master Natura Residents Directory.xlsm` as the source of truth for resident records and photo availability.
 
 ## Next Recommended Step
 
-1. Close the workbook before any further Codex workbook automation.
-2. Test the photo workflow with the current 26-photo batch.
-3. Run Step 3 and confirm whether all staged photos are cropped.
-4. Let Step 3 create/check the `Photo Staging Review`.
-5. Use Step 4 to correct the non-Exact yellow rows:
+1. Open the workbook and confirm the login bypass/button captions behave correctly.
+2. On the Admin and User panels, confirm the new "Before Step 3" reminder and `Open Staging Folder` button appear between Step 2 and Step 3.
+3. Run Photo Workflow Step 1 from Excel and confirm the improved Step 1 prompts, All Residents Photos safety check, backup/clear report, and progress tick.
+4. After Step 2, use `Open Staging Folder`, load/copy the new resident photos into the root staging folder, then run Step 3.
+5. Continue the photo workflow only after Step 3 creates/checks the `Photo Staging Review`.
+6. Use Step 4 to correct any non-Exact yellow rows:
    - Walter Wood -> Walter Tink
    - Meg Olsen -> Margaret Olsen
    - Mel Hope -> Melinda Hope
    - choose the correct Shirley Truong Resident ID
-6. Re-run the name check.
-7. Continue only when all intended rows are `Exact` or deliberately corrected to `Process`.
-8. If the workbook is correct after the photo workflow, rebuild/export `data/residents.csv` from the workbook and redeploy normally when needed.
-9. If any GitHub CSV value differs from the workbook, correct the workbook first, then export and redeploy the CSV again rather than manually editing the CSV.
-10. After any Codex or ChatGPT session, update both this file and `PROJECT_CONTEXT.md` when the change is important enough to affect future work.
+7. Re-run the name check.
+8. Continue only when all intended rows are `Exact` or deliberately corrected to `Process`.
+9. If the workbook is correct after the photo workflow, rebuild/export `data/residents.csv` from the workbook and redeploy normally when needed.
+10. If any GitHub CSV value differs from the workbook, correct the workbook first, then export and redeploy the CSV again rather than manually editing the CSV.
+11. After any Codex or ChatGPT session, update both this file and `PROJECT_CONTEXT.md` when the change is important enough to affect future work.
