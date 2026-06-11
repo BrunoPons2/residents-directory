@@ -709,6 +709,7 @@ const pdfUpdatedEl = document.getElementById('pdfUpdated');
 const installStateKey = 'residentsDirectoryInstalled';
 const pdfDocumentUrl = 'documents/residents-directory-hard-copy.pdf';
 const pdfMetadataUrl = 'documents/residents-directory-hard-copy.json';
+const helpContactText = 'Need Help? Ask Bruno @ 35 Autumn Ave.';
 let pdfDocumentVersion = '';
 
 function isIosDevice() {
@@ -769,12 +770,11 @@ async function loadPdfMetadata() {
 
     const meta = await res.json();
     pdfDocumentVersion = meta.generatedAt || '';
-    if (pdfUpdatedEl) pdfUpdatedEl.textContent = meta.generatedDisplay ? `PDF updated ${meta.generatedDisplay}` : '';
   } catch {
     pdfDocumentVersion = '';
-    if (pdfUpdatedEl) pdfUpdatedEl.textContent = '';
   }
 
+  if (pdfUpdatedEl) pdfUpdatedEl.textContent = helpContactText;
   updatePdfDownloadUrl();
   updateInstallUi();
 }
