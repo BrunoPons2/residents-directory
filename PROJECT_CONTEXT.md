@@ -96,3 +96,9 @@ When the user says "bye", "goodbye", "that's all", "done for now", or otherwise 
 - Admin control-panel layout was coded on 2026-06-09 from Bruno's manually adjusted trial layout. The current User control-panel layout was also coded for preservation. Future installer/portable repair runs preserve both layouts. The reset button caption is now `Reset Tick Buttons`, and the Residents button caption on both Admin and User panels is now `Open Residents Sheet & edit/update Records`.
 
 - App service-worker update behavior changed on 2026-06-04: `sw.js` is now `residents-directory-shell-v4` and no longer calls `self.skipWaiting()` during install. New app versions should show the existing "New version ready" prompt and only reload after the user clicks Reload. The Reload button still sends the `SKIP_WAITING` message, so the app updates by choice instead of auto-reloading and appearing to load residents data twice. This was pushed to GitHub in commit `9439e7e`.
+
+- 2026-06-20 pause point: no workbook or VBA changes were applied during the latest session.
+- Prepared correction pack: `Residents_Directory_VBA_Patch_Pack_2026-06-20.zip`.
+- Resume by applying Group 1 only to the TEST FIXES workbook: `modCurrentGitHubPhotos`, `modProjectRelocation`, `modWorkbookCleanup`, and `modPathMigration`.
+- After Group 1, run `Debug -> Compile VBAProject`, close and reopen the workbook, then test Step 1 with one expendable staged photo.
+- Verify that `All Residents Photos on GitHub` is used, `Current Residents Photos on GitHub` is not recreated, and `PhotosAllGitHubMirrorFolder` remains correct before moving to Group 2.
