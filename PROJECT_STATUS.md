@@ -1,6 +1,6 @@
 # Residents Directory Project Status
 
-Last updated: 2026-06-09 20:43 +10:00
+Last updated: 2026-06-23 19:52 +10:00
 
 This file is the short handover status for ChatGPT and Codex. `PROJECT_CONTEXT.md` remains the longer standing project context and rules file.
 
@@ -26,7 +26,13 @@ This file is the short handover status for ChatGPT and Codex. `PROJECT_CONTEXT.m
 
 The latest workbook/photo workflow upgrades have been installed into:
 
-- `D:\Bruno\Documents\App Projects\Residents Directory\Master Natura Residents Directory.xlsm`
+- `D:\Bruno\Documents\App Projects\Residents Directory\Master Natura Residents Directory V2.0.xlsm`
+
+V1 preservation:
+
+- Original source retained unchanged: `D:\Bruno\Documents\App Projects\Residents Directory\Master Natura Residents Directory.xlsm`
+- Immutable V1 snapshot: `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Versioned Releases\Master Natura Residents Directory V1.0 - Final 2026-06-23_17-47-48.xlsm`
+- Source/V1 SHA-256: `4F88CFDB4D8F3678A1BFE2FC8B508435057AD0A1FD8A244C5D3C3A2FB3964B5F`
 
 Excel was closed and no workbook lock file was visible during the final Codex check on 2026-06-09.
 
@@ -35,6 +41,29 @@ Latest pre-install workbook backup recorded:
 - `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-portable-project-relocation 9-06-2026_8-41-15_PM.xlsm`
 
 ## What Changed In The Workbook
+
+### Consolidated Photo Workflow V2.0
+
+- Added `modPhotoWorkflowV2`, a resumable state-machine controller for the complete photo workflow.
+- Replaced the normal 14-step panel sequence with four controls on both Admin and User panels:
+  - `Process / Resume New Resident Photos`
+  - `Open Current Batch Review`
+  - `View Last Workflow Report`
+  - `Reset Photo Workflow Session`
+- Added Admin-only `Show / Hide Legacy Recovery Controls`; the original macros remain installed but hidden during normal operation.
+- Added permanent VeryHidden/protected sheets:
+  - `PHOTO_INTAKE_LOG`
+  - `PHOTO_BATCH_LOG`
+- Added SHA-256 intake tracking, verified immutable batch snapshots, verified transient staging backup/cleanup, resumable checkpoints, and final Git commit recording.
+- The safe intake folder is `Photos\New Residents Photos collection - safe copy` and is never cleaned or changed by V2.
+- `All Residents Photos on GitHub` is now the canonical originals collection. The legacy `PhotosCurrentGitHubMirrorFolder` setting points to the All folder.
+- Name matches continue automatically when exact. Uncertain matches pause at `Photo Staging Review`.
+- Thumb/profile replacements continue automatically when no conflict or when output is unchanged. Material replacements pause for `Keep New` or `Keep Old`; `Later` keeps the batch paused.
+- Publication validates output files, refreshes Residents photo availability, rebuilds `PWA_EXPORT`, exports a line-count-verified UTF-8 CSV, stages only expected data/photo paths, commits, pushes, and records the commit SHA.
+- Git preflight requires a clean working tree and records `origin/main`. Publication stops if origin moves or unexpected files appear.
+- APP_SETTINGS startup visibility was corrected for protected workbook structure.
+- Admin/User sheet protection now consistently uses password `natura`.
+- Startup was optimized by supplying the correct password during Admin unprotect and avoiding the old User unhide/protect/rehide-all-sheets pass.
 
 ### Portable Project Location
 
@@ -52,6 +81,7 @@ Latest pre-install workbook backup recorded:
 - Existing control-panel buttons are rebound after relocation.
 - Startup performance was repaired on 2026-06-09. Normal workbook open now checks whether `APP_SETTINGS` already matches the workbook's current folder and skips the heavy portable path regeneration/button rebind when everything is current. Full path regeneration still runs after relocation, missing/stale settings, or the `Set Project Location` workflow.
 - Admin control-panel layout was coded from Bruno's manually adjusted trial layout on 2026-06-09. The current User control-panel layout was also coded for preservation. The installer and portable button repair now preserve both layouts. The reset button caption is now `Reset Tick Buttons`; the Residents button caption on both Admin and User panels is now `Open Residents Sheet & edit/update Records`.
+- `Reset Tick Buttons` was corrected on 2026-06-23. It now performs the Photo Workflow, Admin, and User tick resets first, then displays one final informational completion message. The old preliminary Yes/No confirmation was removed.
 
 ### Photo Workflow
 
@@ -80,7 +110,8 @@ Latest pre-install workbook backup recorded:
 
 - Step 3 button caption on both control panels is now:
   - `3 Confirm Cropping + Check Names`
-- Admin and User panels now include a "Before Step 3" reminder plus an `Open Staging Folder` button between Step 2 and Step 3.
+- Admin and User panels include a "Before Step 3" reminder between Step 2 and Step 3.
+- The separate optional root staging-folder buttons were removed on 2026-06-23 because they only opened Explorer and duplicated Step 3 behaviour.
 - The reminder text is refreshed from `PhotosStagingFolder` in `APP_SETTINGS`, so relocated User workbooks show their own staging path.
 - The reminder tells the operator to load/copy new resident photos into the root `New Residents Photos for GitHub` staging folder and to leave `STANDARDISED` empty for Step 10.
 - Step 3 now asks whether all new resident photos have been copied into staging, properly cropped, face-centred, and saved.
@@ -147,7 +178,7 @@ Key VBA areas installed or updated:
 
 Latest pre-install backup recorded:
 
-- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-portable-project-relocation 9-06-2026_2-07-51_PM.xlsm`
+- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-remove-optional-staging-buttons 23-06-2026_4-57-48_PM.xlsm`
 
 ## Tests And Checks Done
 
@@ -162,6 +193,24 @@ Latest pre-install backup recorded:
 
 ### Codex Workbook/Photo Workflow Checks
 
+- Created V1 and V2 from the 2026-06-23 source workbook and verified the V1 snapshot is byte-for-byte identical to the source.
+- Imported and executed `InitialisePhotoWorkflowV2`; the VBA project compiled sufficiently to run the initializer successfully.
+- Verified `modPhotoWorkflowV2` is installed with 2,846 code lines and `modProjectRelocation` contains the V2 portable path changes.
+- Verified V2 workbook structure, `PHOTO_INTAKE_LOG`, `PHOTO_BATCH_LOG`, Admin panel, and User panel are protected in the saved workbook.
+- Verified the intake and batch logs are VeryHidden.
+- Verified both control panels point to the V2 process/review/report/reset macros and legacy numbered controls are hidden.
+- Verified Sharyn Colquhoun is recorded as `MIGRATED_EXISTING` with SHA-256 `5503F9BD26192BB016DA5BB72278BE65F4FD4DFEC4682E499C8EBFA85B6BAEA5`.
+- Verified V2 installation did not remove or change `Sharyn Colquhoun.jpg` in the safe collection.
+- Normal macro-enabled Admin startup passed in about 6.6 seconds with `ADMIN_CONTROL_PANEL` active and V2 controls intact.
+- User-mode verification passed in about 5.6 seconds:
+  - workbook structure protected
+  - Residents protected
+  - Residents A3/F3 locked
+  - Residents B3:E3 editable
+  - Admin panel, APP_SETTINGS, intake log, and batch log VeryHidden
+  - User panel visible and protected
+- No actual photo batch, CSV replacement, Git commit, or Git push was run during implementation testing.
+
 - Exported the current workbook VBA/state using `export_current_workbook_state.vbs`.
 - Ran `smoke_test_portable_relocation.vbs`.
 - Portable relocation smoke test passed.
@@ -169,22 +218,22 @@ Latest pre-install backup recorded:
 - Verified the repaired login bypass opens to `ADMIN_CONTROL_PANEL` when `BypassWorkbookLoginToAdmin=Yes`.
 - Verified the Photo Workflow progress helper updates matching Admin/User button captions.
 - Verified the green tick character stored on button captions is Unicode character code 9989.
-- Installed the Step 3 staging checkpoint controls into the workbook and confirmed the saved XLSM package contains:
-  - `txtAdminStagePhotosReminder`
-  - `btnAdminOpenStagingFolder` assigned to `OpenPhotoWorkflowStagingFolder`
-  - `txtUserStagePhotosReminder`
-  - `btnUserOpenStagingFolder` assigned to `UserOpenPhotoWorkflowStagingFolder`
+- Installed the Step 3 staging reminder controls into the workbook and confirmed both Admin and User reminder text boxes are present.
 - Confirmed the saved reminder text contains `Before Step 3` and the `New Residents Photos for GitHub` staging folder wording.
 - Confirmed saved control positions moved Step 3 below Step 2 on both Admin and User panels.
 - Confirmed the GitHub repo working tree had `PROJECT_CONTEXT.md` modified before this status update.
 - Installed the startup fast-path repair and confirmed saved `APP_SETTINGS` values match the live workbook folder, including `LastKnownWorkbookFolder`, `WorkbookFolder`, `WorkingDirectory`, `ThisWorkbookFullName`, `PhotosStagingFolder`, `PhotosCurrentGitHubMirrorFolder`, `GitHubRepoFolder`, `PhotosThumbPath`, and `PhotosProfilePath`.
 - Confirmed the saved workbook package still contains 72 tracked control-panel button assignments and 2 direct reset-button assignments after the startup repair.
 - Installed the coded Admin control-panel trial layout and caption changes. Verified saved captions for Admin/User reset buttons and Admin/User Residents buttons. Verified the saved workbook package still contains 72 tracked control-panel button assignments and 2 direct reset-button assignments.
-- Installed the User control-panel layout preservation pass. Verified key User panel captions/positions, including `Reset Tick Buttons`, `Open Residents Sheet & edit/update Records`, the Step 3 reminder, `Open Staging Folder`, Step 14, and `Administrator Login`. Excel may round some Form Control positions slightly when saving.
+- Installed the User control-panel layout preservation pass. Verified key User panel captions/positions, including `Reset Tick Buttons`, `Open Residents Sheet & edit/update Records`, the Step 3 reminder, Step 14, and `Administrator Login`. Excel may round some Form Control positions slightly when saving.
+- Installed and verified the `Reset Tick Buttons` message-order correction. Live VBA inspection confirmed all reset calls occur before the success message and the old pre-reset prompt is absent. Backup: `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-reset-tick-message-order 23-06-2026_4-40-07_PM.xlsm`.
+- Removed the optional root staging-folder buttons from both control panels and removed their portable repair/layout references. Verified both reminders remain, both Step 3 buttons still target the correct crop/name-check routines, and the removed buttons cannot be recreated by portable repair. Backup: `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-remove-optional-staging-buttons 23-06-2026_4-57-48_PM.xlsm`.
 
 ## Problems Or Items Needing Verification
 
 - Keep closing the workbook before Codex installs or tests workbook changes.
+- The real V2 end-to-end photo batch still needs operator testing from Excel.
+- The repo currently has local modifications to `PROJECT_CONTEXT.md` and `PROJECT_STATUS.md`. V2 correctly treats this as a dirty working tree and will block photo publication until the documentation changes are committed/pushed or reconciled.
 - The latest Step 1 safety cleanup, progress-tick changes, Step 3 staging checkpoint, all-button tick tracker, and startup fast path should be tested by Bruno from Excel in the normal operator flow.
 - Excel COM macro-level verification for the new Step 3 checkpoint hung twice; hidden verifier processes were stopped and no workbook lock file remained afterward. Package-level workbook verification passed.
 - The duplicate `Shirley Truong` match requires a manual choice of the correct Resident ID whenever both active records are possible matches.
@@ -194,22 +243,13 @@ Latest pre-install backup recorded:
 
 ## Next Recommended Step
 
-1. Open the workbook and confirm the login bypass/button captions behave correctly.
-2. Confirm the workbook opens promptly now that normal startup skips the heavy portable path regeneration/button rebind when settings are current.
-3. On the Admin panel, visually confirm the coded layout matches Bruno's latest trial layout closely enough.
-4. On the User panel, visually confirm the preserved layout is acceptable and still easy for User to follow.
-5. On Admin and User panels, confirm `Reset Tick Buttons` and `Open Residents Sheet & edit/update Records` captions are acceptable.
-6. On the Admin and User panels, confirm the new "Before Step 3" reminder and `Open Staging Folder` button appear between Step 2 and Step 3.
-7. Run Photo Workflow Step 1 from Excel and confirm the improved Step 1 prompts, All Residents Photos safety check, backup/clear report, and progress tick.
-8. After Step 2, use `Open Staging Folder`, load/copy the new resident photos into the root staging folder, then run Step 3.
-9. Continue the photo workflow only after Step 3 creates/checks the `Photo Staging Review`.
-10. Use Step 4 to correct any non-Exact yellow rows:
-   - Walter Wood -> Walter Tink
-   - Meg Olsen -> Margaret Olsen
-   - Mel Hope -> Melinda Hope
-   - choose the correct Shirley Truong Resident ID
-11. Re-run the name check.
-12. Continue only when all intended rows are `Exact` or deliberately corrected to `Process`.
-13. If the workbook is correct after the photo workflow, rebuild/export `data/residents.csv` from the workbook and redeploy normally when needed.
-14. If any GitHub CSV value differs from the workbook, correct the workbook first, then export and redeploy the CSV again rather than manually editing the CSV.
-15. After any Codex or ChatGPT session, update both this file and `PROJECT_CONTEXT.md` when the change is important enough to affect future work.
+1. Review and commit/push the pending `PROJECT_CONTEXT.md` and `PROJECT_STATUS.md` changes so the Git working tree is clean.
+2. Open `Master Natura Residents Directory V2.0.xlsm`.
+3. Visually confirm the four V2 photo controls on both control panels.
+4. Put one genuinely new, cropped test photo in `Photos\New Residents Photos collection - safe copy`.
+5. Click `Process / Resume New Resident Photos`.
+6. Confirm exact matches continue automatically and an uncertain name pauses on the yellow review row.
+7. If a replacement conflict is created, choose `Keep New` or `Keep Old`, then click Resume.
+8. Confirm the final report shows the processed/skipped counts and Git commit SHA.
+9. Verify the app shows the correct resident details and photo after GitHub deployment.
+10. Keep the V1 snapshot unchanged until at least one complete V2 batch has passed.
