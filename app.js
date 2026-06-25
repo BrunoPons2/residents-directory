@@ -23,6 +23,7 @@ let searchTimer;
 let directoryStatusText = '';
 let lastProfileTrigger = null;
 let waitingServiceWorker = null;
+let reloadAfterServiceWorkerUpdate = false;
 let refreshingForUpdate = false;
 const residentsCsvCacheKey = 'residentsDirectoryCsvCache';
 const residentsCsvCachedAtKey = 'residentsDirectoryCsvCachedAt';
@@ -481,6 +482,7 @@ function openProfile(r, trigger) {
   if (modal && typeof modal.showModal === 'function') {
     modal.showModal();
     if (closeBtn) closeBtn.focus();
+    updateBackToTop();
   }
 }
 
@@ -504,6 +506,7 @@ if (modal) {
       lastProfileTrigger.focus();
     }
     lastProfileTrigger = null;
+    updateBackToTop();
   });
 }
 
@@ -568,10 +571,9 @@ function updateSearchStatus(query) {
 }
 
 function scrollResultsToTop() {
-  const topbar = document.querySelector('.topbar');
-  const top = Math.max(0, (topbar?.offsetTop || 0));
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  const scrollTarget = document.scrollingElement || document.documentElement;
+  scrollTarget.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
 }
 
 function applySearchAndRender() {
@@ -637,12 +639,18 @@ function updateConnectionStatus() {
 function updateBackToTop() {
   if (!backToTopBtn) return;
 
-  backToTopBtn.classList.toggle('hidden', window.scrollY < 500);
+  const scrollTarget = document.scrollingElement || document.documentElement;
+  const isNearTop = scrollTarget.scrollTop < 400;
+  const modalOpen = Boolean(modal?.open);
+  const updateNoticeVisible = Boolean(updateNotice && !updateNotice.classList.contains('hidden'));
+
+  backToTopBtn.classList.toggle('hidden', isNearTop || modalOpen || updateNoticeVisible);
 }
 
 function showUpdateNotice(worker) {
   waitingServiceWorker = worker;
   if (updateNotice) updateNotice.classList.remove('hidden');
+  updateBackToTop();
 }
 
 function watchInstallingWorker(worker) {
@@ -666,13 +674,14 @@ if (backToTopBtn) {
 if (reloadAppBtn) {
   reloadAppBtn.addEventListener('click', () => {
     if (!waitingServiceWorker) return;
+    reloadAfterServiceWorkerUpdate = true;
     waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
   });
 }
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (refreshingForUpdate) return;
+    if (!reloadAfterServiceWorkerUpdate || refreshingForUpdate) return;
     refreshingForUpdate = true;
     window.location.reload();
   });

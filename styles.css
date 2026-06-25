@@ -7,7 +7,7 @@ body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:syste
 .brand{font-weight:700;flex:0 0 auto}
 .search{flex:1;min-width:0;padding:10px 12px;border:1px solid #ddd;border-radius:12px;font-size:16px}
 .search:focus-visible{outline:3px solid #1f6feb;outline-offset:2px;border-color:#1f6feb}
-.container{width:100%;padding:10px 10px 40px}
+.container{width:100%;padding:10px 10px 88px}
 .status{padding:8px 4px;color:#555;font-size:14px}
 .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
 .empty-state{display:flex;flex-direction:column;align-items:center;gap:12px;border:1px solid #eee;border-radius:16px;padding:18px 12px;background:#fff;color:#666;text-align:center;font-size:14px}
@@ -163,7 +163,7 @@ dialog.modal[open]{
   }
 
   .container{
-    padding:8px 8px 36px;
+    padding:8px 8px 88px;
   }
 
   .card{
@@ -273,18 +273,23 @@ dialog.modal[open]{
 
 .back-to-top {
   position: fixed;
-  right: max(12px, calc((100vw - 460px) / 2 + 12px));
-  bottom: 14px;
+  right: max(14px, calc((100vw - 460px) / 2 + 14px));
+  bottom: calc(env(safe-area-inset-bottom) + 14px);
   z-index: 20;
   border: 1px solid #ccc;
-  border-radius: 999px;
+  border-radius: 50%;
   background: #ffffff;
   color: #111;
   font: inherit;
-  font-size: 13px;
+  font-size: 28px;
   font-weight: 700;
-  min-height: 42px;
-  padding: 8px 13px;
+  line-height: 1;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 6px 18px rgba(0,0,0,.14);
   cursor: pointer;
 }
