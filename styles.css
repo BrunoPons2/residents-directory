@@ -8,8 +8,8 @@ body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:syste
 .search{flex:1;min-width:0;padding:10px 12px;border:1px solid #ddd;border-radius:12px;font-size:16px}
 .search:focus-visible{outline:3px solid #1f6feb;outline-offset:2px;border-color:#1f6feb}
 .container{width:100%;padding:10px 10px 88px}
-.status{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:8px 4px;color:#555;font-size:14px}
-.status-text{min-width:0}
+.status{display:flex;align-items:baseline;justify-content:space-between;gap:6px;padding:8px 4px;color:#555;font-size:14px;flex-wrap:wrap}
+.status-text{min-width:0;flex:1 1 auto}
 .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
 .empty-state{display:flex;flex-direction:column;align-items:center;gap:12px;border:1px solid #eee;border-radius:16px;padding:18px 12px;background:#fff;color:#666;text-align:center;font-size:14px}
 .empty-clear{border:1px solid #ccc;border-radius:10px;background:#fff;color:#111;font:inherit;font-weight:650;min-height:40px;padding:8px 14px;cursor:pointer}
@@ -268,11 +268,12 @@ dialog.modal[open]{
 }
 
 .updated-note {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   margin-left: auto;
   color: #555;
   font-size: 12px;
   line-height: 1.2;
+  text-align: right;
   white-space: nowrap;
 }
 
