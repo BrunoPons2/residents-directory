@@ -3,12 +3,13 @@ html{background:#f7f7f7;overflow-x:hidden}
 body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#fff;color:#111;overflow-x:hidden}
 .topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #eaeaea;padding:12px 14px;display:flex;flex-direction:column;gap:8px;align-items:stretch}
 .topbar-main{display:flex;gap:10px;align-items:center}
-.topbar-actions{display:flex;gap:8px;justify-content:flex-start;flex-wrap:wrap}
+.topbar-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .brand{font-weight:700;flex:0 0 auto}
 .search{flex:1;min-width:0;padding:10px 12px;border:1px solid #ddd;border-radius:12px;font-size:16px}
 .search:focus-visible{outline:3px solid #1f6feb;outline-offset:2px;border-color:#1f6feb}
 .container{width:100%;padding:10px 10px 88px}
-.status{padding:8px 4px;color:#555;font-size:14px}
+.status{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:8px 4px;color:#555;font-size:14px}
+.status-text{min-width:0}
 .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
 .empty-state{display:flex;flex-direction:column;align-items:center;gap:12px;border:1px solid #eee;border-radius:16px;padding:18px 12px;background:#fff;color:#666;text-align:center;font-size:14px}
 .empty-clear{border:1px solid #ccc;border-radius:10px;background:#fff;color:#111;font:inherit;font-weight:650;min-height:40px;padding:8px 14px;cursor:pointer}
@@ -223,7 +224,14 @@ dialog.modal[open]{
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
-  white-space: nowrap;
+  min-width: 0;
+  width: 100%;
+  text-align: center;
+  white-space: normal;
+}
+
+.install-button {
+  grid-column: 1 / -1;
 }
 
 .install-button:hover,
@@ -244,7 +252,8 @@ dialog.modal[open]{
 }
 
 .connection-status {
-  align-self: center;
+  grid-column: 1 / -1;
+  justify-self: start;
   border-radius: 999px;
   background: #fff3cd;
   color: #5d4300;
@@ -258,16 +267,16 @@ dialog.modal[open]{
   display: none;
 }
 
-.updated-note,
-.pdf-updated {
-  align-self: center;
+.updated-note {
+  flex: 0 0 auto;
+  margin-left: auto;
   color: #555;
   font-size: 12px;
   line-height: 1.2;
+  white-space: nowrap;
 }
 
-.updated-note.hidden,
-.pdf-updated.hidden {
+.updated-note.hidden {
   display: none;
 }
 

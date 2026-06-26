@@ -1,5 +1,5 @@
 const listEl = document.getElementById('list');
-const statusEl = document.getElementById('status');
+const statusEl = document.getElementById('statusText') || document.getElementById('status');
 const searchEl = document.getElementById('search');
 
 const modal = document.getElementById('modal');
@@ -714,11 +714,9 @@ const printPdfBtn = document.getElementById('printPdfBtn');
 const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 const refreshDataBtn = document.getElementById('refreshDataBtn');
 const dataUpdatedEl = document.getElementById('dataUpdated');
-const pdfUpdatedEl = document.getElementById('pdfUpdated');
 const installStateKey = 'residentsDirectoryInstalled';
 const pdfDocumentUrl = 'documents/residents-directory-hard-copy.pdf';
 const pdfMetadataUrl = 'documents/residents-directory-hard-copy.json';
-const helpContactText = 'Need Help? Ask Bruno @ 35 Autumn Ave.';
 let pdfDocumentVersion = '';
 
 function isIosDevice() {
@@ -759,8 +757,7 @@ function updateInstallUi() {
   if (printPdfBtn) printPdfBtn.classList.toggle('hidden', !installed);
   if (downloadPdfBtn) downloadPdfBtn.classList.toggle('hidden', !installed);
   if (refreshDataBtn) refreshDataBtn.classList.toggle('hidden', !installed);
-  if (dataUpdatedEl) dataUpdatedEl.classList.toggle('hidden', !installed || !dataUpdatedEl.textContent);
-  if (pdfUpdatedEl) pdfUpdatedEl.classList.toggle('hidden', !installed || !pdfUpdatedEl.textContent);
+  if (dataUpdatedEl) dataUpdatedEl.classList.toggle('hidden', !dataUpdatedEl.textContent);
 }
 
 function currentPdfUrl() {
@@ -783,7 +780,6 @@ async function loadPdfMetadata() {
     pdfDocumentVersion = '';
   }
 
-  if (pdfUpdatedEl) pdfUpdatedEl.textContent = helpContactText;
   updatePdfDownloadUrl();
   updateInstallUi();
 }

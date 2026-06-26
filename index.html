@@ -27,17 +27,15 @@
       <a id="downloadPdfBtn" class="document-button hidden" href="documents/residents-directory-hard-copy.pdf" download>
         Download PDF Document
       </a>
-      <button id="refreshDataBtn" class="document-button hidden" type="button">
-        Refresh Residents Data
-      </button>
       <span id="connectionStatus" class="connection-status hidden" role="status" aria-live="polite"></span>
-      <span id="dataUpdated" class="updated-note hidden"></span>
-      <span id="pdfUpdated" class="pdf-updated hidden"></span>
     </div>
   </header>
 
   <main class="container">
-    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <div id="status" class="status" role="status" aria-live="polite">
+      <span id="statusText" class="status-text"></span>
+      <span id="dataUpdated" class="updated-note hidden"></span>
+    </div>
     <ul id="list" class="list" aria-label="Residents"></ul>
   </main>
 
