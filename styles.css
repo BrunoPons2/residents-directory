@@ -3,12 +3,12 @@ html{background:#f7f7f7;overflow-x:hidden}
 body{width:100%;max-width:460px;min-height:100vh;margin:0 auto;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#fff;color:#111;overflow-x:hidden}
 .topbar{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #eaeaea;padding:12px 14px;display:flex;flex-direction:column;gap:8px;align-items:stretch}
 .topbar-main{display:flex;gap:10px;align-items:center}
-.topbar-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.topbar-actions{display:flex;align-items:center;gap:8px}
 .brand{font-weight:700;flex:0 0 auto}
 .search{flex:1;min-width:0;padding:10px 12px;border:1px solid #ddd;border-radius:12px;font-size:16px}
 .search:focus-visible{outline:3px solid #1f6feb;outline-offset:2px;border-color:#1f6feb}
 .container{width:100%;padding:10px 10px 88px}
-.status{display:flex;align-items:baseline;justify-content:space-between;gap:6px;padding:8px 4px;color:#555;font-size:14px;flex-wrap:wrap}
+.status{display:flex;align-items:baseline;justify-content:space-between;gap:6px;padding:8px 4px;color:#555;font-size:17px;flex-wrap:wrap}
 .status-text{min-width:0;flex:1 1 auto}
 .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
 .empty-state{display:flex;flex-direction:column;align-items:center;gap:12px;border:1px solid #eee;border-radius:16px;padding:18px 12px;background:#fff;color:#666;text-align:center;font-size:14px}
@@ -271,7 +271,7 @@ dialog.modal[open]{
   flex: 0 1 auto;
   margin-left: auto;
   color: #555;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.2;
   text-align: right;
   white-space: nowrap;
