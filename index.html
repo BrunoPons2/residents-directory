@@ -17,6 +17,11 @@
       <input id="search" class="search" type="search" placeholder="Search residents…" autocomplete="off" aria-label="Search residents" />
     </div>
 
+    <div id="status" class="status" role="status" aria-live="polite">
+      <span id="statusText" class="status-text"></span>
+      <span id="dataUpdated" class="updated-note hidden"></span>
+    </div>
+
     <div class="topbar-actions">
       <button id="installBtn" class="install-button" type="button">
         Add to Home Screen
@@ -26,10 +31,6 @@
   </header>
 
   <main class="container">
-    <div id="status" class="status" role="status" aria-live="polite">
-      <span id="statusText" class="status-text"></span>
-      <span id="dataUpdated" class="updated-note hidden"></span>
-    </div>
     <ul id="list" class="list" aria-label="Residents"></ul>
   </main>
 

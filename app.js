@@ -1,6 +1,7 @@
 const listEl = document.getElementById('list');
 const statusEl = document.getElementById('statusText') || document.getElementById('status');
 const searchEl = document.getElementById('search');
+const containerEl = document.querySelector('.container');
 
 const modal = document.getElementById('modal');
 const closeBtn = document.getElementById('closeBtn');
@@ -15,6 +16,8 @@ const connectionStatusEl = document.getElementById('connectionStatus');
 const updateNotice = document.getElementById('updateNotice');
 const reloadAppBtn = document.getElementById('reloadAppBtn');
 const backToTopBtn = document.getElementById('backToTopBtn');
+const topbar = document.querySelector('.topbar');
+const topbarActions = document.querySelector('.topbar-actions');
 
 let residents = [];
 let filtered = [];
@@ -574,7 +577,7 @@ function updateSearchStatus(query) {
 
 function scrollResultsToTop() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const scrollTarget = document.scrollingElement || document.documentElement;
+  const scrollTarget = containerEl || document.scrollingElement || document.documentElement;
   scrollTarget.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
 }
 
@@ -636,17 +639,34 @@ function updateConnectionStatus() {
   const offline = window.navigator.onLine === false;
   connectionStatusEl.textContent = offline ? 'Offline' : '';
   connectionStatusEl.classList.toggle('hidden', !offline);
+  updateTopbarActionsVisibility();
+  updateTopbarHeight();
 }
 
 function updateBackToTop() {
   if (!backToTopBtn) return;
 
-  const scrollTarget = document.scrollingElement || document.documentElement;
+  const scrollTarget = containerEl || document.scrollingElement || document.documentElement;
   const isNearTop = scrollTarget.scrollTop < 400;
   const modalOpen = Boolean(modal?.open);
   const updateNoticeVisible = Boolean(updateNotice && !updateNotice.classList.contains('hidden'));
 
   backToTopBtn.classList.toggle('hidden', isNearTop || modalOpen || updateNoticeVisible);
+}
+
+function updateTopbarActionsVisibility() {
+  if (!topbarActions) return;
+
+  const hasVisibleControl = Array.from(topbarActions.children).some(child => (
+    !child.classList.contains('hidden')
+  ));
+  topbarActions.classList.toggle('hidden', !hasVisibleControl);
+}
+
+function updateTopbarHeight() {
+  if (!topbar) return;
+
+  document.documentElement.style.setProperty('--topbar-height', `${Math.ceil(topbar.offsetHeight)}px`);
 }
 
 function showUpdateNotice(worker) {
@@ -667,7 +687,16 @@ function watchInstallingWorker(worker) {
 
 window.addEventListener('online', updateConnectionStatus);
 window.addEventListener('offline', updateConnectionStatus);
-window.addEventListener('scroll', updateBackToTop, { passive: true });
+if (containerEl) {
+  containerEl.addEventListener('scroll', updateBackToTop, { passive: true });
+} else {
+  window.addEventListener('scroll', updateBackToTop, { passive: true });
+}
+window.addEventListener('resize', updateTopbarHeight);
+
+if (topbar && 'ResizeObserver' in window) {
+  new ResizeObserver(updateTopbarHeight).observe(topbar);
+}
 
 if (backToTopBtn) {
   backToTopBtn.addEventListener('click', scrollResultsToTop);
@@ -729,6 +758,23 @@ function isInStandaloneMode() {
   return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 }
 
+function fitDesktopAppWindow() {
+  const isDesktop = window.matchMedia('(pointer: fine)').matches && window.screen?.availWidth >= 800;
+  if (!isDesktop || isInStandaloneMode()) return;
+
+  const appContentWidth = 460;
+  const horizontalChrome = Math.max(0, window.outerWidth - window.innerWidth);
+  const targetWidth = Math.min(window.screen.availWidth, appContentWidth + horizontalChrome);
+  const targetHeight = window.screen.availHeight;
+  const targetLeft = window.screen.availLeft || 0;
+  const targetTop = window.screen.availTop || 0;
+
+  try {
+    window.moveTo(targetLeft, targetTop);
+    window.resizeTo(targetWidth, targetHeight);
+  } catch {}
+}
+
 function hasRememberedInstall() {
   try {
     return window.localStorage.getItem(installStateKey) === 'yes';
@@ -760,6 +806,8 @@ function updateInstallUi() {
   if (downloadPdfBtn) downloadPdfBtn.classList.toggle('hidden', !installed);
   if (refreshDataBtn) refreshDataBtn.classList.toggle('hidden', !installed);
   if (dataUpdatedEl) dataUpdatedEl.classList.toggle('hidden', !dataUpdatedEl.textContent);
+  updateTopbarActionsVisibility();
+  updateTopbarHeight();
 }
 
 function currentPdfUrl() {
@@ -889,4 +937,6 @@ if (installBtn) {
     deferredInstallPrompt = null;
   });
 }
+
+window.addEventListener('load', fitDesktopAppWindow, { once: true });
 loadData().then(focusSearchFromLaunch);
