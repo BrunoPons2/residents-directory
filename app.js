@@ -759,10 +759,11 @@ function isInStandaloneMode() {
 }
 
 function fitDesktopAppWindow() {
-  const isDesktop = window.matchMedia('(pointer: fine)').matches && window.screen?.availWidth >= 800;
-  if (!isDesktop || isInStandaloneMode()) return;
+  const isPhoneWidth = window.matchMedia('(max-width: 600px)').matches;
+  const canUseWindowChrome = window.screen?.availWidth >= 700;
+  if (isPhoneWidth || !canUseWindowChrome || isInStandaloneMode()) return;
 
-  const appContentWidth = 460;
+  const appContentWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--app-width'), 10) || 460;
   const horizontalChrome = Math.max(0, window.outerWidth - window.innerWidth);
   const targetWidth = Math.min(window.screen.availWidth, appContentWidth + horizontalChrome);
   const targetHeight = window.screen.availHeight;
