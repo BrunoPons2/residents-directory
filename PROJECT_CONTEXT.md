@@ -127,3 +127,13 @@ When the user says "bye", "goodbye", "that's all", "done for now", or otherwise 
 - V2 startup was repaired for protected APP_SETTINGS and password-protected control sheets. Normal Admin startup measured about 6.6 seconds. User mode measured about 5.6 seconds.
 - User mode was verified with workbook structure protected, Admin/settings/audit sheets VeryHidden, User panel protected, and only Residents columns B:E editable. Residents columns A and F remain locked.
 - A real V2 photo batch has not yet been executed. The current repo has local `PROJECT_CONTEXT.md` and `PROJECT_STATUS.md` changes, so V2 Git preflight will intentionally block until those changes are committed/pushed or otherwise reconciled.
+
+## 2026-06-07 Workbook Sheet Placement Rule
+
+- Workbook sheet-placement behavior was updated in `D:\Bruno\Documents\App Projects\Residents Directory\Master Natura Residents Directory.xlsm`.
+- When the staged-photo name check creates a new `Photo Review mmdd-hhnn` archive sheet, previous generated `Photo Review *` sheets are deleted first.
+- New `Photo Staging Review` sheets are placed immediately after `Archives` / `Archive`.
+- Newly created `Email Unsubscribe List` sheets are placed immediately before `Archives` / `Archive`.
+- Existing live workbook sheets were cleaned up on 2026-06-07 so `Email Unsubscribe List` is before `Archives`, `Photo Staging Review` is after `Archives`, and old `Photo Review *` sheets were removed.
+- `Email Unsubscribe List` columns were autofit to the widest text in each column.
+- Backups from this work are in `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS` with prefixes `pre-sheet-placement-updates`, `pre-live-sheet-cleanup`, and `pre-email-unsubscribe-autofit`.

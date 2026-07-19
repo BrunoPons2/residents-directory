@@ -253,3 +253,40 @@ Latest pre-install backup recorded:
 8. Confirm the final report shows the processed/skipped counts and Git commit SHA.
 9. Verify the app shows the correct resident details and photo after GitHub deployment.
 10. Keep the V1 snapshot unchanged until at least one complete V2 batch has passed.
+
+## 2026-06-07 Workbook Sheet Placement And Cleanup Addendum
+
+Codex installed and then applied the workbook sheet placement/cleanup changes in the live workbook on Bruno's laptop:
+
+- Live workbook updated: `D:\Bruno\Documents\App Projects\Residents Directory\Master Natura Residents Directory.xlsm`.
+- Future `Photo Staging Review` sheets are created immediately after `Archives` / `Archive`.
+- Future `Email Unsubscribe List` sheets are created immediately before `Archives` / `Archive`.
+- When a new `Photo Review mmdd-hhnn` archive sheet is created, previous generated `Photo Review *` sheets are deleted first.
+- Existing live workbook sheets were also cleaned up after Bruno noticed the original install only changed future behavior:
+  - old existing `Photo Review *` sheets were deleted
+  - `Email Unsubscribe List` was moved before `Archives`
+  - `Photo Staging Review` was moved after `Archives`
+- Final verified live sheet order after cleanup:
+  1. `GITHUB_SYNC_GUIDE`
+  2. `Email Unsubscribe List`
+  3. `Archives`
+  4. `Photo Staging Review`
+  5. `Residents`
+  6. `PWA_EXPORT`
+  7. `APP_SETTINGS`
+  8. `ADMIN_CONTROL_PANEL`
+  9. `USER_CONTROL_PANEL`
+  10. `Phone Repair Audit`
+- `Email Unsubscribe List` columns were autofit to the widest text in each column.
+
+Backups created during this work:
+
+- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-sheet-placement-updates 7-06-2026_7-17-10_PM.xlsm`
+- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-live-sheet-cleanup 7-06-2026_8-50-51_PM.xlsm`
+- `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS\Master Natura Residents Directory - pre-email-unsubscribe-autofit 7-06-2026_8-54-31_PM.xlsm`
+
+Verification notes:
+
+- The future-behavior VBA was verified on a temporary workbook copy before the live cleanup.
+- The live workbook was then inspected after cleanup and showed the final sheet order above.
+- Excel was closed after the final automation run.
