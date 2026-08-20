@@ -76,6 +76,8 @@ When the user says "bye", "goodbye", "that's all", "done for now", or otherwise 
 ## Open Follow-Ups
 
 - Use `Master Natura Residents Directory V3.0.xlsm` for the next photo workflow test. Keep V2.0 unchanged as the rollback copy.
+- Next handover step: prepare a clean operational `Residents Directory` folder for David and Mandy rather than copying Bruno's entire project root. Include V3.0, the current David/Mandy guides, `CSV_Data`, `CSV_BACKUPS`, `Photos`, selected V3 backups/restore points, PDF copies, and a fresh `GitHub\residents-directory` clone; exclude Codex/development material and old working workbooks.
+- Decide whether both David and Mandy will publish. Invite each intended publisher's separate GitHub account as a collaborator, clone the repository fresh on their laptop, run `Set Project Location`, and complete the supervised pull/backup/test-publish/live-verification handover.
 - Before future app edits, inspect `git status` and the relevant files read-only.
 - Keep this file updated when project rules or workflow assumptions change.
 
