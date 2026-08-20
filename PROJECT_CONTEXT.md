@@ -75,7 +75,7 @@ When the user says "bye", "goodbye", "that's all", "done for now", or otherwise 
 
 ## Open Follow-Ups
 
-- Use `Master Natura Residents Directory V2.0.xlsm` for the next photo workflow test.
+- Use `Master Natura Residents Directory V3.0.xlsm` for the next photo workflow test. Keep V2.0 unchanged as the rollback copy.
 - Before future app edits, inspect `git status` and the relevant files read-only.
 - Keep this file updated when project rules or workflow assumptions change.
 
@@ -87,7 +87,7 @@ When the user says "bye", "goodbye", "that's all", "done for now", or otherwise 
 - Folder naming updated on 2026-06-09: use 'All Residents Photos on GitHub' everywhere; prior current/currant wording is obsolete.
 - Photo Workflow Step 9 now archives confirmed staged photos and then copies current staged original image files into PhotosAllGitHubMirrorFolder, set to D:\Bruno\Documents\App Projects\Residents Directory\Photos\All Residents Photos on GitHub. Admin and User panels label Step 9 as '9 Archive Confirmed Staged Photos + Update All GitHub Photos'.
 - Missing-photo email workflow now uses a permanent workbook sheet named 'Email Unsubscribe List' with columns Recorded At, full_name, address, email, source, and notes. This sheet is not part of generated worksheet cleanup. The draft-email macro skips residents matching the unsubscribe list by email or by name+address, and the email footer asks residents to reply with 'unsubscribe' to stop future Residents Directory emails from Bruno.
-- The User handover guide, currently saved as `Residents Directory - User1 Handover Guide`, was refreshed on 2026-06-05 as DOCX and PDF to include User access limits, the clean-slate photo workflow, All Residents Photos on GitHub wording, and missing-photo email unsubscribe handling. The same operating guidance should be kept aligned for Admin and User.
+- The legacy User handover guide, saved as `Residents Directory - User1 Handover Guide`, was refreshed on 2026-06-05 as DOCX and PDF to include User access limits, the clean-slate photo workflow, All Residents Photos on GitHub wording, and missing-photo email unsubscribe handling. It is retained as the historical pre-Version-3 guide.
 - The workbook now keeps APP_SETTINGS as the single active settings sheet and has a portable project-location startup check for both Admin and User use. On open, if the recorded LastKnownWorkbookFolder/WorkbookFolder differs from ThisWorkbook.Path, the workbook prompts to use the current folder, choose another folder, or cancel startup. Confirmed relocation regenerates all active local project paths from the selected root, records LastKnownWorkbookFolder, LastRelocatedAt, LastRelocatedBy, LastRelocatedFrom, and LastRelocatedTo, creates expected local folders under the selected root, and rebinds Admin/User control-panel buttons to the current workbook macros. The Admin panel's old path-migration button is now "Set Project Location".
 - Photo Workflow Step 1 was further upgraded on 2026-06-09: before any staged cleanup, it copies/updates root staged originals into `Photos\All Residents Photos on GitHub`, verifies every root staged original by filename and file size, then backs up and clears verified root staged and STANDARDISED images. STANDARDISED images are not copied into the All Residents Photos folder.
 - Photo Workflow user feedback was improved on 2026-06-09: numbered workflow message-box title bars now start with `Step X -`, Step 1 resets progress ticks, and successful numbered steps add a green tick to the matching Admin/User workflow buttons. Progress is stored in APP_SETTINGS and refreshed on workbook open.
@@ -137,3 +137,26 @@ When the user says "bye", "goodbye", "that's all", "done for now", or otherwise 
 - Existing live workbook sheets were cleaned up on 2026-06-07 so `Email Unsubscribe List` is before `Archives`, `Photo Staging Review` is after `Archives`, and old `Photo Review *` sheets were removed.
 - `Email Unsubscribe List` columns were autofit to the widest text in each column.
 - Backups from this work are in `D:\Bruno\Documents\App Projects\Residents Directory\Workbook_BACKUPS` with prefixes `pre-sheet-placement-updates`, `pre-live-sheet-cleanup`, and `pre-email-unsubscribe-autofit`.
+
+## 2026-08-20 Control-Panel Navigation
+
+- The V2.0 workbook now has direct, password-prompt-free navigation between the two control panels.
+- The Admin panel's former login-bypass control is now `Open Mandy Control Panel` and runs `OpenMandyControlPanel`.
+- The User panel's former `Administrator Login` control is now `Open Administrator Control Panel` and runs `OpenAdministratorControlPanel`.
+- The new navigation procedures call the existing User/Admin workbook-mode routines, so established visibility and protection behavior remains unchanged.
+
+## 2026-08-20 Version 3.0 Mandy / David Transition
+
+- The new working workbook is `D:\Bruno\Documents\App Projects\Residents Directory\Master Natura Residents Directory V3.0.xlsm`.
+- V2.0 remains unchanged. Its SHA-256 hash was verified against the final pre-V3 backup before handoff.
+- Version 3.0 retires the workbook login prompt, the Admin/User passwords, the login-bypass setting, and all password-bearing sheet/workbook protection calls.
+- Workbook and key-sheet protection remain as password-free accidental-edit guardrails. They can be removed without entering a password.
+- Version 3.0 opens in Mandy mode by default. `USER_CONTROL_PANEL` remains the technical sheet name for macro compatibility, but its visible title is `Mandy Control Panel`.
+- The Mandy panel was rebuilt from the Administrator visual framework and contains only the approved operating controls: sync, backup, resident maintenance, consolidated photo workflow, PWA/CSV publishing, PDF output, missing-photo follow-up, and Administrator navigation.
+- Administrator-only settings, protection toggles, cleanup, restore, troubleshooting, path/folder, unsubscribe-maintenance, filename-repair, and legacy recovery controls were removed from the Mandy panel.
+- The Administrator panel retains its administrative tools and has `Open Mandy Control Panel`. Mandy's panel has `Open Administrator Control Panel`.
+- David and Bruno use the Administrator panel; Mandy uses the Mandy panel. Navigation in both directions is direct and password-free.
+- Verification passed with 0 failures: required button bindings, forbidden-button absence, Version 3 titles, default visibility, password-free unprotection, all-sheet formula-error scan, and live execution of both navigation macros.
+- A comprehensive Version 3 handover guide was completed on 2026-08-20 in both DOCX and PDF: `D:\Bruno\Documents\App Projects\Residents Directory\Residents Directory - David and Mandy Handover Guide.docx` and `.pdf`.
+- The Version 3 guide preserves the established 14-page structure and design while updating the working workbook, Mandy/David/Bruno role boundaries, first setup and session procedures, direct panel navigation in both directions, password-free guardrails, troubleshooting, acceptance checks, reference paths, and button map. The V2.0 photo-controller wording remains where it describes the photo workflow rather than the workbook version.
+- The Version 3 handover documents are local project deliverables and are not stored in the public GitHub repository. The legacy `User1` guide remains available as a historical reference.
