@@ -64,6 +64,8 @@ When the user says "bye", "goodbye", "that's all", "done for now", or otherwise 
 
 ## Recent Decisions And Work
 
+- 2026-09-17 recovery: the September 16 CSV commit `a86f592` contained only headings. Recovered local data from `0f53029` and reconciled the September 12 workbook with its later archive audit. Main V3 workbook now has 240 preserved resident IDs/slots, 170 active export records, and unchanged opt-out metadata. John Purdon and Pam Mullins update existing placeholder IDs 183/184; Jane and Peter Hearsum retain IDs 96/243. Four photo pairs are prepared locally. Workbook import/export safeguards and consistent header handling were installed and passed six native Excel regression tests; main-workbook startup and panel navigation passed. Original workbook, recovery evidence and local-only details are in the project root's `Recovery_2026-09-17` folder. Bruno explicitly approved GitHub publication of the recovery CSV and photos on 2026-09-17; deployment verification is recorded in the local recovery folder. The cause of the initial empty export remains unproven.
+
 - The real app repo is `D:\Bruno\Documents\App Projects\Residents Directory\GitHub\residents-directory`.
 - The broader project folder includes CSV backups, CSV data, photo folders, workbook backups, restore points, PDF copies, and workflow/reference documents.
 - `data/residents.csv` exists in the repo.
