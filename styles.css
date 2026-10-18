@@ -284,32 +284,7 @@ dialog.modal[open]{
   display: none;
 }
 
-.back-to-top {
-  position: fixed;
-  right: max(14px, calc((100vw - 460px) / 2 + 14px));
-  bottom: calc(env(safe-area-inset-bottom) + 14px);
-  z-index: 20;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  background: #ffffff;
-  color: #111;
-  font: inherit;
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1;
-  width: 56px;
-  height: 56px;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,.14);
-  cursor: pointer;
-}
 
-.back-to-top.hidden {
-  display: none;
-}
 
 .update-notice {
   position: fixed;
@@ -346,3 +321,15 @@ dialog.modal[open]{
 .update-notice.hidden {
   display: none;
 }
+
+@media (pointer: coarse) { .contact-action { min-height: 44px; } #clearSearchBox { min-height: 44px; flex-basis: 44px; } }
+#cardNavigation { position: fixed; top: calc(12px + env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); z-index: 20; display: flex; align-items: center; gap: 6px; }
+#cardNavigation[hidden] { display: none; }
+#cardNavigation button { width: auto; height: auto; min-height: 30px; padding: 5px 8px; border: 1px solid white; border-radius: 10px; background: #075e54; color: white; box-shadow: 0 2px 8px #0003; font: inherit; font-size: .6875rem; font-weight: 700; line-height: 1.2; white-space: nowrap; cursor: pointer; }
+#cardNavigation button:hover { background: #04473f; }
+#cardNavigation button:focus-visible { outline: 3px solid #1479c9; outline-offset: 3px; }
+@media (pointer: coarse) { #cardNavigation button { min-height: 44px; } }
+#cardNavigation #backToTop { position: fixed; right: max(12px, env(safe-area-inset-right)); bottom: calc(12px + env(safe-area-inset-bottom)); }
+#cardNavigation { flex-direction: column; align-items: stretch; right: auto; }
+#cardNavigation #backToTop { right: auto; bottom: auto; }
+#cardNavigation #goToBottom { position: fixed; right: auto; bottom: auto; }

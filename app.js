@@ -15,7 +15,7 @@ const emailBtn = document.getElementById('emailBtn');
 const connectionStatusEl = document.getElementById('connectionStatus');
 const updateNotice = document.getElementById('updateNotice');
 const reloadAppBtn = document.getElementById('reloadAppBtn');
-const backToTopBtn = document.getElementById('backToTopBtn');
+const backToTopBtn = document.getElementById('backToTop');
 const topbar = document.querySelector('.topbar');
 const topbarActions = document.querySelector('.topbar-actions');
 
@@ -644,16 +644,29 @@ function updateConnectionStatus() {
 }
 
 function updateBackToTop() {
-  if (!backToTopBtn) return;
-
-  const scrollTarget = containerEl || document.scrollingElement || document.documentElement;
-  const isNearTop = scrollTarget.scrollTop < 400;
-  const modalOpen = Boolean(modal?.open);
-  const updateNoticeVisible = Boolean(updateNotice && !updateNotice.classList.contains('hidden'));
-
-  backToTopBtn.classList.toggle('hidden', isNearTop || modalOpen || updateNoticeVisible);
+  const navigation = document.getElementById('cardNavigation');
+  const bottomNavigation = document.getElementById('goToBottom');
+  if (!navigation || !containerEl) return;
+  const viewport = containerEl.getBoundingClientRect();
+  const visible = [...listEl.querySelectorAll('.card')]
+    .map(card => card.getBoundingClientRect())
+    .filter(rect => rect.bottom > viewport.top && rect.top < viewport.bottom);
+  navigation.hidden = !visible.length || Boolean(modal?.open) ||
+    Boolean(updateNotice && !updateNotice.classList.contains('hidden'));
+  if (navigation.hidden) return;
+  const first = visible[0];
+  const last = visible[visible.length - 1];
+  navigation.style.left = Math.max(4, Math.min(first.right + 8, window.innerWidth - navigation.offsetWidth - 8)) + 'px';
+  navigation.style.top = Math.max(viewport.top + 8, first.top + 8) + 'px';
+  const width = Math.max(backToTopBtn.offsetWidth, bottomNavigation.offsetWidth);
+  const left = Math.max(4, Math.min(last.right + 8, window.innerWidth - width - 8));
+  const pairHeight = backToTopBtn.offsetHeight + 6 + bottomNavigation.offsetHeight;
+  const top = Math.max(viewport.top + navigation.offsetHeight + 14,
+    Math.min(viewport.bottom - pairHeight - 8, last.bottom - pairHeight - 8));
+  backToTopBtn.style.left = bottomNavigation.style.left = left + 'px';
+  backToTopBtn.style.top = top + 'px';
+  bottomNavigation.style.top = (top + backToTopBtn.offsetHeight + 6) + 'px';
 }
-
 function updateTopbarActionsVisibility() {
   if (!topbarActions) return;
 
@@ -692,7 +705,7 @@ if (containerEl) {
 } else {
   window.addEventListener('scroll', updateBackToTop, { passive: true });
 }
-window.addEventListener('resize', updateTopbarHeight);
+window.addEventListener('resize', () => { updateTopbarHeight(); updateBackToTop(); });
 
 if (topbar && 'ResizeObserver' in window) {
   new ResizeObserver(updateTopbarHeight).observe(topbar);
@@ -941,3 +954,10 @@ if (installBtn) {
 
 window.addEventListener('load', fitDesktopAppWindow, { once: true });
 loadData().then(focusSearchFromLaunch);
+
+const scrollBehavior = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+document.getElementById('pageUp').addEventListener('click', () => containerEl.scrollBy({ top: -containerEl.clientHeight, behavior: scrollBehavior() }));
+document.getElementById('pageDown').addEventListener('click', () => containerEl.scrollBy({ top: containerEl.clientHeight, behavior: scrollBehavior() }));
+document.getElementById('goToBottom').addEventListener('click', () => containerEl.scrollTo({ top: containerEl.scrollHeight, behavior: scrollBehavior() }));
+new MutationObserver(() => requestAnimationFrame(updateBackToTop)).observe(listEl, { childList: true });
+new ResizeObserver(updateBackToTop).observe(containerEl);
