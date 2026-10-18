@@ -656,10 +656,10 @@ function updateBackToTop() {
   if (navigation.hidden) return;
   const first = visible[0];
   const last = visible[visible.length - 1];
-  navigation.style.left = Math.max(4, Math.min(first.right, viewport.right, window.innerWidth) - navigation.offsetWidth - 8) + 'px';
+  navigation.style.left = Math.max(4, Math.min(viewport.left + containerEl.clientWidth, window.innerWidth) - navigation.offsetWidth - 2) + 'px';
   navigation.style.top = Math.max(viewport.top + 8, first.top + 8) + 'px';
   const width = Math.max(backToTopBtn.offsetWidth, bottomNavigation.offsetWidth);
-  const left = Math.max(4, Math.min(last.right, viewport.right, window.innerWidth) - width - 8);
+  const left = Math.max(4, Math.min(viewport.left + containerEl.clientWidth, window.innerWidth) - width - 2);
   const pairHeight = backToTopBtn.offsetHeight + 6 + bottomNavigation.offsetHeight;
   const top = Math.max(viewport.top + navigation.offsetHeight + 14,
     Math.min(viewport.bottom - pairHeight - 8, last.bottom - pairHeight - 8));
