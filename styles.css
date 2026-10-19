@@ -325,8 +325,8 @@ dialog.modal[open]{
 @media (pointer: coarse) { .contact-action { min-height: 44px; } #clearSearchBox { min-height: 44px; flex-basis: 44px; } }
 #cardNavigation { position: fixed; top: calc(12px + env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); z-index: 20; display: flex; align-items: center; gap: 6px; }
 #cardNavigation[hidden] { display: none; }
-#cardNavigation button { width: auto; height: auto; min-height: 30px; padding: 5px 8px; border: 1px solid white; border-radius: 10px; background: #075e54; color: white; box-shadow: 0 2px 8px #0003; font: inherit; font-size: .6875rem; font-weight: 700; line-height: 1.2; white-space: nowrap; cursor: pointer; }
-#cardNavigation button:hover { background: #04473f; }
+#cardNavigation button { width: auto; height: auto; min-height: 30px; padding: 5px 8px; border: 1px solid white; border-radius: 10px; background: #475569; color: white; box-shadow: 0 2px 8px #0003; font: inherit; font-size: .6875rem; font-weight: 700; line-height: 1.2; white-space: nowrap; cursor: pointer; }
+#cardNavigation button:hover { background: #334155; }
 #cardNavigation button:focus-visible { outline: 3px solid #1479c9; outline-offset: 3px; }
 @media (pointer: coarse) { #cardNavigation button { min-height: 44px; } }
 #cardNavigation #backToTop { position: fixed; right: max(12px, env(safe-area-inset-right)); bottom: calc(12px + env(safe-area-inset-bottom)); }
