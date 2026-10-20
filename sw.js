@@ -1,9 +1,12 @@
-const SHELL_CACHE = 'residents-directory-shell-v12';
+const SHELL_CACHE = 'residents-directory-shell-v13';
 const SHELL_ASSETS = [
   './',
   'index.html',
   'styles.css',
   'app.js',
+  'map.js',
+  'maps/natura-site-map.jpg',
+  'maps/houses.json',
   'manifest.json',
   'icon-192.png',
   'icon-512.png',

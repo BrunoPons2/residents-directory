@@ -23,6 +23,7 @@
     </div>
 
     <div class="topbar-actions">
+      <button id="villageMapBtn" class="install-button" type="button">Village Map</button>
       <button id="installBtn" class="install-button" type="button">
         Add to Home Screen
       </button>
@@ -44,6 +45,7 @@
         <a id="textBtn" class="btn" href="#">Text</a>
         <a id="callBtn" class="btn" href="#">Call</a>
         <a id="emailBtn" class="btn" href="#">Email</a>
+        <button id="mapBtn" class="btn" type="button">Map</button>
       </div>
       <div id="modalMeta" class="modal-meta"></div>
     </div>
@@ -61,6 +63,19 @@
   <button id="goToBottom" type="button" aria-label="Go to bottom of cards" title="Go to bottom of cards">Bot</button>
   </div>
 
+  <dialog id="villageMap" class="village-map" aria-labelledby="mapTitle">
+    <div class="map-heading"><h2 id="mapTitle">Natura Village Map</h2><button id="closeMap" type="button">Close map</button></div>
+    <label for="mapSearch">Find a resident, house number or address</label>
+    <input id="mapSearch" type="search" placeholder="Name, house number or street…" autocomplete="off" />
+    <div id="mapResults" class="map-results" aria-label="Search results"></div>
+    <div class="map-tools"><button id="mapZoomIn" type="button" aria-label="Zoom in">+</button><button id="mapZoomOut" type="button" aria-label="Zoom out">−</button><button id="mapFit" type="button">Show whole village</button></div>
+    <p id="mapStatus" role="status">Loading village map…</p>
+    <div id="mapViewport" class="map-viewport" tabindex="0" aria-label="Village map. Use arrow keys to pan; scroll wheel, plus and minus to zoom.">
+      <svg id="mapSvg" viewBox="0 0 1600 1600" role="group" aria-label="Clickable village houses"><image href="maps/natura-site-map.jpg" width="1600" height="1600" /></svg>
+    </div>
+    <section id="mapHousehold" class="map-household" aria-live="polite"></section>
+  </dialog>
   <script src="app.js"></script>
+  <script src="map.js"></script>
 </body>
 </html>

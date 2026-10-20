@@ -443,6 +443,7 @@ function render() {
 
 function openProfile(r, trigger) {
   lastProfileTrigger = trigger || null;
+  window.dispatchEvent(new CustomEvent('resident-profile-open', { detail: r }));
   const residentName = getName(r);
   const phoneHref = phoneLinkValue(r.phone);
   const emailHref = cleanEmail(r.email);
@@ -517,6 +518,7 @@ if (modal) {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && modal && modal.open) {
+    e.preventDefault();
     modal.close();
   }
 });
@@ -651,7 +653,7 @@ function updateBackToTop() {
   const visible = [...listEl.querySelectorAll('.card')]
     .map(card => card.getBoundingClientRect())
     .filter(rect => rect.bottom > viewport.top && rect.top < viewport.bottom);
-  navigation.hidden = !visible.length || Boolean(modal?.open) ||
+  navigation.hidden = !visible.length || Boolean(modal?.open) || Boolean(document.getElementById('villageMap')?.open) ||
     Boolean(updateNotice && !updateNotice.classList.contains('hidden'));
   if (navigation.hidden) return;
   const first = visible[0];

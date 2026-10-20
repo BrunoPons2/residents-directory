@@ -333,3 +333,25 @@ dialog.modal[open]{
 #cardNavigation { flex-direction: column; align-items: stretch; right: auto; }
 #cardNavigation #backToTop { right: auto; bottom: auto; }
 #cardNavigation #goToBottom { position: fixed; right: auto; bottom: auto; }
+/* Village map and four profile actions. */
+.modal-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.modal-actions .btn{min-width:0;min-height:44px;padding:9px 5px;font:inherit;font-weight:650;background:#fff;cursor:pointer}
+@media(max-width:350px){.modal-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.village-map{width:min(1100px,96vw);max-width:96vw;height:94vh;height:94dvh;max-height:96dvh;margin:auto;padding:16px;border:0;border-radius:16px;background:#fff;overflow:auto}
+.village-map::backdrop{background:rgba(0,0,0,.5)}
+.map-heading,.map-tools{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.map-heading h2{font-size:20px;margin:0 0 10px}.map-tools{justify-content:flex-start;margin-top:8px}
+.village-map button{min-height:44px;padding:8px 12px;border:1px solid #bbb;border-radius:10px;background:#fff;color:#111;font:inherit;cursor:pointer}
+.village-map button:hover{background:#edf5ff}.village-map :focus-visible{outline:3px solid #1262ba;outline-offset:2px}
+#mapSearch{display:block;width:100%;font:inherit;font-size:16px;padding:10px;margin-top:5px;border:1px solid #aaa;border-radius:10px}
+.map-results{max-height:150px;overflow:auto}.map-results button{display:block;width:100%;text-align:left;margin-top:4px}
+#mapStatus{margin:8px 0;font-size:14px;color:#444}
+.map-viewport{height:clamp(230px,53vh,680px);background:#e5eddc;overflow:hidden;touch-action:none;border-radius:10px;cursor:grab}
+#mapSvg{display:block;width:100%;height:100%;user-select:none}
+.map-plot{fill:transparent;stroke:transparent;stroke-width:3;cursor:pointer}
+.map-plot:hover,.map-plot:focus{fill:#ffffff55;stroke:#114f93;outline:none}
+.map-plot.selected{fill:#ffdf0066;stroke:#153b98;stroke-width:5}
+.map-household h3{margin:10px 0 6px;font-size:18px}.map-household button{margin:4px 6px 0 0}
+@media(max-width:600px){.village-map{padding:10px;width:98vw;max-width:98vw;height:96dvh}.map-heading h2{font-size:18px}.map-tools button{padding:6px 10px}}
+
+.modal-actions .btn[hidden]{display:none}
