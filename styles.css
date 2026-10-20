@@ -355,3 +355,13 @@ dialog.modal[open]{
 @media(max-width:600px){.village-map{padding:10px;width:98vw;max-width:98vw;height:96dvh}.map-heading h2{font-size:18px}.map-tools button{padding:6px 10px}}
 
 .modal-actions .btn[hidden]{display:none}
+
+/* Compact directory summary: resident count, map, update time. */
+.topbar{gap:4px;padding-bottom:6px}
+.status{display:flex;justify-content:space-between;flex-wrap:nowrap;align-items:center;gap:6px;padding:0 0 2px;font-size:clamp(11px,3.1vw,15px)}
+.status .status-text{flex:0 1 auto}
+.status-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status .updated-note{margin-left:0;font-size:clamp(10px,2.65vw,12px)}
+#villageMapBtn{grid-column:auto;width:auto;min-height:32px;padding:5px 8px;font-size:12px;white-space:nowrap}
+@media(max-width:600px){.topbar{padding-bottom:6px}}
+@media(max-width:350px){.status{gap:4px}#villageMapBtn{padding:5px 6px;font-size:11px}}
