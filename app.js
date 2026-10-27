@@ -11,6 +11,7 @@ const modalSub = document.getElementById('modalSub');
 const modalMeta = document.getElementById('modalMeta');
 const textBtn = document.getElementById('textBtn');
 const callBtn = document.getElementById('callBtn');
+const videoBtn = document.getElementById('videoBtn');
 const emailBtn = document.getElementById('emailBtn');
 const connectionStatusEl = document.getElementById('connectionStatus');
 const updateNotice = document.getElementById('updateNotice');
@@ -99,6 +100,16 @@ function phoneLinkValue(s) {
 
 function cleanEmail(s) {
   return (s || '').toString().trim();
+}
+
+function whatsappNumber(value) {
+  const raw = String(value || '').trim();
+  let number = digitsOnly(raw);
+  if (number.startsWith('00')) number = number.slice(2);
+  else if (number.startsWith('0')) number = '61' + number.slice(1);
+  else if (/^4\d{8}$/.test(number)) number = '61' + number;
+  else if (!raw.startsWith('+') && !number.startsWith('61')) return '';
+  return /^[1-9]\d{7,14}$/.test(number) ? number : '';
 }
 
 function searchTerms(query) {
@@ -460,7 +471,7 @@ function openProfile(r, trigger) {
   const bits = [];
   if (r.phone) bits.push(r.phone);
   if (r.email) bits.push(r.email);
-  modalSub.textContent = bits.join(' • ');
+  modalSub.textContent = bits.join('\n');
 
   if (modalMeta) {
     modalMeta.textContent = '';
@@ -484,6 +495,13 @@ function openProfile(r, trigger) {
     emailBtn.style.display = emailHref ? '' : 'none';
     emailBtn.setAttribute('aria-label', `Email ${residentName}`);
   }
+
+  const whatsappPhone = whatsappNumber(r.phone);
+  videoBtn.hidden = !whatsappPhone;
+  videoBtn.href = whatsappPhone ? `https://wa.me/${whatsappPhone}` : '#';
+  videoBtn.setAttribute('aria-label', `Open WhatsApp for a video call with ${residentName}; then tap the video camera`);
+  document.getElementById('videoHint').hidden = !whatsappPhone;
+  document.querySelector('.profile-details').scrollTop = 0;
 
   if (modal && typeof modal.showModal === 'function') {
     modal.showModal();

@@ -365,3 +365,19 @@ dialog.modal[open]{
 #villageMapBtn{grid-column:auto;width:auto;min-height:32px;padding:5px 8px;font-size:12px;white-space:nowrap}
 @media(max-width:600px){.topbar{padding-bottom:6px}}
 @media(max-width:350px){.status{gap:4px}#villageMapBtn{padding:5px 6px;font-size:11px}}
+
+/* V4.0: scroll details within the available height; keep actions visible. */
+dialog.modal[open]{top:max(8px,env(safe-area-inset-top));bottom:max(8px,env(safe-area-inset-bottom));left:8px;right:8px;margin:auto;width:min(340px,calc(100% - 16px));max-width:calc(100% - 16px);max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:hidden;background:#fff}
+.modal-inner{display:flex;flex-direction:column;width:100%;max-width:none;max-height:inherit;padding:8px;gap:6px;overflow:hidden}
+.profile-details{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-top:38px;scrollbar-gutter:stable}
+.modal-photo{width:100%;max-width:none;height:clamp(64px,calc(100vh - 270px),320px);height:clamp(64px,calc(100dvh - 270px),320px);max-height:45dvh;object-fit:contain;border-radius:12px}
+.modal-title,.modal-sub{margin-top:6px;overflow-wrap:anywhere}
+.modal-sub{white-space:pre-line}
+.profile-footer{flex:0 0 auto;background:#fff}
+.modal-actions{display:flex;flex-wrap:wrap;gap:4px;margin-top:0}
+.modal-actions .btn{flex:1 1 44px;min-width:44px;min-height:44px;padding:4px;font-size:.875rem;line-height:1.2;border-radius:10px}
+.modal-actions .btn[style*="display: none"]{display:none}
+.video-hint{margin:6px 2px 0;color:#555;font-size:.75rem;line-height:1.3}
+.icon-btn{top:6px;right:6px;min-width:44px;min-height:44px;padding:4px;z-index:1}
+.brand small{font-size:.65em;color:#555}
+@media(max-height:450px){.modal-inner{gap:4px}.modal-title,.modal-sub{margin-top:4px}.modal-photo{height:80px;max-height:25dvh}}
